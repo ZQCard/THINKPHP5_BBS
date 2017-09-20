@@ -1,0 +1,134 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" id="linkOrder" href="#">
+                        <i class="fa fa-bell"></i> <span class="label label-primary"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="row J_mainContent" id="content-main">
+        <div class="col-sm-12">
+            <!-- Example Toolbar -->
+            <div class="example-wrap">
+                <h4 class="example-title">导航管理</h4>
+                <div class="example">
+
+                    <div class="bootstrap-table">
+                        <div class="fixed-table-toolbar"><div class="bars pull-left"><div class="btn-group hidden-xs" id="exampleToolbar" role="group">
+                            <a type="button"  href="{:url('create')}" class="btn btn-outline btn-default"  title="添加导航">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                            </a>
+                            <button class="btn btn-default btn-outline" type="button" onclick="window.location.reload();" title="刷新">
+                                <i class="glyphicon glyphicon-repeat"></i>
+                            </button>
+                        </div>
+                        </div>
+
+                        </div>
+                        <div class="fixed-table-container" style="padding-bottom: 0px;">
+                            <div class="fixed-table-header" style="display: none;">
+                                <table></table>
+                            </div>
+                            <div class="fixed-table-body">
+                                <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="name" tabindex="0">
+                                            <div class="th-inner ">序号</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th data-field="name" tabindex="0">
+                                            <div class="th-inner ">分类名称</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner ">排序值</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner ">链接</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner ">状态</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner ">更新时间</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner ">创建时间</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+
+                                        <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner">操作</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {foreach name="data" item="category"}
+                                    <tr class="no-records-found">
+                                        <td>{$key+1}</td>
+                                        <td>{$category->name}</td>
+                                        <td>{$category->sort}</td>
+                                        <td>{$category->link}</td>
+                                        <td>
+                                            <div class="switch">
+                                                <div class="onoffswitch">
+                                                    <input type="checkbox" {eq name="$category->status" value="正常"}checked=""{/eq}  class="onoffswitch-checkbox statusChange" id="status-{$category->status}-{$category->id}">
+                                                    <label class="onoffswitch-label" for="status-{$category->status}-{$category->id}">
+                                                        <span class="onoffswitch-inner"></span>
+                                                        <span class="onoffswitch-switch"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{$category->update_time}</td>
+                                        <td>{$category->create_time}</td>
+
+                                        <td>
+                                            <a href="{:url('admin/category/edit',['id'=>$category->id])}" type="button" class="btn btn-outline btn-default"  title="修改">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a type="button" class="btn btn-outline btn-default delete" data-id="{$category->id}" data-name="{$category->name}"  title="删除">
+                                                <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="float: right">{$data->render()}</div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!-- End Example Toolbar -->
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="js"}
+<script>
+    $(".statusChange").change(function () {
+        var info = $(this).attr('id').split('-');
+        var name = info[0];
+        var status = (info[1]=='正常')?2:1;
+        var id = info[2];
+        sendChange(id,name,status);
+    });
+</script>
+{/block}

@@ -1,0 +1,73 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="page-wrapper" class="gray-bg dashbard-1">
+
+    <div class="row J_mainContent" id="content-main">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加友情链接</h5>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" method="post" action="" id="commentForm" novalidate="novalidate">
+                        <input type="hidden" name="__token__" value="{$Request.token}" />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">友情链接名称：</label>
+                            <div class="col-sm-8">
+                                <input name="name" value="" minlength="2" type="text" class="form-control" required="" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">链接：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="link" required="" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">排序值：</label>
+                            <div class="col-sm-8">
+                                <input type="number" name="sort" maxlength="11" value=""  minlength="11" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">开始时间：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="start_time" required="" aria-required="true" placeholder="选择日期" onclick="fPopCalendar(event,this,this)" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">结束时间：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="end_time" required="" aria-required="true"  placeholder="选择日期" onclick="fPopCalendar(event,this,this)" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态：</label>
+                            <div class="col-sm-8">
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox"  checked="" class="onoffswitch-checkbox" name="status" id="example2">
+                                        <label class="onoffswitch-label" for="example2">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <a class="btn btn-primary" id="formSubmitAdd">提交</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="js"}
+<script src="__STATIC__/admin/js/Calendar.js"></script>
+{/block}

@@ -1,0 +1,78 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="wp" class="wp">
+    <div class="main clearfix">
+        <div class="container-sm mtm">
+            <div class="section clearfix">
+                <div class="content" >
+                    <div class="vw" style="margin: 50px 150px;">
+                        <div class="h hm">
+                            <h1 class="ph">{$information['title']} </h1>
+                            <p class="xg1" style="margin: 20px;">
+                                {$information['create_time']|date="Y-m-d H:i",###}<span class="pipe">|</span>
+                                发布者: <a href="home.php?mod=space&amp;uid=1">{$information['author']}</a>
+                                <span class="pipe">|</span>
+                                查看: <em id="_viewnum">{$information['look']}</em>
+                                <span class="pipe">|</span>
+                                评论:{$information['comment']}
+                            </p>
+                        </div>
+                        <div class="s" style="margin: 20px">
+                            <div>
+                                <strong>摘要</strong>{$information['brief']}
+                            </div>
+                        </div>
+                        <div class="d">
+                            <div style="margin: 20px;">
+                                <img src="{$information['pic']}" alt="">
+                            </div>
+                            {$information['content']}
+                        </div>
+                    </div>
+                    <div class="pren pbm cl" style="margin-top: 50px;">
+                        <em style="float: left; margin-left: 100px;">上一篇：{eq name="$information['prev_has']" value="1"}<a href="/information/{$information['prev_id']}">{$information['prev_title']}</a>{else/}没有了{/eq}</em>
+                        <em style="float: right; margin-right: 100px;">下一篇：{eq name="$information['back_has']" value="1"}<a href="/information/{$information['back_id']}">{$information['back_title']}</a>{else/}没有了{/eq}</em>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <!--[diy=um_article_view_diy1]-->
+                <div id="um_article_view_diy1" class="area">
+                    <div id="frameW75ggg" class=" frame move-span cl frame-1">
+                        <div id="frameW75ggg_left" class="column frame-1-c">
+                            <div id="frameW75ggg_left_temp" class="move-span temp"></div>
+                            <div id="portal_block_12" class="block move-span">
+                                <div id="portal_block_12_content" class="dxb_bc">
+                                    <div class="right-module ">
+                                        <h4>资讯推荐</h4>
+                                        <ul class="thread-list">
+                                            <!--咨询推荐开始-->
+                                            {foreach name="recommend" item="recommend"}
+                                            <li>
+                                                <a target="_blank" href="portal.php?mod=view&amp;aid=16">
+                                                    <img src="{$recommend['pic']}" alt="{$recommend['title']}">
+                                                </a>
+                                                <dl>
+                                                    <dt><a target="_blank" href="/information/{$recommend['id']}">{$recommend['title']}</a></dt>
+                                                    <dd>{$recommend['create_time']|date="Y-m-d",###}</dd>
+                                                </dl>
+                                            </li>
+                                            {/foreach}
+                                            <!--咨询推荐结束-->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--[/diy]-->
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+<!--主要内容结束-->
+{block name="js"}
+
+{/block}

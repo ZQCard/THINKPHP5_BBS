@@ -1,0 +1,125 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="wp" class="wp">
+    <div id="ct" class="ptm wp cl">
+        <div class="mn">
+            <div class="bm" id="main_message">
+                <div class="bm_h bbs" id="main_hnav">
+                    <span class="y">
+                        <a href="/login" class="xi2">已有帐号？前去登陆</a>
+                    </span>
+                </div>
+
+                <p id="returnmessage4"></p>
+                <form method="post" action="/register">
+                    <input type="hidden" name="__token__" value="{$Request.token}" />
+                    <div id="layer_reg" class="bm_c">
+                        <div class="mtw">
+                            <div id="reginfo_a">
+                                <div class="rfm">
+
+                                </div>
+                                <div class="rfm">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <th><span class="rq">*</span><label >用户名:</label></th>
+                                                <td><input type="text" name="username" class="px" tabindex="1" value="" autocomplete="off" size="25" maxlength="15"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="rfm">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <th><span class="rq">*</span><label >密码:</label></th>
+                                                <td><input type="password" name="password" size="25" tabindex="1" class="px"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="rfm">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <th><span class="rq">*</span><label>确认密码:</label></th>
+                                                <td><input type="password" name="repassword" size="25" tabindex="1" value="" class="px"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="rfm">
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <th><span class="rq">*</span><label>邮箱:</label></th>
+                                            <td><input type="text" name="email" size="25" tabindex="1" value="" class="px"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="rfm">
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <th><span class="rq">*</span><label>验证码:</label></th>
+                                            <td><div id="captcha"></div></td>
+                                        </tr>
+                                        <tr>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div id="layer_reginfo_b">
+                        <div class="rfm mbw bw0">
+                            <table width="100%">
+                                <tbody>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <td>
+                                        <em>&nbsp;</em>
+                                            <a class="pn pnc" id="formSubmitAdd" tabindex="1">
+                                                <strong>提交</strong>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
+    </div>
+</div>
+{/block}
+<!--主要内容结束-->
+{block name="js"}
+<script src="http://static.geetest.com/static/tools/gt.js"></script>
+<script>
+    var handler = function (captchaObj) {
+        captchaObj.appendTo("#captcha");
+    };
+    // 获取验证码
+    $.get("/index/common/StartCaptchaServlet", function(data) {
+        initGeetest({
+            gt: data.gt,
+            challenge: data.challenge,
+            product: "popup",
+            offline: !data.success
+        }, handler);
+    },'json');
+</script>
+{/block}

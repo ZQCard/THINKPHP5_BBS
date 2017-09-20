@@ -1,0 +1,32 @@
+{extend name="layout" /}
+{block name="content"}
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <ul class="nav navbar-top-links navbar-right">
+                    <button class="btn-primary" id="quit">退出</button>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" id="linkOrder" href="javascript:;">
+                            <i class="fa fa-bell"></i> <span class="label label-primary"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="row J_mainContent" id="content-main">
+            <h1>TP5SHOP2</h1>
+        </div>
+    </div>
+{/block}
+{block name="js"}
+<script>
+    $("#quit").click(function () {
+        var url = "{:url('admin/index/logout')}";
+        $.post(url,'',function (res) {
+            parent.layer.msg(res.msg,{time:2000}, function () {
+                window.location.href = "{:url('admin/login/index')}";
+            });
+        });
+    });
+</script>
+{/block}
