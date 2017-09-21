@@ -18,9 +18,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">跳转链接：</label>
+                            <label class="col-sm-3 control-label">图片：</label>
                             <div class="col-sm-8">
-                                <input name="link" value="" minlength="2" type="text" class="form-control" required="" aria-required="true">
+                                <label>
+                                    <img style="max-height:100%;max-width:100%;width:300px;height:200px;vertical-align:middle;" class="fileimg" src="__STATIC__/admin/img/up.jpg" />
+                                    <input type="file" style="display: none;" id="file" class="files" />
+                                    <input type="hidden" name="pic" id="nowPic" value="">
+                                </label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -65,4 +69,36 @@
         </div>
     </div>
 </div>
+{/block}
+{block name="js"}
+<script>
+    $(document).ready(function() {
+        var url = "{:url('admin/common/upload',['type' => 'module'])}";
+        $("#file").change(function() {
+            //普通上传
+            var upload = function(f) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', url, true);
+                var formData;
+                formData = new FormData();
+                formData.append('file', f);
+                xhr.onreadystatechange = function(response) {
+                    if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText != "") {
+                        var text = JSON.parse(xhr.responseText);
+                        $(".fileimg").attr("src",text);
+                        $("#file").remove();
+                        $("#nowPic").val(text);
+                    } else if (xhr.status != 200 && xhr.responseText) {
+                    }
+                };
+                xhr.send(formData);
+            };
+            if ($("#file")[0].files.length > 0) {
+                upload($("#file")[0].files[0]);
+            } else {
+                console && console.log("form input error");
+            }
+        })
+    });
+</script>
 {/block}

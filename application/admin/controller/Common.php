@@ -62,7 +62,7 @@ class Common extends Controller
         $res = $Manager->delete($bucket,$key);
         //删除失败
         if ($res !== null){
-            //$res->message()
+            //echo $res->message();die;
             return false;
         }
         return true;

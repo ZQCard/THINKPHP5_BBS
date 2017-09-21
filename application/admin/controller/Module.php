@@ -33,7 +33,7 @@ class Module extends Base
     }
     public function create()
     {
-        //取出所有一级分类
+        //取出所有一级模块
         $firstModel = Db::name($this->request->controller())->where('pid',0)->select();
         $this->assign([
             'firstModel' => $firstModel,
@@ -47,7 +47,7 @@ class Module extends Base
         {
             $Table = Db::name($this->request->controller());
             $data = $Table->find(input('param.id'));
-            //取出所有一级分类
+            //取出所有一级模块
             $firstModel = $Table->where('pid',0)->select();
             $this->assign([
                 'firstModel' => $firstModel,
@@ -62,7 +62,7 @@ class Module extends Base
         if ($request->isPost())
         {
             $res = $this->saveData(input('param.'));
-            ($res != false)?$this->success('添加分类成功'):$this->error('添加分类失败');
+            ($res != false)?$this->success('添加模块成功'):$this->error('添加模块失败');
         }
     }
 
@@ -70,7 +70,7 @@ class Module extends Base
     {
         if ($request->isPut()){
             $res = $this->saveData(input('param.'));
-            ($res != false)?$this->success('修改分类成功'):$this->error('修改分类失败');
+            ($res != false)?$this->success('修改模块成功'):$this->error('修改模块失败');
         }
     }
 
@@ -82,5 +82,14 @@ class Module extends Base
         return $res;
     }
 
+    public function delete()
+    {
+        if ($this->request->isDelete())
+        {
+            $data = input('param.');
+            $res = \app\admin\model\Module::destroy(intval($data['id']));
+            ($res != false)?$this->success('删除成功'):$this->error('删除失败');
+        }
+    }
 
 }

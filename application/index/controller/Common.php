@@ -22,7 +22,7 @@ class Common extends Controller
             "ip_address" => $ip # 请在此处传输用户请求验证时所携带的IP
         );
         $status = $GtSdk->pre_process($data, 1);
-        $_SESSION['gtserver'] = $status;
+        session('gtserver',$status);
         session(cookie('jeetestcode'),$data['user_id']);
         echo $GtSdk->get_response_str();
     }
@@ -37,7 +37,7 @@ class Common extends Controller
             "client_type" => "web", #web:电脑上的浏览器；h5:手机上的浏览器，包括移动应用内完全内置的web_view；native：通过原生SDK植入APP应用的方式
             "ip_address" => $ip # 请在此处传输用户请求验证时所携带的IP
         );
-        if ($_SESSION['gtserver'] == 1) {   //服务器正常
+        if (session('gtserver') == 1) {   //服务器正常
             $result = $GtSdk->success_validate($challenge, $validate, $seccode, $data);
             if ($result) {
                 return true;
