@@ -68,3 +68,19 @@ function findHash($uid,$hash)
     return false;
 }
 
+
+/**
+ * @param $data   传入的数组
+ * @param int $length  新数组的长度
+ * @return array      筛选过后的数组
+ */
+function randArray($data,$length = 5){
+    $array = [];
+    for ($i = 0; $i < $length;$i++){
+        $key = array_rand($data);
+        $array[] = $data[$key];
+        unset($data[$key]);
+    }
+    return $array;
+}
+
