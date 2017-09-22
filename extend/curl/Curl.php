@@ -12,11 +12,12 @@ class Curl
      * @version   V1.0
      * @date      2017-04-12
      * @param     [string]     $url    [请求地址]
+     * @param     [int]     $type    1返回原始处理HSON/XML过后的数据 2返回原始数据
      * @param     [Array]      $header [HTTP Request headers array('Content-Type'=>'application/x-www-form-urlencoded')]
      * @param     [Array]      $data   [参数数据 array('name'=>'value')]
      * @return    [type]               [如果服务器返回xml则返回xml，不然则返回json]
      */
-    public static  function cUrl($url,$header=null, $data = null){
+    public static  function cUrl($url,$type=1,$header=null, $data = null){
         //初始化curl
         $curl = curl_init();
         //设置cURL传输选项
@@ -42,7 +43,9 @@ class Curl
 
         //关闭cURL链接
         curl_close($curl);
-
+        if ($type == 2){
+            return $output;
+        }
         //解析json
         $json=json_decode($output,true);
         //判断json还是xml

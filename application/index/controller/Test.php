@@ -2,13 +2,12 @@
 namespace app\index\controller;
 
 use think\Controller;
-use think\Request;
 
 class Test extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $res = getLocation($request->ip());
-        var_dump($res);
+        $news = Common::getBlogNews();
+        dump($news);
     }
 }

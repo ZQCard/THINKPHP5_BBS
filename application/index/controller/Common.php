@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 
+use curl\Curl;
 use think\Controller;
 use geetcode\Geetcode;
 
@@ -10,6 +11,7 @@ use geetcode\Geetcode;
  */
 class Common extends Controller
 {
+    //极验滑动验证码展示接口
     public function StartCaptchaServlet()
     {
         $GtSdk = new Geetcode(config('GEET_ID'), config('GEET_KEY'));
@@ -27,6 +29,7 @@ class Common extends Controller
         echo $GtSdk->get_response_str();
     }
 
+    //极验滑动验证码二次验证
     public static function VerifyLoginServlet($challenge,$validate,$seccode)
     {
         $GtSdk = new Geetcode(config('GEET_ID'), config('GEET_KEY'));
@@ -53,10 +56,55 @@ class Common extends Controller
         }
     }
 
+    //退出
     public function logout()
     {
         session(null);
         cookie(null);
         $this->success('退出成功');
+    }
+
+    //抓取博客园新闻链接  返回10条
+    public static function getBlogNews()
+    {
+        if (!cookie('newsInfo')){
+            $url = "https://news.cnblogs.com";
+            $file_contents = Curl::cUrl($url,2);
+            //一次筛选链接
+            $data = [];
+            $patten='/<a href=\"\/n(.*?)\".*?>(.*?)<\/a>/i';
+            if(preg_match_all($patten, $file_contents, $matches)){
+                //获取到的链接
+                $data = $matches[0];
+            }
+
+            //为a链接加上网络路径前缀并去除其他无效链接(没有  target="_blank")
+            $finally = [];
+            $identify = "_blank";
+            $identify2 = 'comment';
+            foreach ($data as $key => $value){
+                if (strpos($value,$identify) !== false){
+                    $res = str_replace('/n',$url.'/n',$value);
+                    $finally[] = $res;
+                }
+            }
+            foreach ($finally as $key => $value){
+                if (strpos($value,$identify) !== false){
+                    $res = str_replace('/n',$url.'/n',$value);
+                    $finally[] = $res;
+                }
+            }
+            foreach ($finally as $key => $value){
+                if (strpos($value,$identify2) !== false){
+                    unset($finally[$key]);
+                }
+            }
+            $finally = array_values($finally);
+            $res = serialize($finally);
+            cookie('newsInfo',$res,12*60*60);
+        }
+        $newsInfo = unserialize(cookie('newsInfo'));
+        $res = randArray($newsInfo);
+        return $res;
     }
 }

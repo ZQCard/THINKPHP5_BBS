@@ -174,12 +174,12 @@
                         <div id="portal_block_10" class="block move-span">
                             <div id="portal_block_10_content" class="dxb_bc">
                                 <div class="right-module application">
-                                    <h4>应用推荐</h4>
+                                    <h4>新闻推荐</h4>
                                     <ul class="recommend-list">
-                                        <li>
-                                            <a class="qr-trigger" title="" href="forum.php?mod=viewthread&tid=4">
-                                                <img alt="即刻" src="__STATIC__/index/picture/104513qkdsfwmadzm32sey_1.png">
-                                            </a>
+                                        <li class="qr-trigger">
+                                            {foreach name="newsInfo" item="news"}
+                                                {$news}
+                                            {/foreach}
                                         </li>
                                     </ul>
                                 </div>
