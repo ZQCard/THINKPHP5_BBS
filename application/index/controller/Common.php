@@ -64,7 +64,7 @@ class Common extends Controller
         $this->success('退出成功');
     }
 
-    //抓取博客园新闻链接  返回10条
+    //抓取博客园新闻链接  返回5条
     public static function getBlogNews()
     {
         if (!cookie('newsInfo')){
@@ -106,5 +106,11 @@ class Common extends Controller
         $newsInfo = unserialize(cookie('newsInfo'));
         $res = randArray($newsInfo);
         return $res;
+    }
+
+    //返回用户二维码
+    public function qrcode($type,$id)
+    {
+        return config('DOMAIN').'/'.$type.'/'.$id;
     }
 }

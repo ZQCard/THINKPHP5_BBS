@@ -238,7 +238,8 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
-
+    //站点域名
+    'DOMAIN'     => 'http://www.studycoding.top',
     //七牛云设置
     'ACCESSKEY'  =>  'N1mm43CZSlIG1ovR-DOcyzg32n_7oPfWlyC1E5qM',
     'SECRETKEY'  =>  'dOkaehvIX1tuOtc-W7OgmHU5IKxj8-Um8Ru1gBoM',

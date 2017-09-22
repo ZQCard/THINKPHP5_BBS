@@ -98,7 +98,7 @@ class Login extends Base
 
             $uid = $Users->getLastInsID();
             $hash = getHash($uid);
-            $href = 'www.studycoding.top/check/uid/'.$uid.'/hash/'.$hash;
+            $href = config('DOMAIN').'/check/uid/'.$uid.'/hash/'.$hash;
             $message = '欢迎注册爱编程论坛,请点击下面网址进行激活账号^_^~'.$href;
             //保存hash验证值
             $res = saveHash($uid,$hash);
