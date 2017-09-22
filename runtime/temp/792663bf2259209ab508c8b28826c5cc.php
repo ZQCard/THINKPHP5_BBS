@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\index\index.html";i:1506003374;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506004893;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\index\index.html";i:1506080572;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506080339;}*/ ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -137,7 +137,7 @@
                                         <?php if(is_array($information) || $information instanceof \think\Collection || $information instanceof \think\Paginator): if( count($information)==0 ) : echo "" ;else: foreach($information as $key=>$information): ?>
                                         <div class="content-box">
                                             <h2>
-                                                <a target="_blank" href="/information/<?php echo $information['id']; ?>">
+                                                <a href="/information/<?php echo $information['id']; ?>">
                                                     <?php echo $information['title']; ?>
                                                 </a>
                                             </h2>
@@ -148,13 +148,13 @@
                                                 <li class="browse"><?php echo $information['comment']; ?></li>
                                             </ul>
                                             <div class="content-picture">
-                                                <a href="/information/<?php echo $information['id']; ?>" target="_blank">
+                                                <a href="/information/<?php echo $information['id']; ?>">
                                                     <img src="<?php echo $information['pic']; ?>" alt="">
                                                 </a>
                                             </div>
                                             <p>
                                          <span>
-                                            <a target="_blank" href="/information/<?php echo $information['id']; ?>">查看全文</a>
+                                            <a href="/information/<?php echo $information['id']; ?>">查看全文</a>
                                          </span>
                                             </p>
                                         </div>
@@ -171,55 +171,6 @@
                 </div>
             </div>
             <!--[/新闻资讯区域结束]-->
-            <!--[最新发帖开始]-->
-            <div id="um_portal_diy4" class="area">
-                <div id="framen69ggR" class="frame move-span cl frame-1">
-                    <div id="framen69ggR_left" class="column frame-1-c">
-                        <div id="framen69ggR_left_temp" class="move-span temp"></div>
-                        <div id="portal_block_8" class="block move-span">
-                            <div id="portal_block_8_content" class="dxb_bc">
-                                <div id="discussBox" class="foldableBox discuss " data-node="fold_discuss">
-                                    <h4>热帖推荐<span class="btn-fold"></span></h4>
-                                    <div id="hiddenresult" style="display:none">
-                                        <!--最新帖子开始-->
-                                        <div class="discuss-box">
-
-                                            <div class="portrait">
-                                                <a href="">
-                                                    <img src="__STATIC__/index/picture/avatar_1.php">
-                                                </a>
-                                            </div>
-                                            <div class="discuss-content">
-                                                <h5>
-                                                    <a href="forum.php?mod=viewthread&tid=2" target="_blank">美丽风景</a>
-
-
-
-                                                    <span class="icon icon-img"></span>                     </h5>
-                                                <ul class="post-info">
-                                                    <li class="author"><a href="/?50">admin</a></li>
-                                                    <li class="time">发表于 2017-06-10</li>
-                                                    <li class="review">0</li>
-                                                    <li class="browse">16</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!--最新帖子结束-->
-                                    </div>
-                                    <div id="Searchresult" class="js-list">
-                                    </div>
-                                    <div class="forum-list-pager js-pager">
-                                        <div class="pager-wrapper clearfix">
-                                            <div id="Pagination" class="pg"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--[最新发帖结束]-->
         </div>
         <!--侧边栏开始-->
         <div class="sidebar">
@@ -236,7 +187,7 @@
                                         <!--推荐位开始-->
                                         <?php if(is_array($module) || $module instanceof \think\Collection || $module instanceof \think\Paginator): if( count($module)==0 ) : echo "" ;else: foreach($module as $key=>$module): ?>
                                         <li style="background: url(__STATIC__/index/images/common_50_icon_1.png) no-repeat 20px center;background-size: 26px 26px;-webkit-background-size: 26px 26px;">
-                                            <a href="/forum/<?php echo $module['id']; ?>" target="_blank"><?php echo $module['name']; ?></a>
+                                            <a href="/forum/<?php echo $module['id']; ?>"><?php echo $module['name']; ?></a>
                                         </li>
                                         <?php endforeach; endif; else: echo "" ;endif; ?>
                                         <!--推荐位结束-->
@@ -257,12 +208,13 @@
                         <div id="portal_block_10" class="block move-span">
                             <div id="portal_block_10_content" class="dxb_bc">
                                 <div class="right-module application">
-                                    <h4>应用推荐</h4>
-                                    <ul class="recommend-list">
+                                    <h4>新闻推荐</h4>
+                                    <br/>
+                                    <ul>
                                         <li>
-                                            <a class="qr-trigger" title="" href="forum.php?mod=viewthread&tid=4">
-                                                <img alt="即刻" src="__STATIC__/index/picture/104513qkdsfwmadzm32sey_1.png">
-                                            </a>
+                                            <?php if(is_array($newsInfo) || $newsInfo instanceof \think\Collection || $newsInfo instanceof \think\Paginator): if( count($newsInfo)==0 ) : echo "" ;else: foreach($newsInfo as $key=>$news): ?>
+                                                <?php echo $news; ?><br/><br/>
+                                            <?php endforeach; endif; else: echo "" ;endif; ?>
                                         </li>
                                     </ul>
                                 </div>
@@ -297,8 +249,6 @@
             </h6>
             <div id="flk" class="y">
                 <p>
-                    <a href="archiver/" >Archiver</a>
-                    <span class="pipe">|</span>
                     <a href="forum.php?mobile=yes" >手机版</a>
                     <span class="pipe">|</span>
                 </p>

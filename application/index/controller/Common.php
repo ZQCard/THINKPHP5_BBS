@@ -104,7 +104,7 @@ class Common extends Controller
             cookie('newsInfo',$res,12*60*60);
         }
         $newsInfo = unserialize(cookie('newsInfo'));
-        $res = randArray($newsInfo);
+        $res = randArray($newsInfo,10);
         return $res;
     }
 }

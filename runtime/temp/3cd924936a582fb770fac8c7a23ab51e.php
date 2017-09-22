@@ -1,17 +1,17 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1505823982;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1505824909;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1505823982;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506080339;}*/ ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>爱编程论坛</title>
     <meta name="keywords" content="" />
     <meta name="description" content="" />
-    <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_common_1.css" /><link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_portal_index_1.css" /><script type="text/javascript">var STYLEID = '2', STATICURL = 'static/', IMGDIR = 'template/mountain_chuizi/michael_img/common/', VERHASH = 'I28', charset = 'utf-8', discuz_uid = '0', cookiepre = 'FQ7o_2132_', cookiedomain = '', cookiepath = '/', showusercard = '1', attackevasive = '0', disallowfloat = 'newthread', creditnotice = '1|威望|,2|金钱|,3|贡献|', defaultstyle = '', REPORTURL = 'aHR0cDovLzEyMy41Ni4xOTUuMjI4L3J3L2NodWl6aS9wb3J0YWwucGhw', SITEURL = 'http://123.56.195.228/rw/chuizi/', JSPATH = 'static/js/', CSSPATH = 'data/cache/style_', DYNAMICURL = '';</script>
-    <script src="__STATIC__/index/js/jquery.min_1.js" type="text/javascript"></script>
-    <script src="__STATIC__/index/js/common_1.js" type="text/javascript"></script>
-    <script src="__STATIC__/index/js/portal_1.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_common_1.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_portal_index_1.css" />
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/main_1.css" />
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/flexslider_1.css" />
     <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    
+    
 </head>
 
 <body>
@@ -24,29 +24,50 @@
             </a>
         </h2>
     </div>
-
     <div class="header-main">
         <div class="container-sm clearfix">
             <h1>
                 <a href="/" title=""><img src="__STATIC__/index/picture/logo_1.png" alt="" border="0" /></a>
             </h1>
+            <?php if($sessionUid): ?>
             <div class="user">
-                <script src="__STATIC__/index/js/logging_1.js" type="text/javascript"></script>
-                <form method="post" autocomplete="off" id="lsform" action="member.php?mod=logging&amp;action=login&amp;loginsubmit=yes&amp;infloat=yes&amp;lssubmit=yes" onsubmit="return lsSubmit();">
-                    <div class="fastlg cl">
-                        <div>
-                     <span class="xi2">
-                        <a id="user-login" href="">登录</a>
-                     </span>
-                            <span class="pipe">|</span>
-                            <span class="xi2">
-                        <a id="user-register" href="">注册</a>
-                     </span>
-                        </div>
+                <div id="um">
+                    <div class="ui-login-toggle">
+                        <span class="user-avatar"><img src="http://123.56.195.228/rw/chuizi/uc_server/avatar.php?uid=3&amp;size=small"></span>
+                        <span class="user-name hide-row">test123</span>
                     </div>
-                </form>
+                    <div class="ui-login-status" style="display: none;">
+                        <ul>
+                            <li class="user-primary-info">
+                                <p class="user-avatar-name">
+                                    <span class="user-avatar"><a href="home.php?mod=space&amp;uid=3"><img src="http://123.56.195.228/rw/chuizi/uc_server/avatar.php?uid=3&amp;size=small"></a></span>
+                                    <span class="user-name hide-row"><a href="home.php?mod=space&amp;uid=3" target="_blank" title="访问我的空间">test123</a></span>
+                                </p>
+                            </li>
+                            <li class="user-alert"><a href="home.php?mod=space&amp;do=notice">提醒</a></li>
+                            <li class="user-message"><a href="home.php?mod=space&amp;do=pm" id="pm_ntc">消息</a></li>
+                            <li class="user-favorite"><a href="home.php?mod=space&amp;do=favorite">收藏</a></li>
+                            <li class="user-setting"><a href="home.php?mod=spacecp">设置</a></li>
+                            <li class="user-logout"><a id="logout">退出</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-
+            <?php else: ?>
+            <div class="user">
+                <div class="fastlg cl">
+                    <div>
+                 <span class="xi2">
+                    <a id="user-login" href="/login">登录</a>
+                 </span>
+                        <span class="pipe">|</span>
+                        <span class="xi2">
+                    <a id="user-register" href="/register">注册</a>
+                 </span>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
             <ul class="header-menu">
                 <?php if(is_array($navData) || $navData instanceof \think\Collection || $navData instanceof \think\Paginator): if( count($navData)==0 ) : echo "" ;else: foreach($navData as $key=>$nav): ?>
                 <li class="a" >
@@ -153,8 +174,6 @@
             </h6>
             <div id="flk" class="y">
                 <p>
-                    <a href="archiver/" >Archiver</a>
-                    <span class="pipe">|</span>
                     <a href="forum.php?mobile=yes" >手机版</a>
                     <span class="pipe">|</span>
                 </p>
@@ -162,7 +181,39 @@
         </div>
     </div>
 </div>
-<div id="back-top" class="back-top"></div>
+
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/layer/3.0/layer.min.js"></script>
+<!--页面折合代码-->
+<script src="__STATIC__/index/js/index_1.js" type="text/javascript"></script>
+<script>
+    //添加表单提交
+    $("#formSubmitAdd").click(function () {
+        var form = $("form");
+        $.post(form.attr('action'),form.serialize(),success);
+    });
+
+    //退出登陆
+    $("#logout").click(function () {
+        $.get('/logout',{},function (res) {
+            if (res.code == 1) {
+                alert(res.msg);
+                window.location.reload();
+            }
+        });
+    });
+
+    //请求成功回调函数
+    function success(res) {
+        layer.msg(res.msg,{time:2000}, function () {
+            if (res.code == 1) {
+                window.location = document.referrer;
+            }else{
+                window.location.reload();
+            }
+        });
+    }
+</script>
 <!--顶部内容结束-->
 
 
