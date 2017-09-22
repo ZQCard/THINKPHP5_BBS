@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d2ca517-8a93-4f1b-9525-0a181571e07f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/index/controller/Forum.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/index/view/forum/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/Common.php" afterPath="$PROJECT_DIR$/application/admin/controller/Common.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/Module.php" afterPath="$PROJECT_DIR$/application/admin/controller/Module.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/model/Module.php" afterPath="$PROJECT_DIR$/application/admin/model/Module.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/view/banner/create.html" afterPath="$PROJECT_DIR$/application/admin/view/banner/create.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/view/module/create.html" afterPath="$PROJECT_DIR$/application/admin/view/module/create.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/view/module/edit.html" afterPath="$PROJECT_DIR$/application/admin/view/module/edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/view/module/index.html" afterPath="$PROJECT_DIR$/application/admin/view/module/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/index/controller/Common.php" afterPath="$PROJECT_DIR$/application/index/controller/Common.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/index/controller/Index.php" afterPath="$PROJECT_DIR$/application/index/controller/Index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/index/view/index/index.html" afterPath="$PROJECT_DIR$/application/index/view/index/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/index/view/layout.html" afterPath="$PROJECT_DIR$/application/index/view/layout.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/route.php" afterPath="$PROJECT_DIR$/application/route.php" />
     </list>
     <ignored path="bbs.iws" />
@@ -51,21 +37,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="route.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="route.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/route.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+            <state relative-caret-position="279">
+              <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forum.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="forum.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/index/view/forum/forum.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2250">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="186">
+              <caret line="148" column="13" selection-start-line="148" selection-start-column="13" selection-end-line="148" selection-end-column="13" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#tbody#0;n#table#0;n#form#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
@@ -132,10 +118,10 @@
         <option value="$PROJECT_DIR$/application/index/view/forum/index.html" />
         <option value="$PROJECT_DIR$/application/index/controller/Common.php" />
         <option value="$PROJECT_DIR$/application/index/view/index/index.html" />
-        <option value="$PROJECT_DIR$/application/route.php" />
         <option value="$PROJECT_DIR$/application/index/controller/Forum.php" />
         <option value="$PROJECT_DIR$/application/index/view/layout.html" />
         <option value="$PROJECT_DIR$/application/index/view/forum/forum.html" />
+        <option value="$PROJECT_DIR$/application/route.php" />
       </list>
     </option>
   </component>
@@ -210,105 +196,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="index" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="index" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="index" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -424,12 +312,12 @@
       <workItem from="1505822529076" duration="11067000" />
       <workItem from="1505908295491" duration="12431000" />
       <workItem from="1505994635540" duration="2981000" />
-      <workItem from="1505999931509" duration="5321000" />
+      <workItem from="1505999931509" duration="7199000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="156300000" />
+    <option name="totallyTimeSpent" value="158178000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1924" height="1048" extended-state="0" />
@@ -818,14 +706,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/index/controller/Forum.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1148">
@@ -859,8 +739,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/index/view/forum/forum.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2250">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="186">
+          <caret line="148" column="13" selection-start-line="148" selection-start-column="13" selection-end-line="148" selection-end-column="13" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#tbody#0;n#table#0;n#form#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
@@ -868,6 +748,14 @@
             <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
