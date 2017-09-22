@@ -1,0 +1,27 @@
+---------------------------------------------------------------
+[ 2017-09-12T11:59:41+08:00 ] 127.0.0.1 127.0.0.1 GET /
+[ info ] www.studycoding.top/ [运行时间：0.683284s][吞吐率：1.46req/s] [内存消耗：2,756.04kb] [文件加载：43]
+[ info ] [ LANG ] D:\wamp64\www\bbs\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.studycoding.top',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'zhouqiusername=zhouqi; zhouqitoken=a5d2d2071d38bce09bf9a6a75d1a2228',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ D:\wamp64\www\bbs\application\index\controller\Index.php ]
+[ info ] [ LOG ] INIT File

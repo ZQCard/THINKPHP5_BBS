@@ -1,0 +1,14 @@
+(function($){
+	$(document).ready(function(){
+		$('.user').mouseover(function(){
+	$('.ui-login-status').css('display','block');
+	});
+	$('.user').mouseout(function(){	
+		$('.ui-login-status').css('display','none');
+	});
+	//折叠
+	$('.btn-fold').click(function(e){
+		$(e.target).parents('.foldableBox').toggleClass('fold');
+	});
+	});
+})(jQuery);
