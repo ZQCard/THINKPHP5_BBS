@@ -21,12 +21,10 @@ Route::get('information','index/information/index');
 //论坛
 Route::get('forum/:id','index/forum/forum');
 Route::get('forum','index/forum/index');
-
 //登陆注册验证退出
 Route::rule('register','index/login/register','GET|POST');
 Route::rule('login','index/login/index','GET|POST');
 Route::get('check','index/login/check');
 Route::get('logout','index/common/logout');
-
 //测试控制器
 Route::get('test','index/test/index');

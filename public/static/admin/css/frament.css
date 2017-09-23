@@ -1,0 +1,73 @@
+.fragment {
+	display: relative;
+}
+.fragment label {
+	margin-left: 80px;
+}
+.fragment input {
+	margin-left: 20px;
+}
+.fragment input:checked + div{
+	display: block;
+}
+.fragment .spec {
+	position: absolute;
+	color: #999;
+	left: 236px;
+	top: 20px;
+}
+.fragment .checked-show {
+	display: none;
+	margin-top: 60px;
+}
+.fragment .checked-show p {
+	color: #5c90d2;
+}
+.fragment .checked-show span{
+	display: inline-block;
+	width: 120px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background: #5c90d2;
+	margin-left: 20px;
+	cursor: pointer;
+	color: #fff;
+}
+
+.fragment .rule input{
+	width: 240px;
+	height:28px; 
+}
+.fragment .rule span{
+	width: 86px;
+	height:28px; 
+	line-height: 28px;
+	margin-top:30px 
+}
+.fragment .rule .add-spec-item {
+	margin-left: 150px; 
+}
+
+.bottom {
+	margin: 40px 0 0 40px;
+}
+.bottom .return {
+	display: inline-block;
+	width: 100px;
+	height:36px; 
+	line-height: 36px;
+	margin-left:30px;
+	cursor: pointer;
+	color: #fff;
+	background: #5c90d2;
+	text-align: center;
+}
+
+table .row1 span {
+	display: block;
+}
+
+.hidden-element{
+	display: none;
+}
