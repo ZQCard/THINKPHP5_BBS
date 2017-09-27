@@ -1,7 +1,9 @@
 <?php
 namespace app\index\controller;
 
+use app\common\model\Message;
 use think\Db;
+use think\Loader;
 use think\Request;
 
 class Information extends Base
@@ -49,7 +51,10 @@ class Information extends Base
         }
 
         $recommend = $this->recInfo();
+        //查看评论
+        $comment = Db::name('message')->where('type = 1 AND post_id = '.$id)->paginate(4);
         $this->assign([
+            'comments'     => $comment,
             'recommend'   => $recommend,
             'information' => $information,
         ]);
@@ -76,5 +81,18 @@ class Information extends Base
         $incLook  = $Query->where('id',$id)->setInc('look');
         $incScore = $Query->where('id',$id)->setInc('score',86400);
         return ($incLook&&$incScore);
+    }
+
+
+    public function comment(Request $request)
+    {
+        if ($request->isPost()){
+            $data = input('param.');
+            $data['type'] = 1;
+            $validate = Loader::validate('message');
+            ($validate->check($data)) || $this->error($validate->getError());
+            $res = (new Message())->saveData($data);
+            ($res !== false)?$this->success('评论成功!'):$this->error('评论失败');
+        }
     }
 }

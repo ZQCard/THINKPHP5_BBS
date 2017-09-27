@@ -1,17 +1,26 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:73:"D:\wamp64\www\bbs\public/../application/index\view\information\index.html";i:1505825201;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506003395;}*/ ?>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:73:"D:\wamp64\www\bbs\public/../application/index\view\information\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506318935;}*/ ?>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>爱编程论坛</title>
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_common_1.css" /><link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_portal_index_1.css" />
+    <title>学编程论坛</title>
+    <meta name="keywords" content='<?php echo $config["keywords"]; ?>' />
+    <meta name="description" content="<?php echo $config['description']; ?>" />
+    <!--本地资源链接-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_common_1.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_portal_index_1.css" />
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/main_1.css" />
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/flexslider_1.css" />
+    <link href="__STATIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+    <!--
+    在线资源链接
     <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    -->
+    
+    
 </head>
 
 <body>
+<h1 style="display: none;">学编程论坛</h1>
 <!--顶部导航到此开始-->
 <div class="header-sm">
     <div class="hdc cl" style="display: none;">
@@ -176,14 +185,15 @@
                 <!--友情连接结束-->
             </ul>
         </div>
+        <!-- 二维码生成注释
+        <div id="output"></div>
+        <div style="width: 200px;height: 200px;background:#000;" class="getQRCode"></div>-->
         <div class="copyright">
             <h6>Powered by
                 <strong><a href="http://www.discuz.net" target="_blank">THINKPHP5.0---</a></strong> <em>5.0.9</em>
             </h6>
             <div id="flk" class="y">
                 <p>
-                    <a href="archiver/" >Archiver</a>
-                    <span class="pipe">|</span>
                     <a href="forum.php?mobile=yes" >手机版</a>
                     <span class="pipe">|</span>
                 </p>
@@ -191,11 +201,17 @@
         </div>
     </div>
 </div>
-
+<!--本地资源链接-->
+<script src="__STATIC__/admin/js/jquery.min.js"></script>
+<script src="__STATIC__/admin/js/plugins/layer/layer.min.js"></script>
+<!--
+在线资源链接
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/layer/3.0/layer.min.js"></script>
+-->
 <!--页面折合代码-->
 <script src="__STATIC__/index/js/index_1.js" type="text/javascript"></script>
+<script src="__STATIC__/index/js/jquery.qrcode.min.js" type="text/javascript"></script>
 <script>
     //添加表单提交
     $("#formSubmitAdd").click(function () {
@@ -223,6 +239,27 @@
             }
         });
     }
+
+    //二维码生产
+    /*jQuery(function(){
+        $(".getQRCode").mouseenter(function () {
+            $type = 'users';
+            $id   = 1;
+            var postData = {type:$type,id:$id};
+            $.get('/index/common/qrcode',postData,function (res) {
+                var content = res;
+                $('#output').qrcode({
+                    render	: "table",
+                    width   : 200,
+                    height   : 200,
+                    text	: content
+                });
+            });
+        });
+        $(".getQRCode").mouseleave(function () {
+            $('#output').html('');
+        });
+    });*/
 </script>
 <!--顶部内容结束-->
 

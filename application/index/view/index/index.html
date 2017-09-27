@@ -13,21 +13,13 @@
                             <div class="banner clearfix">
                                 <div class="flexslider">
                                     <ul class="slides">
+                                        {foreach name="banner" item="banner"}
                                         <li>
-                                            <a href="forum.php?mod=viewthread&tid=3">
-                                                <img src="__STATIC__/index/picture/104137nwlwbl5flmerczw5_1.png" />
+                                            <a href="{$banner.link}">
+                                                <img src="{$banner.pic}" />
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="forum.php?mod=viewthread&tid=2">
-                                                <img src="__STATIC__/index/picture/104054k2wbowobgurvgiav_1.jpg" />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="forum.php?mod=viewthread&tid=1">
-                                                <img src="__STATIC__/index/picture/104007la8mx1mwo6lpb8vm_1.jpg" />
-                                            </a>
-                                        </li>
+                                        {/foreach}
                                     </ul>
                                 </div>
                             </div>
@@ -130,7 +122,7 @@
                                     <ul>
                                         <li>
                                             {foreach name="newsInfo" item="news"}
-                                                {$news}<br/><br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$news}<br/><br/>
                                             {/foreach}
                                         </li>
                                     </ul>
@@ -153,8 +145,7 @@
 <script src="__STATIC__/index/js/index_1.js" type="text/javascript"></script>
 <!--轮播图代码-->
 <script src="__STATIC__/index/js/jquery.flexslider_1.js" type="text/javascript"></script>
-<!--分页代码
-<script src="__STATIC__/index/js/jquery.pagination_1.js" type="text/javascript"></script>-->
+<script src="__STATIC__/index/js/jquery.pagination_1.js" type="text/javascript"></script>
 <script type="text/javascript">
     (function($){
         function pageselectCallback(page_index, jq){

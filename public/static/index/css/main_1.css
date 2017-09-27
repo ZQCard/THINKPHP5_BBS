@@ -1717,7 +1717,7 @@ a {
     font-size: 12px;
     height: 15px;
     list-style: outside none none;
-    margin: 0;
+    margin: 20px;
     padding: 17px 0;
 }
 .section .post-info li {
@@ -1737,13 +1737,11 @@ a {
     padding-left: 10px;
 }
 .section .post-info .review {
-    background: url(../images/review_1.png) no-repeat scroll left center;
     float: right;
     padding-left: 30px;
     text-align: right;
 }
 .section .post-info .browse {
-    background: url(../images/browse_1.png) no-repeat scroll left center;
     float: right;
     margin-right: 20px;
     padding-left: 33px;

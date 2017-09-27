@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"D:\wamp64\www\bbs\public/../application/admin\view\administrator\index.html";i:1504798280;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1505041200;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"D:\wamp64\www\bbs\public/../application/admin\view\administrator\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506300564;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -9,14 +9,22 @@
     <title>测试管理后台</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
-
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
+    <!--本地资源链接-->
+    <link href="__STATIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/admin/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/admin/css/animate.css" rel="stylesheet">
+    <!--
+    在线资源链接
     <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    -->
     <link href="__STATIC__/admin/css/style.css?v=4.1.0" rel="stylesheet">
+    
+    
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
@@ -33,7 +41,7 @@
                                 <span class="clear">
                                     <span class="block m-t-xs" style="font-size:20px;">
                                         <i class="fa fa-area-chart"></i>
-                                        <strong class="font-bold">TP5SHOP</strong>
+                                        <strong class="font-bold">BBS</strong>
                                     </span>
                                 </span>
                         </a>
@@ -75,7 +83,36 @@
                             <a class="J_menuItem" href="<?php echo url('admin/banner/index'); ?>">轮播图管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="<?php echo url('admin/category/index'); ?>">导航管理</a>
+                            <a class="J_menuItem" href="<?php echo url('admin/category/index'); ?>">导航分类管理</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="<?php echo url('admin/link/index'); ?>">友情链接管理</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        <span class="nav-label">论坛管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a class="J_menuItem" href="<?php echo url('admin/module/index'); ?>">论坛模块管理</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        <span class="nav-label">资讯管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a class="J_menuItem" href="<?php echo url('admin/information/index'); ?>">资讯列表</a>
                         </li>
                     </ul>
                 </li>
@@ -226,16 +263,24 @@
     <source  src="__PUBLIC__/tips/tips.mp3" type="audio/mp3">
 </audio>-->
 <!-- 全局js -->
+<!--本地资源链接-->
+<script src="__STATIC__/admin/js/jquery.min.js"></script>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+<script src="__STATIC__/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="__STATIC__/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="__STATIC__/admin/js/plugins/pace/pace.min.js"></script>
+<script src="__STATIC__/admin/js/plugins/layer/layer.min.js"></script>
+<script src="__STATIC__/admin/js/hAdmin.js?v=4.1.0"></script>
+<!--在线资源链接
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="//cdn.bootcss.com/metisMenu/2.7.0/metisMenu.min.js"></script>
 <script src="//cdn.bootcss.com/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
 <script src="//cdn.bootcss.com/layer/3.0/layer.min.js"></script>
-
-<!-- 自定义js -->
-<script src="__STATIC__/admin/js/hAdmin.js?v=4.1.0"></script>
-<!-- 第三方插件 -->
 <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<script src="__STATIC__/admin/js/hAdmin.js?v=4.1.0"></script>
+-->
 <script>
     //添加表单提交
     $("#formSubmitAdd").click(function () {
@@ -273,6 +318,7 @@
         var name = that.data('name');
         var type = that.data('type');
         var url = "<?php echo $controller; ?>"+"/"+id;
+
         //type为2逻辑删除   为1物理删除
         if (type !=2) type = 1
         layer.confirm('是否要删除 '+name+' ?', {

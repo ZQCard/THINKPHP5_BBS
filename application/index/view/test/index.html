@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>非模块化方式使用Layui</title>
+    <link rel="stylesheet" href="__STATIC__/plugins/layer/theme/default/layer.css">
+</head>
+<body>
+
+<!-- 你的HTML代码 -->
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="__STATIC__/plugins/layer/layer.js"></script>
+<script>
+    //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+    ;!function(){
+        var layer = layui.layer
+                ,form = layui.form;
+
+        layer.msg('Hello World');
+    }();
+</script>
+</body>
+</html>

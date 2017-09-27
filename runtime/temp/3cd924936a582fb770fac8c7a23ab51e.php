@@ -1,20 +1,27 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1505823982;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506080339;}*/ ?>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506416980;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506412777;}*/ ?>
+<!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>爱编程论坛</title>
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <title><?php echo $information['title']; ?></title>
+    <meta name="keywords" content='<?php echo $config["keywords"]; ?>,<?php echo $information['title']; ?>' />
+    <meta name="description" content="<?php echo $config['description']; ?>" />
+    <!--本地资源链接-->
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_common_1.css" />
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_portal_index_1.css" />
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/main_1.css" />
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/flexslider_1.css" />
+    <link href="__STATIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/plugins/layer/theme/default/layer.css" rel="stylesheet">
+    <!--
+    在线资源链接
     <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    -->
     
     
 </head>
 
 <body>
+<h1 style="display: none;">学编程论坛</h1>
 <!--顶部导航到此开始-->
 <div class="header-sm">
     <div class="hdc cl" style="display: none;">
@@ -34,14 +41,14 @@
                 <div id="um">
                     <div class="ui-login-toggle">
                         <span class="user-avatar"><img src="http://123.56.195.228/rw/chuizi/uc_server/avatar.php?uid=3&amp;size=small"></span>
-                        <span class="user-name hide-row">test123</span>
+                        <span class="user-name hide-row"><?php echo \think\Cookie::get('bbszhouqiusername'); ?></span>
                     </div>
                     <div class="ui-login-status" style="display: none;">
                         <ul>
                             <li class="user-primary-info">
                                 <p class="user-avatar-name">
                                     <span class="user-avatar"><a href="home.php?mod=space&amp;uid=3"><img src="http://123.56.195.228/rw/chuizi/uc_server/avatar.php?uid=3&amp;size=small"></a></span>
-                                    <span class="user-name hide-row"><a href="home.php?mod=space&amp;uid=3" target="_blank" title="访问我的空间">test123</a></span>
+                                    <span class="user-name hide-row"><a href="home.php?mod=space&amp;uid=3" target="_blank" title="访问我的空间"><?php echo \think\Cookie::get('bbszhouqiusername'); ?></a></span>
                                 </p>
                             </li>
                             <li class="user-alert"><a href="home.php?mod=space&amp;do=notice">提醒</a></li>
@@ -90,7 +97,7 @@
                 <div class="content" >
                     <div class="vw" style="margin: 50px 150px;">
                         <div class="h hm">
-                            <h1 class="ph"><?php echo $information['title']; ?> </h1>
+                            <h1 class="ph"><?php echo $information['title']; ?></h1>
                             <p class="xg1" style="margin: 20px;">
                                 <?php echo date("Y-m-d H:i",$information['create_time']); ?><span class="pipe">|</span>
                                 发布者: <a href="home.php?mod=space&amp;uid=1"><?php echo $information['author']; ?></a>
@@ -99,11 +106,6 @@
                                 <span class="pipe">|</span>
                                 评论:<?php echo $information['comment']; ?>
                             </p>
-                        </div>
-                        <div class="s" style="margin: 20px">
-                            <div>
-                                <strong>摘要</strong><?php echo $information['brief']; ?>
-                            </div>
                         </div>
                         <div class="d">
                             <div style="margin: 20px;">
@@ -115,6 +117,41 @@
                     <div class="pren pbm cl" style="margin-top: 50px;">
                         <em style="float: left; margin-left: 100px;">上一篇：<?php if($information['prev_has'] == '1'): ?><a href="/information/<?php echo $information['prev_id']; ?>"><?php echo $information['prev_title']; ?></a><?php else: ?>没有了<?php endif; ?></em>
                         <em style="float: right; margin-right: 100px;">下一篇：<?php if($information['back_has'] == '1'): ?><a href="/information/<?php echo $information['back_id']; ?>"><?php echo $information['back_title']; ?></a><?php else: ?>没有了<?php endif; ?></em>
+                    </div>
+                    <div class="foldableBox discuss ">
+                        <h4>热帖推荐</h4>
+                        <div class="js-list">
+                            <?php if(is_array($comments) || $comments instanceof \think\Collection || $comments instanceof \think\Paginator): if( count($comments)==0 ) : echo "" ;else: foreach($comments as $key=>$comment): ?>
+                            <div class="discuss-box">
+                                <div class="discuss-content" style="margin-top: -10px;">
+                                    <h5>
+                                        <a href="">
+                                            <?php echo $comment['content']; ?>
+                                        </a>
+                                        <div class="portrait" >
+                                            <a href="">
+                                                <img src="http://115.28.163.216/app9/uc_server/avatar.php?uid=2&amp;size=small">
+                                            </a>
+                                        </div>
+                                        <ul class="post-info">
+                                            <li class="author"><a href="/?92300"><?php echo $comment['reply_user_name']; ?></a></li>
+                                            <li class="time">发表于 <?php echo $comment['create_time']; ?></li>
+                                            <li class="review"><img src="__STATIC__/index/images/upvote-f.png" alt="" style="height: 20px;width: 20px;"><?php echo $comment['upvote']; ?></li>
+                                            <li class="browse"><img src="__STATIC__/index/images/oppose-f.png" alt="" style="height: 20px;width: 20px;"><?php echo $comment['oppose']; ?></li>
+                                        </ul>
+                                </div>
+                            </div>
+                            <?php endforeach; endif; else: echo "" ;endif; ?>
+                            <div style="float: right;"><?php echo $comments->render(); ?></div>
+                        </div>
+                    </div>
+                    <div class="pren pbm cl" style="margin-top: 50px;">
+                        <form action="<?php echo url('comment'); ?>" method="post" enctype="multipart/form-data">
+                            <textarea id="editor_id" name="content" style="width:100%;height:300px;margin: 0 auto;"><?php if(empty($sessionUid) || (($sessionUid instanceof \think\Collection || $sessionUid instanceof \think\Paginator ) && $sessionUid->isEmpty())): ?>登陆以后才能发布评论噢<?php endif; ?></textarea>
+                            <div class="fastpost-content-bottom ptm pnpost">
+                                <p style="width: 130px;float: right;" id="comment" class="btn-post btn-post-B"><strong>发表评论</strong></p>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -155,6 +192,7 @@
     </div>
 </div>
 
+
 <!--主要内容结束-->
 <!--底部内容开始-->
 <div class="footer">
@@ -168,6 +206,9 @@
                 <!--友情连接结束-->
             </ul>
         </div>
+        <!-- 二维码生成注释
+        <div id="output"></div>
+        <div style="width: 200px;height: 200px;background:#000;" class="getQRCode"></div>-->
         <div class="copyright">
             <h6>Powered by
                 <strong><a href="http://www.discuz.net" target="_blank">THINKPHP5.0---</a></strong> <em>5.0.9</em>
@@ -181,11 +222,17 @@
         </div>
     </div>
 </div>
-
+<!--本地资源链接-->
+<script src="__STATIC__/admin/js/jquery.min.js"></script>
+<script src="__STATIC__/plugins/layer/layer.js"></script>
+<!--
+在线资源链接
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/layer/3.0/layer.min.js"></script>
+-->
 <!--页面折合代码-->
 <script src="__STATIC__/index/js/index_1.js" type="text/javascript"></script>
+<script src="__STATIC__/index/js/jquery.qrcode.min.js" type="text/javascript"></script>
 <script>
     //添加表单提交
     $("#formSubmitAdd").click(function () {
@@ -196,10 +243,7 @@
     //退出登陆
     $("#logout").click(function () {
         $.get('/logout',{},function (res) {
-            if (res.code == 1) {
-                alert(res.msg);
-                window.location.reload();
-            }
+            layer.msg(res.msg,{time:2000}, original);
         });
     });
 
@@ -213,10 +257,70 @@
             }
         });
     }
+    //原页刷新函数
+    function original(res) {
+        layer.msg(res.msg,{time:2000}, function () {
+            if (res.code == 1) {
+                window.location.reload();
+            }else{
+                window.location.reload();
+            }
+        });
+    }
+    
+    //二维码生产
+    /*jQuery(function(){
+        $(".getQRCode").mouseenter(function () {
+            $type = 'users';
+            $id   = 1;
+            var postData = {type:$type,id:$id};
+            $.get('/index/common/qrcode',postData,function (res) {
+                var content = res;
+                $('#output').qrcode({
+                    render	: "table",
+                    width   : 200,
+                    height   : 200,
+                    text	: content
+                });
+            });
+        });
+        $(".getQRCode").mouseleave(function () {
+            $('#output').html('');
+        });
+    });*/
 </script>
 <!--顶部内容结束-->
 
-
+<script  src="__STATIC__/plugins/kindeditor/kindeditor-all-min.js"></script>
+<script  src="__STATIC__/plugins/kindeditor/lang/zh-CN.js"></script>
+<script>
+    KindEditor.ready(function(K) {
+        editor  = K.create('#editor_id');
+        //editor.html('你好<img src="http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif" border="0" alt="" />');
+        $("#comment").click(function(){
+            var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
+            if (!uid){
+                layer.confirm('您还未登陆,是否前去登陆？', {
+                    btn: ['快点O(∩_∩)O','等会吧']
+                }, function(){
+                    window.location.href = "/login";
+                }, function(){
+                    layer.msg('我会等你的噢');
+                });
+                return false;
+            }
+            var data = {
+                '__token__':"<?php echo \think\Request::instance()->token(); ?>",
+                'content':editor.text(),
+                'post_id':"<?php echo $information['id']; ?>",
+                'post_user_id':"<?php echo $information['post_user_id']; ?>",
+                'reply_user_id':uid,
+                'reply_user_name':"<?php echo \think\Cookie::get('bbszhouqiusername'); ?>",
+            };
+            $.post("<?php echo url('comment'); ?>",data,original);
+        });
+    });
+</script>
 
 </body>
 </html>
