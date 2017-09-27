@@ -36,21 +36,20 @@
                             {foreach name="comments" item="comment"}
                             <div class="discuss-box">
                                 <div class="discuss-content" style="margin-top: -10px;">
-                                    <h5>
-                                        <a href="">
-                                            {$comment['content']}
-                                        </a>
+                                    <h5>&nbsp;&nbsp;&nbsp;
+                                        {$comment['content']}
                                         <div class="portrait" >
-                                            <a href="">
-                                                <img src="http://115.28.163.216/app9/uc_server/avatar.php?uid=2&amp;size=small">
+                                            <a href="/user/{$comment->users->id}">
+                                                <img src="{$comment->users->headimg}">
                                             </a>
                                         </div>
-                                        <ul class="post-info">
-                                            <li class="author"><a href="/?92300">{$comment['reply_user_name']}</a></li>
-                                            <li class="time">发表于 {$comment['create_time']}</li>
-                                            <li class="browse"><img src="__STATIC__/index/images/oppose-f.png" alt="" style="height: 20px;width: 20px;">{$comment['oppose']}</li>
-                                            <li class="review"><img src="__STATIC__/index/images/upvote-f.png" alt="" style="height: 20px;width: 20px;">{$comment['upvote']}</li>
+                                        <ul class="post-info" data-id="{$comment['id']}">
+                                            <li class="author">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$comment->users->nickname}</a>&nbsp;&nbsp;&nbsp;</li>
+                                            <li class="time">&nbsp;&nbsp;&nbsp;发表于 {$comment['create_time']}&nbsp;&nbsp;&nbsp;</li>
+                                            <li class="browse"><img src="__STATIC__/index/images/oppose-f.png" style="height: 20px;width: 20px;" class="browse-c">{$comment['oppose']}</li>
+                                            <li class="review"><img src="__STATIC__/index/images/upvote-f.png" style="height: 20px;width: 20px;" class="review-c">{$comment['upvote']}</li>
                                         </ul>
+                                    </h5>
                                 </div>
                             </div>
                             {/foreach}
@@ -110,21 +109,12 @@
 <script  src="__STATIC__/plugins/kindeditor/kindeditor-all-min.js"></script>
 <script  src="__STATIC__/plugins/kindeditor/lang/zh-CN.js"></script>
 <script>
+    //编辑器
     KindEditor.ready(function(K) {
         editor  = K.create('#editor_id');
         //editor.html('你好<img src="http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif" border="0" alt="" />');
         $("#comment").click(function(){
-            var uid = "{$Think.session.bbszhouqiuid}";
-            if (!uid){
-                layer.confirm('您还未登陆,是否前去登陆？', {
-                    btn: ['快点O(∩_∩)O','等会吧']
-                }, function(){
-                    window.location.href = "/login";
-                }, function(){
-                    layer.msg('我会等你的噢');
-                });
-                return false;
-            }
+            isLogin();
             var data = {
                 '__token__':"{$Request.token}",
                 'content':editor.text(),
@@ -136,5 +126,36 @@
             $.post("{:url('comment')}",data,original);
         });
     });
+
+    $(".browse-c").hover(function () {
+        $(this).attr('src','__STATIC__/index/images/oppose-b.png')
+    },function () {
+        $(this).attr('src','__STATIC__/index/images/oppose-f.png')
+    });
+
+    $(".review-c").hover(function () {
+        $(this).attr('src','__STATIC__/index/images/upvote-b.png')
+    },function () {
+        $(this).attr('src','__STATIC__/index/images/upvote-f.png')
+    });
+    //支持
+    $(".review-c").click(function () {
+        var comment_id = $(this).parent().parent().data('id');
+        sendAttitude(comment_id,1);
+        $(this).attr('src','__STATIC__/index/images/upvote-b.png')
+    });
+    //反对
+    $(".browse-c").click(function () {
+        var comment_id = $(this).parent().parent().data('id');
+        sendAttitude(comment_id,2);
+        $(this).attr('src','__STATIC__/index/images/oppose-b.png')
+    });
+
+    function sendAttitude(id,attitude){
+        isLogin();
+        $.post("{:url('attitude')}",{id:id,uid:uid,attitude:attitude},function (res) {
+            layer.msg(res.msg,{time:2000});
+        });
+    }
 </script>
 {/block}

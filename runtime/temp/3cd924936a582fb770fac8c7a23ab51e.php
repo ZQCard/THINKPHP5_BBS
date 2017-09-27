@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506416980;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506412777;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506504405;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506499519;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -124,21 +124,20 @@
                             <?php if(is_array($comments) || $comments instanceof \think\Collection || $comments instanceof \think\Paginator): if( count($comments)==0 ) : echo "" ;else: foreach($comments as $key=>$comment): ?>
                             <div class="discuss-box">
                                 <div class="discuss-content" style="margin-top: -10px;">
-                                    <h5>
-                                        <a href="">
-                                            <?php echo $comment['content']; ?>
-                                        </a>
+                                    <h5>&nbsp;&nbsp;&nbsp;
+                                        <?php echo $comment['content']; ?>
                                         <div class="portrait" >
-                                            <a href="">
-                                                <img src="http://115.28.163.216/app9/uc_server/avatar.php?uid=2&amp;size=small">
+                                            <a href="/user/<?php echo $comment->users->id; ?>">
+                                                <img src="<?php echo $comment->users->headimg; ?>">
                                             </a>
                                         </div>
-                                        <ul class="post-info">
-                                            <li class="author"><a href="/?92300"><?php echo $comment['reply_user_name']; ?></a></li>
-                                            <li class="time">发表于 <?php echo $comment['create_time']; ?></li>
-                                            <li class="review"><img src="__STATIC__/index/images/upvote-f.png" alt="" style="height: 20px;width: 20px;"><?php echo $comment['upvote']; ?></li>
-                                            <li class="browse"><img src="__STATIC__/index/images/oppose-f.png" alt="" style="height: 20px;width: 20px;"><?php echo $comment['oppose']; ?></li>
+                                        <ul class="post-info" data-id="<?php echo $comment['id']; ?>">
+                                            <li class="author">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $comment->users->nickname; ?></a>&nbsp;&nbsp;&nbsp;</li>
+                                            <li class="time">&nbsp;&nbsp;&nbsp;发表于 <?php echo $comment['create_time']; ?>&nbsp;&nbsp;&nbsp;</li>
+                                            <li class="browse"><img src="__STATIC__/index/images/oppose-f.png" style="height: 20px;width: 20px;" class="browse-c"><?php echo $comment['oppose']; ?></li>
+                                            <li class="review"><img src="__STATIC__/index/images/upvote-f.png" style="height: 20px;width: 20px;" class="review-c"><?php echo $comment['upvote']; ?></li>
                                         </ul>
+                                    </h5>
                                 </div>
                             </div>
                             <?php endforeach; endif; else: echo "" ;endif; ?>
@@ -234,6 +233,20 @@
 <script src="__STATIC__/index/js/index_1.js" type="text/javascript"></script>
 <script src="__STATIC__/index/js/jquery.qrcode.min.js" type="text/javascript"></script>
 <script>
+    var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
+    //检测是否登陆
+    function isLogin() {
+        if (!uid){
+            layer.confirm('您还未登陆,是否前去登陆？', {
+                btn: ['快点O(∩_∩)O','等会吧']
+            }, function(){
+                window.location.href = "/login";
+            }, function(){
+                layer.msg('我会等你的噢',{time:1000});
+            });
+            return false;
+        }
+    }
     //添加表单提交
     $("#formSubmitAdd").click(function () {
         var form = $("form");
@@ -267,7 +280,7 @@
             }
         });
     }
-    
+
     //二维码生产
     /*jQuery(function(){
         $(".getQRCode").mouseenter(function () {
@@ -294,21 +307,12 @@
 <script  src="__STATIC__/plugins/kindeditor/kindeditor-all-min.js"></script>
 <script  src="__STATIC__/plugins/kindeditor/lang/zh-CN.js"></script>
 <script>
+    //编辑器
     KindEditor.ready(function(K) {
         editor  = K.create('#editor_id');
         //editor.html('你好<img src="http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif" border="0" alt="" />');
         $("#comment").click(function(){
-            var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
-            if (!uid){
-                layer.confirm('您还未登陆,是否前去登陆？', {
-                    btn: ['快点O(∩_∩)O','等会吧']
-                }, function(){
-                    window.location.href = "/login";
-                }, function(){
-                    layer.msg('我会等你的噢');
-                });
-                return false;
-            }
+            isLogin();
             var data = {
                 '__token__':"<?php echo \think\Request::instance()->token(); ?>",
                 'content':editor.text(),
@@ -317,9 +321,42 @@
                 'reply_user_id':uid,
                 'reply_user_name':"<?php echo \think\Cookie::get('bbszhouqiusername'); ?>",
             };
-            $.post("<?php echo url('comment'); ?>",data,original);
+            $.post("<?php echo url('comment'); ?>",data,function () {
+                
+            });
         });
     });
+
+    $(".browse-c").hover(function () {
+        $(this).attr('src','__STATIC__/index/images/oppose-b.png')
+    },function () {
+        $(this).attr('src','__STATIC__/index/images/oppose-f.png')
+    });
+
+    $(".review-c").hover(function () {
+        $(this).attr('src','__STATIC__/index/images/upvote-b.png')
+    },function () {
+        $(this).attr('src','__STATIC__/index/images/upvote-f.png')
+    });
+    //支持
+    $(".review-c").click(function () {
+        var comment_id = $(this).parent().parent().data('id');
+        sendAttitude(comment_id,1);
+        $(this).attr('src','__STATIC__/index/images/upvote-b.png')
+    });
+    //反对
+    $(".browse-c").click(function () {
+        var comment_id = $(this).parent().parent().data('id');
+        sendAttitude(comment_id,2);
+        $(this).attr('src','__STATIC__/index/images/oppose-b.png')
+    });
+
+    function sendAttitude(id,attitude){
+        isLogin();
+        $.post("<?php echo url('attitude'); ?>",{id:id,uid:uid,attitude:attitude},function (res) {
+            layer.msg(res.msg,{time:2000});
+        });
+    }
 </script>
 
 </body>

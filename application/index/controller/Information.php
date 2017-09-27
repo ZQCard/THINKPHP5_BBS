@@ -1,7 +1,7 @@
 <?php
 namespace app\index\controller;
 
-use app\common\model\Message;
+use app\common\model\InformationComment;
 use think\Db;
 use think\Loader;
 use think\Request;
@@ -52,7 +52,7 @@ class Information extends Base
 
         $recommend = $this->recInfo();
         //查看评论
-        $comment = Db::name('message')->where('type = 1 AND post_id = '.$id)->paginate(4);
+        $comment = (new InformationComment())->where('post_id = '.$id)->order('create_time DESC')->paginate(4);
         $this->assign([
             'comments'     => $comment,
             'recommend'   => $recommend,
@@ -88,11 +88,22 @@ class Information extends Base
     {
         if ($request->isPost()){
             $data = input('param.');
-            $data['type'] = 1;
-            $validate = Loader::validate('message');
+            $validate = Loader::validate('information_comment');
             ($validate->check($data)) || $this->error($validate->getError());
-            $res = (new Message())->saveData($data);
+            $res = (new InformationComment())->allowField(true)->save($data);
             ($res !== false)?$this->success('评论成功!'):$this->error('评论失败');
+        }
+    }
+
+    public function attitude(Request $request)
+    {
+        if ($request->isPost()){
+            $data = input('param.');
+            if ($data['attitude'] == 1){//赞同
+
+            }else{
+
+            }
         }
     }
 }

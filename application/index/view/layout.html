@@ -132,6 +132,20 @@
 <script src="__STATIC__/index/js/index_1.js" type="text/javascript"></script>
 <script src="__STATIC__/index/js/jquery.qrcode.min.js" type="text/javascript"></script>
 <script>
+    var uid = "{$Think.session.bbszhouqiuid}";
+    //检测是否登陆
+    function isLogin() {
+        if (!uid){
+            layer.confirm('您还未登陆,是否前去登陆？', {
+                btn: ['快点O(∩_∩)O','等会吧']
+            }, function(){
+                window.location.href = "/login";
+            }, function(){
+                layer.msg('我会等你的噢',{time:1000});
+            });
+            return false;
+        }
+    }
     //添加表单提交
     $("#formSubmitAdd").click(function () {
         var form = $("form");
@@ -165,7 +179,7 @@
             }
         });
     }
-    
+
     //二维码生产
     /*jQuery(function(){
         $(".getQRCode").mouseenter(function () {

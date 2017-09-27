@@ -2,33 +2,26 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2017/9/26 0026
- * Time: 14:11
+ * Date: 2017/9/27 0027
+ * Time: 17:01
  */
 
 namespace app\common\model;
 
 use think\Db;
+use think\Model;
 
-class Message extends Base
+class Message extends Model
 {
+    //模型事件
     protected static function init()
     {
-        //插入信息后向用户表或者管理员插入新增一条信息提示
-        Message::afterInsert(function ($message){
-            //资讯信息
-            if ($message['type'] == 1){
-                $informationTable = Db::name('information');
-                $res = $informationTable->find($message['post_id']);
-                $informationTable->where('id',$res['id'])->setInc('comment');
-                if ($res['type']==1){//管理员
-                    $query = Db::name('administrator');
-                }else{//用户
-                    $query = Db::name('user');
-                }
-                $query->where('id',$res['post_user_id'])->setInc('message_num');
-            }elseif ($message['type'] == 2){//帖子信息
-                echo 2;
+        //评论之后推送消息给资讯发出者
+        self::afterInsert(function ($message){
+            if ($message->user_type == 1){//发给管理员
+                Db::name('administrator')->where('id',$message->get_user_id)->setInc('message_num');
+            }elseif ($message->user_type == 2){//发给用户
+                Db::name('users')->where('id',$message->get_user_id)->setInc('message_num');
             }
         });
     }
