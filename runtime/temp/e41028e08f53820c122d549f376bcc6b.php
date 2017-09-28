@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\login\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506499021;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\login\index.html";i:1506580517;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506580926;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -154,8 +154,8 @@
                                     <td>
                                         <span id="reginfo_a_btn">
                                         <em>&nbsp;</em>
-                                            <a class="pn pnc" tabindex="1">
-                                                <strong id="formSubmitAdd">提交</strong>
+                                            <a class="pn pnc"  id="formSubmitAdd"  tabindex="1">
+                                                <p style="width: 150px;" class="btn-post btn-post-B"><strong>登陆</strong></p>
                                             </a>
                                         </span>
                                     </td>
@@ -211,9 +211,9 @@
 <script src="__STATIC__/index/js/index_1.js" type="text/javascript"></script>
 <script src="__STATIC__/index/js/jquery.qrcode.min.js" type="text/javascript"></script>
 <script>
+    var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
     //检测是否登陆
     function isLogin() {
-        var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
         if (!uid){
             layer.confirm('您还未登陆,是否前去登陆？', {
                 btn: ['快点O(∩_∩)O','等会吧']
@@ -234,7 +234,9 @@
     //退出登陆
     $("#logout").click(function () {
         $.get('/logout',{},function (res) {
-            layer.msg(res.msg,{time:2000}, original);
+            layer.msg(res.msg,{time:2000}, function () {
+                window.location.reload();
+            });
         });
     });
 
@@ -248,16 +250,7 @@
             }
         });
     }
-    //原页刷新函数
-    function original(res) {
-        layer.msg(res.msg,{time:2000}, function () {
-            if (res.code == 1) {
-                window.location.reload();
-            }else{
-                window.location.reload();
-            }
-        });
-    }
+
 
     //二维码生产
     /*jQuery(function(){

@@ -46,8 +46,14 @@
                                         <ul class="post-info" data-id="{$comment['id']}">
                                             <li class="author">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$comment->users->nickname}</a>&nbsp;&nbsp;&nbsp;</li>
                                             <li class="time">&nbsp;&nbsp;&nbsp;发表于 {$comment['create_time']}&nbsp;&nbsp;&nbsp;</li>
-                                            <li class="browse"><img src="__STATIC__/index/images/oppose-f.png" style="height: 20px;width: 20px;" class="browse-c">{$comment['oppose']}</li>
-                                            <li class="review"><img src="__STATIC__/index/images/upvote-f.png" style="height: 20px;width: 20px;" class="review-c">{$comment['upvote']}</li>
+                                            <li class="browse">
+                                                <img src="{eq name='$comment['is_upvote']' value='1'}__STATIC__/index/images/oppose-b.png{else/}__STATIC__/index/images/oppose-f.png{/eq}" style="height: 20px;width: 20px;" class="browse-c">
+                                                {$comment['oppose']}
+                                            </li>
+                                            <li class="review">
+                                                <img src="{eq name='$comment['is_oppose']' value='1'}__STATIC__/index/images/upvote-b.png{else/}__STATIC__/index/images/upvote-f.png{/eq}" style="height: 20px;width: 20px;" class="review-c">
+                                                {$comment['upvote']}
+                                            </li>
                                         </ul>
                                     </h5>
                                 </div>
@@ -154,7 +160,10 @@
     function sendAttitude(id,attitude){
         isLogin();
         $.post("{:url('attitude')}",{id:id,uid:uid,attitude:attitude},function (res) {
-            layer.msg(res.msg,{time:2000});
+            var data = JSON.parse(res);
+            layer.msg(data.message,{time:2000},function () {
+                window.location.reload();
+            });
         });
     }
 </script>

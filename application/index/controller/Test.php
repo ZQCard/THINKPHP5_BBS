@@ -8,6 +8,7 @@ class Test extends Controller
 {
     public function index()
     {
-        return $this->fetch();
+        $data = [1,2,3,4];
+        echo serialize($data);
     }
 }

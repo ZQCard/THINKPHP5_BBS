@@ -154,9 +154,7 @@
 
     //退出登陆
     $("#logout").click(function () {
-        $.get('/logout',{},function (res) {
-            layer.msg(res.msg,{time:2000}, original);
-        });
+        $.get('/logout',{},original);
     });
 
     //请求成功回调函数
@@ -172,11 +170,7 @@
     //原页刷新函数
     function original(res) {
         layer.msg(res.msg,{time:2000}, function () {
-            if (res.code == 1) {
-                window.location.reload();
-            }else{
-                window.location.reload();
-            }
+            window.location.reload();
         });
     }
 

@@ -1,0 +1,26 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="wp" class="wp">
+    <div id="ct" class="ptm wp cl">
+        {eq name="signal" value="success"}
+            <h1>验证成功</h1>
+            <a href="/index">前往首页</a>
+        {else/}
+        <h1>验证失败</h1>
+        <input type="button" id="btn" value="重新发送验证邮件" />
+        {/eq}
+    </div>
+</div>
+{/block}
+<!--主要内容结束-->
+{block name="js"}
+<script type="text/javascript">
+    $("#btn").click(function () {
+        $(this).hide();
+        $.post("{:url('index/users/resendMail')}",{uid:uid},function (res) {
+            layer.alert(res.msg);
+        });
+    });
+
+</script>
+{/block}

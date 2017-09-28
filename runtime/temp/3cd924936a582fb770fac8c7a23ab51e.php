@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506504405;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506499519;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506589253;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506581300;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -255,9 +255,7 @@
 
     //退出登陆
     $("#logout").click(function () {
-        $.get('/logout',{},function (res) {
-            layer.msg(res.msg,{time:2000}, original);
-        });
+        $.get('/logout',{},original);
     });
 
     //请求成功回调函数
@@ -273,11 +271,7 @@
     //原页刷新函数
     function original(res) {
         layer.msg(res.msg,{time:2000}, function () {
-            if (res.code == 1) {
-                window.location.reload();
-            }else{
-                window.location.reload();
-            }
+            window.location.reload();
         });
     }
 
@@ -321,9 +315,7 @@
                 'reply_user_id':uid,
                 'reply_user_name':"<?php echo \think\Cookie::get('bbszhouqiusername'); ?>",
             };
-            $.post("<?php echo url('comment'); ?>",data,function () {
-                
-            });
+            $.post("<?php echo url('comment'); ?>",data,original);
         });
     });
 
@@ -354,7 +346,10 @@
     function sendAttitude(id,attitude){
         isLogin();
         $.post("<?php echo url('attitude'); ?>",{id:id,uid:uid,attitude:attitude},function (res) {
-            layer.msg(res.msg,{time:2000});
+            var data = JSON.parse(res);
+            layer.msg(data.message,{time:2000},function () {
+                window.location.reload();
+            });
         });
     }
 </script>

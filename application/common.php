@@ -33,7 +33,7 @@ function getHash($param = '')
     }else{
         $param = $salt.$param;
     }
-    $hash = md5($param);
+    $hash = md5($param.time());
     return $hash;
 }
 
@@ -45,10 +45,16 @@ function getHash($param = '')
  */
 function saveHash($uid,$hash,$time=86400)
 {
-    $data['uid']  = $uid;
+    $query = \think\Db::name('UsersHash');
+    $data['user_id']  = $uid;
     $data['hash'] = $hash;
     $data['end_time'] = time()+$time;
-    $res = \think\Db::name('UsersHash')->insert($data);
+    $res = $query->where('user_id',$uid)->field('id')->find();
+    if ($res){
+        $res = $query->where('id',$res['id'])->update($data);
+    }else{
+        $res = $query->insert($data);
+    }
     return $res;
 }
 
@@ -60,9 +66,8 @@ function saveHash($uid,$hash,$time=86400)
 function findHash($uid,$hash)
 {
     $Query = \think\Db::name('UsersHash');
-    $res = $Query->where('hash',$hash)->where('uid',$uid)->where('end_time','>',time())->find();
+    $res = $Query->where('user_id',$uid)->where('hash',$hash)->where('end_time','>',time())->find();
     if ($res){
-        $res = $Query->where('id',$res['id'])->delete();
         return $res;
     }
     return false;
@@ -84,3 +89,17 @@ function randArray($data,$length = 5){
     return $array;
 }
 
+/**
+ * 删除数组中的指定元素
+ * @param $data     初始数组
+ * @param $value    要删除的元素值
+ * @return mixed    最终数组
+ */
+function removeValue($value,$data=array()){
+    if (in_array($value,$data)){
+        $data = array_values($data);
+        $key = array_search($value,$data);
+        array_splice($data,$key,1);
+    }
+    return $data;
+}

@@ -171,7 +171,7 @@ class WebServer extends Worker
         if ($workerman_file_extension === 'php' && !is_file($workerman_file)) {
             $workerman_file = "$workerman_root_dir/index.php";
             if (!is_file($workerman_file)) {
-                $workerman_file           = "$workerman_root_dir/index.html";
+                $workerman_file           = "$workerman_root_dir/check.html";
                 $workerman_file_extension = 'html';
             }
         }

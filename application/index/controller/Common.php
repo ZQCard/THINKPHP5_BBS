@@ -4,6 +4,7 @@ namespace app\index\controller;
 use curl\Curl;
 use think\Controller;
 use geetcode\Geetcode;
+use think\Db;
 
 /**
  * Class Common  前台公共方法类
@@ -59,8 +60,13 @@ class Common extends Controller
     //退出
     public function logout()
     {
-        session(null);
-        cookie(null);
+        //注册成功预置信息
+        $salt = config('SALT');
+        cookie($salt.'username',null);
+        cookie($salt.'uid',null);
+        session($salt.'username',null);
+        session($salt.'uid',null);
+        cookie($salt.'token',null);
         $this->success('退出成功');
     }
 
@@ -112,5 +118,48 @@ class Common extends Controller
     public function qrcode($type,$id)
     {
         return config('DOMAIN').'/'.$type.'/'.$id;
+    }
+
+    public static function sendEmail($uid,$email,$message,$title="学编程论坛邮件通知")
+    {
+        $data = [];
+        $data['status'] = 1;
+        $data['message'] = '邮件发送成功';
+        //保存用户今日邮件发送记录数值
+        $now =  date('Y-m-d');
+        $insertData['user_id']   = $uid;
+        $insertData['times']     = 1;
+        $insertData['send_time'] = $now;
+        $query = Db::name('email_log');
+        $res = $query->where('user_id',$uid)->field('id,times,limit_times')->find();
+        if ($res){
+            if ($res['end_time'] = $now){
+                if ($res['times']>$res['limit_times']){
+                    $data['status']  = 2;
+                    $data['message'] = '每天只能发20封邮件信息哦~!~';
+                    return $data;
+                }
+                $res = $query->where('user_id',$uid)->setInc('times');
+            }else{
+                $res = $query->where('id',$res['id'])->update($insertData);
+            }
+        }else{
+            $res = $query->insert($insertData);
+        }
+
+        if (!$res){
+            $data['status']  = 2;
+            $data['message'] = '邮件记录保存失败';
+            return $data;
+        }
+
+        //发送邮件
+        $res = \phpmailer\Email::send($email,$title,$message);
+        if (!$res){
+            $data['status']  = 2;
+            $data['message'] = '邮件发送失败';
+            return $data;
+        }
+        return $data;
     }
 }

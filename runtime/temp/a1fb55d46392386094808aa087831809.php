@@ -1,5 +1,5 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\forum\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506318935;}*/ ?>
-<html>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\forum\check.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506499519;}*/ ?>
+<!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>学编程论坛</title>
@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/main_1.css" />
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/flexslider_1.css" />
     <link href="__STATIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/plugins/layer/theme/default/layer.css" rel="stylesheet">
     <!--
     在线资源链接
     <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -40,14 +41,14 @@
                 <div id="um">
                     <div class="ui-login-toggle">
                         <span class="user-avatar"><img src="http://123.56.195.228/rw/chuizi/uc_server/avatar.php?uid=3&amp;size=small"></span>
-                        <span class="user-name hide-row">test123</span>
+                        <span class="user-name hide-row"><?php echo \think\Cookie::get('bbszhouqiusername'); ?></span>
                     </div>
                     <div class="ui-login-status" style="display: none;">
                         <ul>
                             <li class="user-primary-info">
                                 <p class="user-avatar-name">
                                     <span class="user-avatar"><a href="home.php?mod=space&amp;uid=3"><img src="http://123.56.195.228/rw/chuizi/uc_server/avatar.php?uid=3&amp;size=small"></a></span>
-                                    <span class="user-name hide-row"><a href="home.php?mod=space&amp;uid=3" target="_blank" title="访问我的空间">test123</a></span>
+                                    <span class="user-name hide-row"><a href="home.php?mod=space&amp;uid=3" target="_blank" title="访问我的空间"><?php echo \think\Cookie::get('bbszhouqiusername'); ?></a></span>
                                 </p>
                             </li>
                             <li class="user-alert"><a href="home.php?mod=space&amp;do=notice">提醒</a></li>
@@ -249,7 +250,7 @@
 </div>
 <!--本地资源链接-->
 <script src="__STATIC__/admin/js/jquery.min.js"></script>
-<script src="__STATIC__/admin/js/plugins/layer/layer.min.js"></script>
+<script src="__STATIC__/plugins/layer/layer.js"></script>
 <!--
 在线资源链接
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
@@ -259,6 +260,20 @@
 <script src="__STATIC__/index/js/index_1.js" type="text/javascript"></script>
 <script src="__STATIC__/index/js/jquery.qrcode.min.js" type="text/javascript"></script>
 <script>
+    var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
+    //检测是否登陆
+    function isLogin() {
+        if (!uid){
+            layer.confirm('您还未登陆,是否前去登陆？', {
+                btn: ['快点O(∩_∩)O','等会吧']
+            }, function(){
+                window.location.href = "/login";
+            }, function(){
+                layer.msg('我会等你的噢',{time:1000});
+            });
+            return false;
+        }
+    }
     //添加表单提交
     $("#formSubmitAdd").click(function () {
         var form = $("form");
@@ -268,10 +283,7 @@
     //退出登陆
     $("#logout").click(function () {
         $.get('/logout',{},function (res) {
-            if (res.code == 1) {
-                alert(res.msg);
-                window.location.reload();
-            }
+            layer.msg(res.msg,{time:2000}, original);
         });
     });
 
@@ -280,6 +292,16 @@
         layer.msg(res.msg,{time:2000}, function () {
             if (res.code == 1) {
                 window.location = document.referrer;
+            }else{
+                window.location.reload();
+            }
+        });
+    }
+    //原页刷新函数
+    function original(res) {
+        layer.msg(res.msg,{time:2000}, function () {
+            if (res.code == 1) {
+                window.location.reload();
             }else{
                 window.location.reload();
             }

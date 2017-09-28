@@ -53,6 +53,12 @@ class Information extends Base
         $recommend = $this->recInfo();
         //查看评论
         $comment = (new InformationComment())->where('post_id = '.$id)->order('create_time DESC')->paginate(4);
+        foreach ($comment as $key => $value){
+            $upvote_user = unserialize($value->upvote_user);
+            if (in_array($this->uid,$upvote_user))$comment[$key]->is_upvote = 1;
+            $oppose_user = unserialize($value->oppose_user);
+            if (in_array($this->uid,$oppose_user))$comment[$key]->is_oppose = 1;
+        }
         $this->assign([
             'comments'     => $comment,
             'recommend'   => $recommend,
@@ -98,12 +104,66 @@ class Information extends Base
     public function attitude(Request $request)
     {
         if ($request->isPost()){
+            $backJson = [];
+            //$backJson['status'] = 请求状态
+            //$backJson['type'] = 动作类型
+            //$backJson['message'] = 提示信息
+            //$backJson['icon'] = 返回图标地址
+
+            $query = Db::name('information_comment');
             $data = input('param.');
-            if ($data['attitude'] == 1){//赞同
-
-            }else{
-
+            $res = $query->field('id,upvote,upvote_user,oppose,oppose_user')->find($data['id']);
+            if ($data['attitude'] == 1){//点赞同
+                //默认点赞+1
+                $updateData['upvote'] = $res['upvote'] + 1;
+                $backJson['type']    = 1;
+                $backJson['message'] = '点赞成功';
+                $backJson['icon'] = '/static/index/images/upvote-b.png';
+                //处理点赞数据
+                if (is_null($res['upvote_user'])){
+                    $upvoteUser[] = $data['uid'];
+                    $updateData['upvote_user'] = serialize($upvoteUser);
+                }else{
+                    $upvoteUser = unserialize($res['upvote_user']);
+                    if (in_array($data['uid'],$upvoteUser)){//已经点过赞,取消点赞
+                        $upvoteUser = removeValue($data['uid'],$upvoteUser);
+                        $updateData['upvote'] = $res['upvote'] - 1;
+                        $backJson['message'] = '取消点赞成功';
+                        $backJson['icon'] = '/static/index/images/upvote-f.png';
+                    }else{
+                        $upvoteUser[] = $data['uid'];      //没有点过赞  进行点赞
+                    }
+                    $updateData['upvote_user'] = serialize($upvoteUser);
+                }
+            }else{//反对
+                $updateData['oppose'] = $res['oppose'] - 1;
+                $backJson['type']    = 2;
+                $backJson['message'] = '反对成功';
+                $backJson['icon'] = '/static/index/images/oppose-b.png';
+                if (is_null($res['oppose_user'])){
+                    $opposeUser['oppose_user'] = $data['uid'];
+                    $updateData['oppose_user'] = serialize($opposeUser);
+                }else{
+                    $opposeUser = unserialize($res['oppose_user']);
+                    if (in_array($data['uid'],$opposeUser)){//取消反对
+                        $opposeUser = removeValue($data['uid'],$opposeUser);
+                        $updateData['oppose'] = $res['oppose'] + 1;
+                        $backJson['message'] = '取消反对成功';
+                        $backJson['icon'] = '/static/index/images/oppose-f.png';
+                    }else{
+                        $opposeUser[] = $data['uid'];
+                    }
+                    $updateData['oppose_user'] = serialize($opposeUser);
+                }
             }
+            $res = $query->where('id',$res['id'])->update($updateData);
+            if ($res){
+                $backJson['status'] = 1;
+            }else{
+                $backJson['message'] = '操作失败';
+                $backJson['status'] = 2;
+            }
+            echo json_encode($backJson);
         }
     }
 }

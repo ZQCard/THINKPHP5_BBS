@@ -72,7 +72,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Directory extends PHP_CodeCoverage_R
         } else {
             if ($item instanceof PHP_CodeCoverage_Report_Node_Directory) {
                 $data['name'] = sprintf(
-                    '<a href="%s/index.html">%s</a>',
+                    '<a href="%s/check.html">%s</a>',
                     $item->getName(),
                     $item->getName()
                 );

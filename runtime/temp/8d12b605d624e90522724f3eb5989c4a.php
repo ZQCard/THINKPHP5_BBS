@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"D:\wamp64\www\bbs\public/../application/admin\view\administrator\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506300564;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"D:\wamp64\www\bbs\public/../application/admin\view\administrator\check.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506300564;}*/ ?>
 <!DOCTYPE html>
 <html>
 

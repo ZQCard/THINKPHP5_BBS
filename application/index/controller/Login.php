@@ -46,19 +46,23 @@ class Login extends Base
 
 
             $user = $User->where('username',$data['username'])->field('id,username,password,login_times')->find();
+            (!$user)&&$this->error('用户不存在');
             if ($data['password'] != $user->password)$this->error('用户名或密码错误');
-
             $ip = $request->ip();
             $location = getLocation($ip);
             $saveData['province'] = $location['province'];
             $saveData['city'] = $location['city'];
             $saveData['last_login_ip'] = $ip;
             $saveData['login_times'] = $user->login_times+1;
+            $salt = config('SALT');
+            $num = mt_rand(1,1000);
+            $token = config('SALT').$num.$user->username;
+            $saveData['verify_token'] = md5($token);
             $res = $user->save($saveData);
             if($res){
                 //注册成功预置信息
                 $salt = config('SALT');
-                $num = rand(1,1000);
+                $num = mt_rand(1,1000);
                 $token = config('SALT').$num.$user->username;
                 cookie($salt.'username',$data['username']);
                 cookie($salt.'uid',$user->id);
@@ -84,7 +88,6 @@ class Login extends Base
             //先验证极验数据是否正确
             $res = \app\index\controller\Common::VerifyLoginServlet($data['geetest_challenge'],$data['geetest_validate'],$data['geetest_seccode']);
             (!$res)&&$this->error('验证码错误');
-
             $data['nickname'] = $data['username'];
             $Validate = Loader::validate('users');
             ($Validate->scene('login')->check($data)) || $this->error($Validate->getError());
@@ -97,43 +100,35 @@ class Login extends Base
             (!$res)&&$this->error('用户保存失败');
 
             $uid = $Users->getLastInsID();
+            $message = "欢迎注册爱编程论坛,请点击下面网址进行激活账号^_^~,有效时间为24小时.";
             $hash = getHash($uid);
             $href = config('DOMAIN').'/check/uid/'.$uid.'/hash/'.$hash;
-            $message = '欢迎注册爱编程论坛,请点击下面网址进行激活账号^_^~'.$href;
+            $message = $message.$href;
+
             //保存hash验证值
             $res = saveHash($uid,$hash);
-            (!$res)&&$this->error('HASH保存失败');
-
-            //发送邮件
-            $res = \phpmailer\Email::send($data['email'],'爱编程论坛注册通知',$message);
-            (!$res)&&$this->error('邮件发送失败');
-
+            if (!$res){
+                $data['status']  = 2;
+                $data['message'] = '保存hash验证值失败';
+                return $data;
+            }
+            $res = Common::sendEmail($uid,$data['email'],$message);
+            if ($res['status'] == 2){
+                $this->error($res['message']);
+            }
             //注册成功预置信息
             $salt = config('SALT');
-            $num = rand(1,1000);
+            $num = mt_rand(1,1000);
             $token = config('SALT').$num.$Users->username;
             cookie($salt.'username',$data['username']);
             cookie($salt.'uid',$uid);
             session($salt.'username',$data['username']);
             session($salt.'uid',$uid);
             cookie($salt.'token',$token);
+            $Users->save(['verify_token'=>md5($token)],['id'=>$uid]);
             ($res !== false)?$this->success('注册成功,请去邮箱激活账号'):$this->error('注册失败');
         }else{
             return $this->fetch();
         }
     }
-
-
-    public function check()
-    {
-        $data = input('param.');
-        $res = findHash($data['uid'],$data['hash']);
-        if ($res){
-            $res = Db::name('Users')->where('id',$data['uid'])->update(['is_validate'=>1]);
-            $this->success('账号激活成功','/index');
-        }else{
-            echo '密钥已经过期';
-        }
-    }
-
 }
