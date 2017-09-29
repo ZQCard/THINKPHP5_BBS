@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:73:"D:\wamp64\www\bbs\public/../application/index\view\information\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506580926;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:73:"D:\wamp64\www\bbs\public/../application/index\view\information\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506581300;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -236,11 +236,7 @@
 
     //退出登陆
     $("#logout").click(function () {
-        $.get('/logout',{},function (res) {
-            layer.msg(res.msg,{time:2000}, function () {
-                window.location.reload();
-            });
-        });
+        $.get('/logout',{},original);
     });
 
     //请求成功回调函数
@@ -253,7 +249,12 @@
             }
         });
     }
-
+    //原页刷新函数
+    function original(res) {
+        layer.msg(res.msg,{time:2000}, function () {
+            window.location.reload();
+        });
+    }
 
     //二维码生产
     /*jQuery(function(){

@@ -54,10 +54,8 @@ class Information extends Base
         //查看评论
         $comment = (new InformationComment())->where('post_id = '.$id)->order('create_time DESC')->paginate(4);
         foreach ($comment as $key => $value){
-            $upvote_user = unserialize($value->upvote_user);
-            if (in_array($this->uid,$upvote_user))$comment[$key]->is_upvote = 1;
-            $oppose_user = unserialize($value->oppose_user);
-            if (in_array($this->uid,$oppose_user))$comment[$key]->is_oppose = 1;
+            $comment[$key]->is_upvote = $this->is_in_array($this->uid,$value->upvote_user);
+            $comment[$key]->is_oppose = $this->is_in_array($this->uid,$value->oppose_user);
         }
         $this->assign([
             'comments'     => $comment,
@@ -109,7 +107,7 @@ class Information extends Base
             //$backJson['type'] = 动作类型
             //$backJson['message'] = 提示信息
             //$backJson['icon'] = 返回图标地址
-
+            //$backJson['num'] = 点赞值
             $query = Db::name('information_comment');
             $data = input('param.');
             $res = $query->field('id,upvote,upvote_user,oppose,oppose_user')->find($data['id']);
@@ -135,6 +133,7 @@ class Information extends Base
                     }
                     $updateData['upvote_user'] = serialize($upvoteUser);
                 }
+                $backJson['num'] = $updateData['upvote'];
             }else{//反对
                 $updateData['oppose'] = $res['oppose'] - 1;
                 $backJson['type']    = 2;
@@ -155,6 +154,7 @@ class Information extends Base
                     }
                     $updateData['oppose_user'] = serialize($opposeUser);
                 }
+                $backJson['num'] = $updateData['oppose'];
             }
             $res = $query->where('id',$res['id'])->update($updateData);
             if ($res){
@@ -165,5 +165,20 @@ class Information extends Base
             }
             echo json_encode($backJson);
         }
+    }
+
+    /**
+     * 检查值是否在序列化过后的字符串中存在
+     * @param $value        要检查的值
+     * @param $string       序列化后的字符串
+     * @return bool         是否存在
+     */
+    private function is_in_array($value,$string){
+        $array = unserialize($string);
+        if (!$array)$array = [];
+        if (!in_array($value,$array)){
+            return 0;
+        }
+        return 1;
     }
 }

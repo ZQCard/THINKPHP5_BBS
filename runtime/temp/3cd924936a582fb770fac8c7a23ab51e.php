@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506589253;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506581300;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506655428;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506581300;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -134,8 +134,22 @@
                                         <ul class="post-info" data-id="<?php echo $comment['id']; ?>">
                                             <li class="author">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $comment->users->nickname; ?></a>&nbsp;&nbsp;&nbsp;</li>
                                             <li class="time">&nbsp;&nbsp;&nbsp;发表于 <?php echo $comment['create_time']; ?>&nbsp;&nbsp;&nbsp;</li>
-                                            <li class="browse"><img src="__STATIC__/index/images/oppose-f.png" style="height: 20px;width: 20px;" class="browse-c"><?php echo $comment['oppose']; ?></li>
-                                            <li class="review"><img src="__STATIC__/index/images/upvote-f.png" style="height: 20px;width: 20px;" class="review-c"><?php echo $comment['upvote']; ?></li>
+                                            <li class="browse">
+                                                <?php if($comment['is_oppose'] == '0'): ?>
+                                                <img src="__STATIC__/index/images/oppose-f.png" style="height: 20px;width: 20px;" class="browse-c">
+                                                <?php else: ?>
+                                                <img src="__STATIC__/index/images/oppose-b.png" style="height: 20px;width: 20px;" class="browse-c">
+                                                <?php endif; ?>
+                                                <b><?php echo $comment['oppose']; ?></b>
+                                            </li>
+                                            <li class="review">
+                                                <?php if($comment['is_upvote'] == '0'): ?>
+                                                <img src="__STATIC__/index/images/upvote-f.png" style="height: 20px;width: 20px;" class="review-c">
+                                                <?php else: ?>
+                                                <img src="__STATIC__/index/images/upvote-b.png" style="height: 20px;width: 20px;" class="review-c">
+                                                <?php endif; ?>
+                                                <b><?php echo $comment['upvote']; ?></b>
+                                            </li>
                                         </ul>
                                     </h5>
                                 </div>
@@ -190,7 +204,7 @@
         </div>
     </div>
 </div>
-
+<span id="backJson"></span>
 
 <!--主要内容结束-->
 <!--底部内容开始-->
@@ -318,38 +332,24 @@
             $.post("<?php echo url('comment'); ?>",data,original);
         });
     });
-
-    $(".browse-c").hover(function () {
-        $(this).attr('src','__STATIC__/index/images/oppose-b.png')
-    },function () {
-        $(this).attr('src','__STATIC__/index/images/oppose-f.png')
-    });
-
-    $(".review-c").hover(function () {
-        $(this).attr('src','__STATIC__/index/images/upvote-b.png')
-    },function () {
-        $(this).attr('src','__STATIC__/index/images/upvote-f.png')
-    });
     //支持
     $(".review-c").click(function () {
         var comment_id = $(this).parent().parent().data('id');
-        sendAttitude(comment_id,1);
-        $(this).attr('src','__STATIC__/index/images/upvote-b.png')
+        sendAttitude(comment_id,1,$(this));
     });
     //反对
     $(".browse-c").click(function () {
         var comment_id = $(this).parent().parent().data('id');
-        sendAttitude(comment_id,2);
-        $(this).attr('src','__STATIC__/index/images/oppose-b.png')
+        sendAttitude(comment_id,2,$(this));
     });
 
-    function sendAttitude(id,attitude){
+    function sendAttitude(id,attitude,that){
         isLogin();
         $.post("<?php echo url('attitude'); ?>",{id:id,uid:uid,attitude:attitude},function (res) {
             var data = JSON.parse(res);
-            layer.msg(data.message,{time:2000},function () {
-                window.location.reload();
-            });
+            that.attr('src',data.icon);
+            that.next().html(data.num);
+            layer.msg(data.message,{time:2000});
         });
     }
 </script>
