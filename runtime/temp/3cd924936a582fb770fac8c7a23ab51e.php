@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506655428;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506581300;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506665083;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -131,7 +131,7 @@
                                                 <img src="<?php echo $comment->users->headimg; ?>">
                                             </a>
                                         </div>
-                                        <ul class="post-info" data-id="<?php echo $comment['id']; ?>">
+                                        <ul class="post-info" data-id="<?php echo $comment['id']; ?>" data-user="<?php echo $comment->users->id; ?>" >
                                             <li class="author">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $comment->users->nickname; ?></a>&nbsp;&nbsp;&nbsp;</li>
                                             <li class="time">&nbsp;&nbsp;&nbsp;发表于 <?php echo $comment['create_time']; ?>&nbsp;&nbsp;&nbsp;</li>
                                             <li class="browse">
@@ -248,6 +248,7 @@
 <script src="__STATIC__/index/js/jquery.qrcode.min.js" type="text/javascript"></script>
 <script>
     var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
+    var nickname = "<?php echo \think\Session::get('bbszhouqiusername'); ?>";
     //检测是否登陆
     function isLogin() {
         if (!uid){
@@ -334,18 +335,28 @@
     });
     //支持
     $(".review-c").click(function () {
-        var comment_id = $(this).parent().parent().data('id');
-        sendAttitude(comment_id,1,$(this));
+        sendAttitude(1,$(this));
     });
     //反对
     $(".browse-c").click(function () {
-        var comment_id = $(this).parent().parent().data('id');
-        sendAttitude(comment_id,2,$(this));
+        sendAttitude(2,$(this));
     });
 
-    function sendAttitude(id,attitude,that){
+    function sendAttitude(attitude,that){
+        var comment_user = that.parent().parent().data('user');
+        var id = that.parent().parent().data('id');
         isLogin();
-        $.post("<?php echo url('attitude'); ?>",{id:id,uid:uid,attitude:attitude},function (res) {
+        var data = {
+            "id":id,
+            "uid":uid,
+            "attitude":attitude,
+            "post_user_id":uid,
+            "post_user_name":nickname,
+            "get_user_id":comment_user,
+            "content_id":id,
+        };
+
+        $.post("<?php echo url('attitude'); ?>",data,function (res) {
             var data = JSON.parse(res);
             that.attr('src',data.icon);
             that.next().html(data.num);

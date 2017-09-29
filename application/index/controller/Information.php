@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\common\model\InformationComment;
+use app\common\model\Message;
 use think\Db;
 use think\Loader;
 use think\Request;
@@ -109,26 +110,37 @@ class Information extends Base
             //$backJson['icon'] = 返回图标地址
             //$backJson['num'] = 点赞值
             $query = Db::name('information_comment');
-            $data = input('param.');
-            $res = $query->field('id,upvote,upvote_user,oppose,oppose_user')->find($data['id']);
+            $data  = input('param.');
+            $res   = $query->field('id,upvote,upvote_user,oppose,oppose_user')->find($data['id']);
+            //信息数据
+            $messageData = input('param.');
+            //删除不必要信息和新的信息
+            unset($messageData['id']);
+            unset($messageData['uid']);
+            unset($messageData['attitude']);
+            $messageData['info'] = '点赞成功';
+            $messageData['type'] = 2;
+            $messageData['user_type'] = 2;
             if ($data['attitude'] == 1){//点赞同
                 //默认点赞+1
                 $updateData['upvote'] = $res['upvote'] + 1;
-                $backJson['type']    = 1;
-                $backJson['message'] = '点赞成功';
-                $backJson['icon'] = '/static/index/images/upvote-b.png';
+                $backJson['type']     = 1;
+                $backJson['message']  = '点赞成功';
+                $backJson['icon']     = '/static/index/images/upvote-b.png';
                 //处理点赞数据
                 if (is_null($res['upvote_user'])){
                     $upvoteUser[] = $data['uid'];
                     $updateData['upvote_user'] = serialize($upvoteUser);
+                    $this->incMessage($messageData);
                 }else{
                     $upvoteUser = unserialize($res['upvote_user']);
                     if (in_array($data['uid'],$upvoteUser)){//已经点过赞,取消点赞
-                        $upvoteUser = removeValue($data['uid'],$upvoteUser);
+                        $upvoteUser           = removeValue($data['uid'],$upvoteUser);
                         $updateData['upvote'] = $res['upvote'] - 1;
-                        $backJson['message'] = '取消点赞成功';
-                        $backJson['icon'] = '/static/index/images/upvote-f.png';
+                        $backJson['message']  = '取消点赞成功';
+                        $backJson['icon']     = '/static/index/images/upvote-f.png';
                     }else{
+                        $this->incMessage($messageData);
                         $upvoteUser[] = $data['uid'];      //没有点过赞  进行点赞
                     }
                     $updateData['upvote_user'] = serialize($upvoteUser);
@@ -165,6 +177,15 @@ class Information extends Base
             }
             echo json_encode($backJson);
         }
+    }
+
+    /**
+     * @param $data 消息数组
+     * @return bool 是否成功发送消息
+     */
+    private function incMessage($data){
+        $res = (new Message())->save($data);
+        return (boolean)$res;
     }
 
     /**

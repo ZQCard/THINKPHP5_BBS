@@ -54,7 +54,6 @@ class Login extends Base
             $saveData['city'] = $location['city'];
             $saveData['last_login_ip'] = $ip;
             $saveData['login_times'] = $user->login_times+1;
-            $salt = config('SALT');
             $num = mt_rand(1,1000);
             $token = config('SALT').$num.$user->username;
             $saveData['verify_token'] = md5($token);

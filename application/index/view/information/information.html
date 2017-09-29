@@ -43,7 +43,7 @@
                                                 <img src="{$comment->users->headimg}">
                                             </a>
                                         </div>
-                                        <ul class="post-info" data-id="{$comment['id']}">
+                                        <ul class="post-info" data-id="{$comment['id']}" data-user="{$comment->users->id}" >
                                             <li class="author">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$comment->users->nickname}</a>&nbsp;&nbsp;&nbsp;</li>
                                             <li class="time">&nbsp;&nbsp;&nbsp;发表于 {$comment['create_time']}&nbsp;&nbsp;&nbsp;</li>
                                             <li class="browse">
@@ -142,18 +142,28 @@
     });
     //支持
     $(".review-c").click(function () {
-        var comment_id = $(this).parent().parent().data('id');
-        sendAttitude(comment_id,1,$(this));
+        sendAttitude(1,$(this));
     });
     //反对
     $(".browse-c").click(function () {
-        var comment_id = $(this).parent().parent().data('id');
-        sendAttitude(comment_id,2,$(this));
+        sendAttitude(2,$(this));
     });
 
-    function sendAttitude(id,attitude,that){
+    function sendAttitude(attitude,that){
+        var comment_user = that.parent().parent().data('user');
+        var id = that.parent().parent().data('id');
         isLogin();
-        $.post("{:url('attitude')}",{id:id,uid:uid,attitude:attitude},function (res) {
+        var data = {
+            "id":id,
+            "uid":uid,
+            "attitude":attitude,
+            "post_user_id":uid,
+            "post_user_name":nickname,
+            "get_user_id":comment_user,
+            "content_id":id,
+        };
+
+        $.post("{:url('attitude')}",data,function (res) {
             var data = JSON.parse(res);
             that.attr('src',data.icon);
             that.next().html(data.num);
