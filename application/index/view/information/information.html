@@ -74,7 +74,12 @@
                         <form action="{:url('comment')}" method="post" enctype="multipart/form-data">
                             <textarea id="editor_id" name="content" style="width:100%;height:300px;margin: 0 auto;">{empty name="sessionUid "}登陆以后才能发布评论噢{/empty}</textarea>
                             <div class="fastpost-content-bottom ptm pnpost">
+                                {empty name="sessionUid "}
+                                <p style="width: 130px;float: right;" class="btn-post btn-post-B"><strong><a href="/login" style="color: #fffaf3">登陆</a></strong></p>
+                                {else/}
                                 <p style="width: 130px;float: right;" id="comment" class="btn-post btn-post-B"><strong>发表评论</strong></p>
+                                {/empty}
+
                             </div>
                         </form>
                     </div>
@@ -116,6 +121,7 @@
         </div>
     </div>
 </div>
+<span id="backJson"></span>
 {/block}
 <!--主要内容结束-->
 {block name="js"}
@@ -148,9 +154,10 @@
     });
 
     function sendAttitude(attitude,that){
+        var res = isLogin();
+        if (!res)return false;
         var comment_user = that.parent().parent().data('user');
         var id = that.parent().parent().data('id');
-        isLogin();
         var data = {
             "id":id,
             "uid":uid,
@@ -163,9 +170,13 @@
 
         $.post("{:url('attitude')}",data,function (res) {
             var data = JSON.parse(res);
-            that.attr('src',data.icon);
-            that.next().html(data.num);
-            layer.msg(data.message,{time:2000});
+            if (data.status == 1){
+                that.attr('src',data.icon);
+                that.next().html(data.num);
+                layer.msg(data.message,{time:2000});
+            }else{
+                layer.msg(data.message,{time:2000});
+            }
         });
     }
 </script>

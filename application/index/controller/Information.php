@@ -111,6 +111,13 @@ class Information extends Base
             //$backJson['num'] = 点赞值
             $query = Db::name('information_comment');
             $data  = input('param.');
+            $res   = Db::name('users')->find($data['uid'])&&Db::name('administrator')->find($data['uid']);
+            if (!$res){
+                $backJson['status'] = 2;
+                $backJson['message'] = '请登录后再操作';
+                echo json_encode($backJson);
+                exit();
+            }
             $res   = $query->field('id,upvote,upvote_user,oppose,oppose_user')->find($data['id']);
             //信息数据
             $messageData = input('param.');

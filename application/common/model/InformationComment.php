@@ -31,6 +31,6 @@ class InformationComment extends Base
     //关联users表
     public function users()
     {
-        return $this->belongsTo('users','reply_user_id')->field('id,nickname,headimg');
+        return $this->belongsTo('users','reply_user_id')->field('id,headimg,nickname');
     }
 }

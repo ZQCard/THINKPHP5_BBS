@@ -2,9 +2,7 @@
 
 namespace app\common\model;
 
-use think\Model;
-
-class Users extends Model
+class Users extends Base
 {
     protected $field = true;
 }

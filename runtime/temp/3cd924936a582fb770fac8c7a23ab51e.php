@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506733890;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506755263;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -162,7 +162,12 @@
                         <form action="<?php echo url('comment'); ?>" method="post" enctype="multipart/form-data">
                             <textarea id="editor_id" name="content" style="width:100%;height:300px;margin: 0 auto;"><?php if(empty($sessionUid) || (($sessionUid instanceof \think\Collection || $sessionUid instanceof \think\Paginator ) && $sessionUid->isEmpty())): ?>登陆以后才能发布评论噢<?php endif; ?></textarea>
                             <div class="fastpost-content-bottom ptm pnpost">
+                                <?php if(empty($sessionUid) || (($sessionUid instanceof \think\Collection || $sessionUid instanceof \think\Paginator ) && $sessionUid->isEmpty())): ?>
+                                <p style="width: 130px;float: right;" class="btn-post btn-post-B"><strong><a href="/login" style="color: #fffaf3">登陆</a></strong></p>
+                                <?php else: ?>
                                 <p style="width: 130px;float: right;" id="comment" class="btn-post btn-post-B"><strong>发表评论</strong></p>
+                                <?php endif; ?>
+
                             </div>
                         </form>
                     </div>
@@ -204,6 +209,7 @@
         </div>
     </div>
 </div>
+<span id="backJson"></span>
 
 <!--主要内容结束-->
 <!--底部内容开始-->
@@ -341,9 +347,10 @@
     });
 
     function sendAttitude(attitude,that){
+        var res = isLogin();
+        if (!res)return false;
         var comment_user = that.parent().parent().data('user');
         var id = that.parent().parent().data('id');
-        isLogin();
         var data = {
             "id":id,
             "uid":uid,
@@ -356,9 +363,13 @@
 
         $.post("<?php echo url('attitude'); ?>",data,function (res) {
             var data = JSON.parse(res);
-            that.attr('src',data.icon);
-            that.next().html(data.num);
-            layer.msg(data.message,{time:2000});
+            if (data.status == 1){
+                that.attr('src',data.icon);
+                that.next().html(data.num);
+                layer.msg(data.message,{time:2000});
+            }else{
+                layer.msg(data.message,{time:2000});
+            }
         });
     }
 </script>
