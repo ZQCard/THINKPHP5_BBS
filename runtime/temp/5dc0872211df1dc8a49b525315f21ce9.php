@@ -1,5 +1,5 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\forum\forum.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506318935;}*/ ?>
-<html>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\forum\forum.html";i:1506669259;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
+<!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>学编程论坛</title>
@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/main_1.css" />
     <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/flexslider_1.css" />
     <link href="__STATIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/plugins/layer/theme/default/layer.css" rel="stylesheet">
     <!--
     在线资源链接
     <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -42,14 +43,14 @@
                 <div id="um">
                     <div class="ui-login-toggle">
                         <span class="user-avatar"><img src="http://123.56.195.228/rw/chuizi/uc_server/avatar.php?uid=3&amp;size=small"></span>
-                        <span class="user-name hide-row">test123</span>
+                        <span class="user-name hide-row"><?php echo \think\Cookie::get('bbszhouqiusername'); ?></span>
                     </div>
                     <div class="ui-login-status" style="display: none;">
                         <ul>
                             <li class="user-primary-info">
                                 <p class="user-avatar-name">
                                     <span class="user-avatar"><a href="home.php?mod=space&amp;uid=3"><img src="http://123.56.195.228/rw/chuizi/uc_server/avatar.php?uid=3&amp;size=small"></a></span>
-                                    <span class="user-name hide-row"><a href="home.php?mod=space&amp;uid=3" target="_blank" title="访问我的空间">test123</a></span>
+                                    <span class="user-name hide-row"><a href="home.php?mod=space&amp;uid=3" target="_blank" title="访问我的空间"><?php echo \think\Cookie::get('bbszhouqiusername'); ?></a></span>
                                 </p>
                             </li>
                             <li class="user-alert"><a href="home.php?mod=space&amp;do=notice">提醒</a></li>
@@ -145,20 +146,14 @@
                                                         </a>
                                                         <dl class="forum-list-item-summary">
                                                             <dt>
-                                                            <h3 class="common">
-                                                                <a href="javascript:;" id="content_29" title="更多操作" onclick="CONTENT_TID='29';CONTENT_ID='stickthread_29';showMenu({'ctrlid':this.id,'menuid':'content_menu'})"></a>
-
-                                                                <a href="forum.php?mod=viewthread&amp;tid=29&amp;extra=page%3D1" onclick="atarget(this)">坚果 Pro 全款预订细则</a>
-                                                                <span title="" class="icon icon-arrow-3"></span>
-                                                                <a href="javascript:void(0);" onclick="hideStickThread('29')" class="showhide y" title="隐藏置顶帖">隐藏置顶帖</a>
-                                                                <span title="精华 1" class="icon icon-finepick"></span>
-
-
-
-
-                                                            </h3>
+                                                                <h3 class="common">
+                                                                    <a href="forum.php?mod=viewthread&amp;tid=29&amp;extra=page%3D1" onclick="atarget(this)">坚果 Pro 全款预订细则</a>
+                                                                    <span title="精华 1" class="icon icon-finepick"></span>
+                                                                </h3>
                                                             </dt>
-                                                            <dd><a href="home.php?mod=space&amp;uid=1" c="1" mid="card_4872">admin</a><span>发表于 2017-6-10</span>
+                                                            <dd>
+                                                                <a href="home.php?mod=space&amp;uid=1" c="1" mid="card_4872">admin</a>
+                                                                <span>发表于 2017-6-10</span>
                                                             </dd>
                                                         </dl>
                                                         <div class="forum-list-item-info">
@@ -189,25 +184,17 @@
                     </div>
                     <!--分页结束-->
                 </div>
-
-
-                <div id="fastpost" class="content forum-list-fastpost">
-                    <h4><a href="home.php?mod=spacecp&amp;ac=credit&amp;op=rule&amp;fid=41" class="forum-fastpost-rule" target="_blank">本版积分规则</a>快速发帖</h4>
-                    <div id="f_pst" class="bm">
-
-                        <div class="fastpost">
-                            <form method="post" autocomplete="off" id="fastpostform" action="forum.php?mod=post&amp;action=newthread&amp;fid=41&amp;topicsubmit=yes&amp;infloat=yes&amp;handlekey=fastnewpost" onsubmit="return fastpostvalidate(this)">
-                                <div id="fastpostreturn" style="margin:-5px 0 5px"></div>
-                                <p class="fastpost-content-bottom ptm pnpost">
-                                    <button class="btn-post btn-post-B" type="submit" name="topicsubmit" id="fastpostsubmit" value="topicsubmit" tabindex="13"><strong>发表帖子</strong></button>
-                                </p>
-                            </form>
+                <?php if($kindEditor == '1'): ?>
+                <div class="pren pbm cl" style="margin-top: 50px;">
+                    <form action="<?php echo url('comment'); ?>" method="post" enctype="multipart/form-data">
+                        <textarea id="editor_id" name="content" style="width:100%;height:300px;margin: 0 auto;"><?php if(empty($sessionUid) || (($sessionUid instanceof \think\Collection || $sessionUid instanceof \think\Paginator ) && $sessionUid->isEmpty())): ?>登陆以后才能发布评论噢<?php endif; ?></textarea>
+                        <div class="fastpost-content-bottom ptm pnpost">
+                            <p style="width: 130px;float: right;" id="comment" class="btn-post btn-post-B"><strong>发表评论</strong></p>
                         </div>
-                    </div>
+                    </form>
                 </div>
+                <?php endif; ?>
             </div>
-
-
             <div class="sidebar">
                 <div class="profile">
                     <a href="home.php?mod=spacecp&amp;ac=favorite&amp;type=forum&amp;id=41&amp;handlekey=favoriteforum&amp;formhash=ba9699b0" class="collect"><i class="icon-fav-star"></i>收藏本版</a>
@@ -215,23 +202,15 @@
                <span class="avatar">
                                                    <img src="picture/common_41_icon_1.png" alt="">
                                        </span>
-                        <p><span class="name">官方动态</span></p>
+                        <p><span class="name"><?php echo $module; ?></span></p>
                     </div>
                     <ul class="profile-col-3 clearfix">
                         <li><span>今日</span><em>0</em></li>
-                        <li><span>主题</span><em>28</em></li>
-                        <li><span>排名</span><em>15</em></li>
+                        <li><span>发帖数量</span><em>1</em></li>
+                        <li><span>排名</span><em>2</em></li>
                     </ul>
                 </div>
-                <!--[diy=um_forumdisplay_diy1]--><div id="um_forumdisplay_diy1" class="area"><div id="frameQ90vU9" class=" frame move-span cl frame-1"><div id="frameQ90vU9_left" class="column frame-1-c"><div id="frameQ90vU9_left_temp" class="move-span temp"></div><div id="portal_block_13" class="block move-span"><div id="portal_block_13_content" class="dxb_bc"><div class="right-module plate-recommend">
-                <h4>版块推荐</h4>
-
-                <ul class="plate-list clearfix">
-                    <li style="background: url(images/common_50_icon_1.png) no-repeat 20px center;background-size: 26px 26px;-webkit-background-size: 26px 26px;">
-                        <a href="forum.php?mod=forumdisplay&amp;fid=50" target="_blank">安卓应用</a>
-                    </li>
-                </ul>
-            </div> </div></div></div></div></div><!--[/diy]-->
+            </div><!--[/diy]-->
             </div>
         </div>
 
@@ -274,7 +253,7 @@
 </div>
 <!--本地资源链接-->
 <script src="__STATIC__/admin/js/jquery.min.js"></script>
-<script src="__STATIC__/admin/js/plugins/layer/layer.min.js"></script>
+<script src="__STATIC__/plugins/layer/layer.js"></script>
 <!--
 在线资源链接
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
@@ -284,6 +263,21 @@
 <script src="__STATIC__/index/js/index_1.js" type="text/javascript"></script>
 <script src="__STATIC__/index/js/jquery.qrcode.min.js" type="text/javascript"></script>
 <script>
+    var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
+    var nickname = "<?php echo \think\Session::get('bbszhouqiusername'); ?>";
+    //检测是否登陆
+    function isLogin() {
+        if (!uid){
+            layer.confirm('您还未登陆,是否前去登陆？', {
+                btn: ['快点O(∩_∩)O','等会吧']
+            }, function(){
+                window.location.href = "/login";
+            }, function(){
+                layer.msg('我会等你的噢',{time:1000});
+            });
+            return false;
+        }
+    }
     //添加表单提交
     $("#formSubmitAdd").click(function () {
         var form = $("form");
@@ -292,12 +286,7 @@
 
     //退出登陆
     $("#logout").click(function () {
-        $.get('/logout',{},function (res) {
-            if (res.code == 1) {
-                alert(res.msg);
-                window.location.reload();
-            }
-        });
+        $.get('/logout',{},original);
     });
 
     //请求成功回调函数
@@ -308,6 +297,12 @@
             }else{
                 window.location.reload();
             }
+        });
+    }
+    //原页刷新函数
+    function original(res) {
+        layer.msg(res.msg,{time:2000}, function () {
+            window.location.reload();
         });
     }
 
@@ -334,7 +329,17 @@
 </script>
 <!--顶部内容结束-->
 
-
+<script  src="__STATIC__/plugins/kindeditor/kindeditor-all-min.js"></script>
+<script  src="__STATIC__/plugins/kindeditor/lang/zh-CN.js"></script>
+<script>
+    //编辑器
+    KindEditor.ready(function(K) {
+        editor  = K.create('#editor_id');
+        $("#comment").click(function(){
+            isLogin();
+        });
+    });
+</script>
 
 </body>
 </html>

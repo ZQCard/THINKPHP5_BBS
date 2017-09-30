@@ -56,9 +56,9 @@
                                             </li>
                                             <li class="review">
                                                 {eq name="$comment['is_upvote']" value="0"}
-                                                <img src="__STATIC__/index/images/upvote-f.png" style="height: 20px;width: 20px;" class="review-c">
+                                                <img src="__STATIC__/index/images/upvote-f.png" class="review-c">
                                                 {else/}
-                                                <img src="__STATIC__/index/images/upvote-b.png" style="height: 20px;width: 20px;" class="review-c">
+                                                <img src="__STATIC__/index/images/upvote-b.png" class="review-c">
                                                 {/eq}
                                                 <b>{$comment['upvote']}</b>
                                             </li>
@@ -116,7 +116,6 @@
         </div>
     </div>
 </div>
-<span id="backJson"></span>
 {/block}
 <!--主要内容结束-->
 {block name="js"}
@@ -126,7 +125,6 @@
     //编辑器
     KindEditor.ready(function(K) {
         editor  = K.create('#editor_id');
-        //editor.html('你好<img src="http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif" border="0" alt="" />');
         $("#comment").click(function(){
             isLogin();
             var data = {

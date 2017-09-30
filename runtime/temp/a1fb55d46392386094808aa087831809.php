@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\forum\check.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506499519;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\forum\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -261,6 +261,7 @@
 <script src="__STATIC__/index/js/jquery.qrcode.min.js" type="text/javascript"></script>
 <script>
     var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
+    var nickname = "<?php echo \think\Session::get('bbszhouqiusername'); ?>";
     //检测是否登陆
     function isLogin() {
         if (!uid){
@@ -282,9 +283,7 @@
 
     //退出登陆
     $("#logout").click(function () {
-        $.get('/logout',{},function (res) {
-            layer.msg(res.msg,{time:2000}, original);
-        });
+        $.get('/logout',{},original);
     });
 
     //请求成功回调函数
@@ -300,11 +299,7 @@
     //原页刷新函数
     function original(res) {
         layer.msg(res.msg,{time:2000}, function () {
-            if (res.code == 1) {
-                window.location.reload();
-            }else{
-                window.location.reload();
-            }
+            window.location.reload();
         });
     }
 

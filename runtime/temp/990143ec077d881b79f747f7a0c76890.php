@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:68:"D:\wamp64\www\bbs\public/../application/admin\view\banner\check.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506300485;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:68:"D:\wamp64\www\bbs\public/../application/admin\view\banner\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506735724;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -62,12 +62,13 @@
                 <li>
                     <a href="#">
                         <i class="fa fa-user"></i>
-                        <span class="nav-label">管理员管理</span>
+                        <span class="nav-label">站点管理</span>
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a class="J_menuItem" href="<?php echo url('admin/administrator/index'); ?>">查看管理员</a>
+                            <a class="J_menuItem" href="<?php echo url('admin/config/index'); ?>">全局配置设置</a>
                         </li>
                     </ul>
                 </li>
@@ -100,6 +101,7 @@
                     <ul class="nav nav-second-level">
                         <li>
                             <a class="J_menuItem" href="<?php echo url('admin/module/index'); ?>">论坛模块管理</a>
+                            <a class="J_menuItem" href="<?php echo url('admin/posts/index'); ?>">帖子管理</a>
                         </li>
                     </ul>
                 </li>
@@ -273,6 +275,7 @@
 <script src="__STATIC__/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="__STATIC__/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="__STATIC__/admin/js/plugins/pace/pace.min.js"></script>
+<script src="__STATIC__/admin/js/plugins/layer/layer.min.js"></script>
 <script src="__STATIC__/admin/js/hAdmin.js?v=4.1.0"></script>
 <!--在线资源链接
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>

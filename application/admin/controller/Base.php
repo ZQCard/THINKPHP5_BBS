@@ -3,8 +3,9 @@
 namespace app\admin\controller;
 use think\Controller;
 use think\Db;
+use think\Request;
 
-class Base extends Controller
+ abstract class Base extends Controller
 {
     protected $salt;
     public function _initialize()
@@ -27,6 +28,8 @@ class Base extends Controller
         return $this->fetch();
     }
 
+    abstract public function save(Request $request);
+    abstract public function update(Request $request);
 
 
     public function edit()

@@ -12,6 +12,8 @@ Route::group('admin',function (){
     Route::resource('module','admin/module');
     Route::resource('information','admin/information');
     Route::resource('config','admin/config');
+    Route::resource('posts','admin/posts');
+    Route::get('test','admin/test/index');
 });
 
 

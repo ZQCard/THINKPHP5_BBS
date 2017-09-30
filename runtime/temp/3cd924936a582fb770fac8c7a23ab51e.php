@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506665083;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506733890;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -144,9 +144,9 @@
                                             </li>
                                             <li class="review">
                                                 <?php if($comment['is_upvote'] == '0'): ?>
-                                                <img src="__STATIC__/index/images/upvote-f.png" style="height: 20px;width: 20px;" class="review-c">
+                                                <img src="__STATIC__/index/images/upvote-f.png" class="review-c">
                                                 <?php else: ?>
-                                                <img src="__STATIC__/index/images/upvote-b.png" style="height: 20px;width: 20px;" class="review-c">
+                                                <img src="__STATIC__/index/images/upvote-b.png" class="review-c">
                                                 <?php endif; ?>
                                                 <b><?php echo $comment['upvote']; ?></b>
                                             </li>
@@ -204,7 +204,6 @@
         </div>
     </div>
 </div>
-<span id="backJson"></span>
 
 <!--主要内容结束-->
 <!--底部内容开始-->
@@ -319,7 +318,6 @@
     //编辑器
     KindEditor.ready(function(K) {
         editor  = K.create('#editor_id');
-        //editor.html('你好<img src="http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif" border="0" alt="" />');
         $("#comment").click(function(){
             isLogin();
             var data = {

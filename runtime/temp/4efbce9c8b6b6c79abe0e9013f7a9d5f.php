@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/admin\view\index\check.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506308803;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/admin\view\index\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506733112;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -101,6 +101,7 @@
                     <ul class="nav nav-second-level">
                         <li>
                             <a class="J_menuItem" href="<?php echo url('admin/module/index'); ?>">论坛模块管理</a>
+                            <a class="J_menuItem" href="<?php echo url('admin/posts/index'); ?>">论坛模块管理</a>
                         </li>
                     </ul>
                 </li>
@@ -171,9 +172,7 @@
     $("#formSubmitAdd").click(function () {
         var form = $("form");
         var url = "/admin/<?php echo $controller; ?>";
-        $.post(url,form.serialize(),function () {
-            
-        });
+        $.post(url,form.serialize(),success);
     });
 
     //修改表单提交

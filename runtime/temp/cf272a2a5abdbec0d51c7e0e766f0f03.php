@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:68:"D:\wamp64\www\bbs\public/../application/admin\view\module\check.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506039767;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:68:"D:\wamp64\www\bbs\public/../application/admin\view\module\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506733112;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -12,9 +12,16 @@
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
+    <!--本地资源链接-->
+    <link href="__STATIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/admin/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/admin/css/animate.css" rel="stylesheet">
+    <!--
+    在线资源链接
     <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    -->
     <link href="__STATIC__/admin/css/style.css?v=4.1.0" rel="stylesheet">
     
     
@@ -55,12 +62,13 @@
                 <li>
                     <a href="#">
                         <i class="fa fa-user"></i>
-                        <span class="nav-label">管理员管理</span>
+                        <span class="nav-label">站点管理</span>
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a class="J_menuItem" href="<?php echo url('admin/administrator/index'); ?>">查看管理员</a>
+                            <a class="J_menuItem" href="<?php echo url('admin/config/index'); ?>">全局配置设置</a>
                         </li>
                     </ul>
                 </li>
@@ -93,6 +101,7 @@
                     <ul class="nav nav-second-level">
                         <li>
                             <a class="J_menuItem" href="<?php echo url('admin/module/index'); ?>">论坛模块管理</a>
+                            <a class="J_menuItem" href="<?php echo url('admin/posts/index'); ?>">论坛模块管理</a>
                         </li>
                     </ul>
                 </li>
@@ -253,16 +262,24 @@
     <source  src="__PUBLIC__/tips/tips.mp3" type="audio/mp3">
 </audio>-->
 <!-- 全局js -->
+<!--本地资源链接-->
+<script src="__STATIC__/admin/js/jquery.min.js"></script>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+<script src="__STATIC__/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="__STATIC__/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="__STATIC__/admin/js/plugins/pace/pace.min.js"></script>
+<script src="__STATIC__/admin/js/plugins/layer/layer.min.js"></script>
+<script src="__STATIC__/admin/js/hAdmin.js?v=4.1.0"></script>
+<!--在线资源链接
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="//cdn.bootcss.com/metisMenu/2.7.0/metisMenu.min.js"></script>
 <script src="//cdn.bootcss.com/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
 <script src="//cdn.bootcss.com/layer/3.0/layer.min.js"></script>
-
-<!-- 自定义js -->
-<script src="__STATIC__/admin/js/hAdmin.js?v=4.1.0"></script>
-<!-- 第三方插件 -->
 <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<script src="__STATIC__/admin/js/hAdmin.js?v=4.1.0"></script>
+-->
 <script>
     //添加表单提交
     $("#formSubmitAdd").click(function () {

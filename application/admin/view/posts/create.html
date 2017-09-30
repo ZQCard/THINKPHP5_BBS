@@ -1,0 +1,144 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="page-wrapper" class="gray-bg dashbard-1">
+
+    <div class="row J_mainContent" id="content-main">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加帖子</h5>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" method="post" action="" id="commentForm" novalidate="novalidate">
+                        <input type="hidden" name="__token__" value="{$Request.token}" />
+                        <input type="hidden" name="user_id" value="{$Request.session.zhouqiaid}" />
+                        <input type="hidden" name="user_type" value="1" />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">帖子标题：</label>
+                            <div class="col-sm-8">
+                                <input name="title" value="" minlength="2" type="text" class="form-control" required="" aria-required="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">帖子内容：</label>
+                            <div class="col-sm-8">
+                                <textarea id="editor_id" name="content" style="width:100%;height:300px;margin: 0 auto;"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">所属模块：</label>
+                            <div class="col-sm-8">
+                                <select style="height: 30px;" id="module-p">
+                                    <option value="">请选择帖子所属模块</option>
+                                    {foreach name="module" item="module"}
+                                    <option value="{$module['id']}">{$module['name']}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            <label class="col-sm-3 control-label">所属子模块：</label>
+                            <div class="col-sm-8">
+                                <select name="module_id" style="height: 30px;" id="module-c">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">是否置顶：</label>
+                            <div class="col-sm-8">
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" class="onoffswitch-checkbox" name="is_top" id="example1">
+                                        <label class="onoffswitch-label" for="example1">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">是否加精：</label>
+                            <div class="col-sm-8">
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" class="onoffswitch-checkbox" name="is_good" id="example3">
+                                        <label class="onoffswitch-label" for="example3">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态：</label>
+                            <div class="col-sm-8">
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox"  checked="" class="onoffswitch-checkbox" name="status" id="example2">
+                                        <label class="onoffswitch-label" for="example2">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <a class="btn btn-primary" id="formSubmitAddEditor">提交</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="js"}
+<script  src="__STATIC__/plugins/kindeditor/kindeditor-all-min.js"></script>
+<script  src="__STATIC__/plugins/kindeditor/lang/zh-CN.js"></script>
+<script>
+    //编辑器
+    KindEditor.ready(function(K) {
+        editor  = K.create('#editor_id');
+    });
+
+    //筛选子模块
+    $("#module-p").change(function () {
+        var pid = $(this).val();
+        if (!pid){
+            $("#module-c").parent().parent().hide();
+            $("#module-c").html('');
+            return false;
+        }
+        $.post("{:url('getChild')}",{pid:pid},function (res) {
+            if (res.code == 2){
+                layer.msg(res.msg);
+                return ;
+            }
+            //<option value="{$module['id']}">{$module['name']}</option>
+            var html = '';
+            for (var i in res.data){
+                html += '<option value="'+res.data[i].id+'">'+res.data[i].name+'</option>';
+            }
+            $("#module-c").html(html);
+            $("#module-c").parent().parent().show();
+        });
+    });
+
+    $("#formSubmitAddEditor").click(function () {
+        var form = $("form");
+        $("#editor_id").val(editor.text());
+        var url = "/admin/{$controller}";
+        $.post(url,form.serialize(),function () {
+
+        });
+    });
+</script>
+{/block}

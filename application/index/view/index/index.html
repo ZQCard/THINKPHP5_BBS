@@ -42,7 +42,7 @@
                                 <div class="foldableBox content ">
                                     <h4>精品资讯<span class="btn-fold"></span></h4>
                                     <div class="section-content">
-                                        <!--主要新闻资讯开始-->
+                                        <!--主要资讯开始-->
                                         {foreach name="information" item="information"}
                                         <div class="content-box">
                                             <h2>
@@ -53,8 +53,8 @@
                                             <ul class="post-info">
                                                 <li class="author">{$information['author']}</li>
                                                 <li class="time">{$information['create_time']|date="Y-m-d",###}</li>
-                                                <li class="review">{$information['look']}</li>
-                                                <li class="browse">{$information['comment']}</li>
+                                                <li class="review"><img src="__STATIC__/index/images/lookover.png" alt="">{$information['look']}</li>
+                                                <li class="browse"><img src="__STATIC__/index/images/comment.png" alt="">{$information['comment']}</li>
                                             </ul>
                                             <div class="content-picture">
                                                 <a href="/information/{$information['id']}">

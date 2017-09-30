@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 
 use think\Cookie;
+use think\Request;
 use think\Session;
 
 class Index extends Base
@@ -11,6 +12,15 @@ class Index extends Base
         return $this->fetch();
     }
 
+    public function save(Request $request)
+    {
+        
+    }
+
+    public function update(Request $request)
+    {
+        
+    }
     public function logout()
     {
         //清空session和cookie

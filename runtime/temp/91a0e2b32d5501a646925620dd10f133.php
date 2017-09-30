@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:73:"D:\wamp64\www\bbs\public/../application/index\view\information\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506581300;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:73:"D:\wamp64\www\bbs\public/../application/index\view\information\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -215,6 +215,7 @@
 <script src="__STATIC__/index/js/jquery.qrcode.min.js" type="text/javascript"></script>
 <script>
     var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
+    var nickname = "<?php echo \think\Session::get('bbszhouqiusername'); ?>";
     //检测是否登陆
     function isLogin() {
         if (!uid){

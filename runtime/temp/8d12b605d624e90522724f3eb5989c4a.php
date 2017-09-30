@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"D:\wamp64\www\bbs\public/../application/admin\view\administrator\check.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506300564;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"D:\wamp64\www\bbs\public/../application/admin\view\administrator\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506315568;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -62,12 +62,13 @@
                 <li>
                     <a href="#">
                         <i class="fa fa-user"></i>
-                        <span class="nav-label">管理员管理</span>
+                        <span class="nav-label">站点管理</span>
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a class="J_menuItem" href="<?php echo url('admin/administrator/index'); ?>">查看管理员</a>
+                            <a class="J_menuItem" href="<?php echo url('admin/config/index'); ?>">全局配置设置</a>
                         </li>
                     </ul>
                 </li>

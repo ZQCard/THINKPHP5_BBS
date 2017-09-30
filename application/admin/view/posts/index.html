@@ -1,0 +1,172 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" id="linkOrder" href="#">
+                        <i class="fa fa-bell"></i> <span class="label label-primary"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="row J_mainContent" id="content-main">
+        <div class="col-sm-12">
+            <!-- Example Toolbar -->
+            <div class="example-wrap">
+                <h4 class="example-title">帖子管理</h4>
+                <div class="example">
+
+                    <div class="bootstrap-table">
+                        <div class="fixed-table-toolbar"><div class="bars pull-left"><div class="btn-group hidden-xs" id="exampleToolbar" role="group">
+                            <a type="button"  href="{:url('create')}" class="btn btn-outline btn-default"  title="添加管理员">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                            </a>
+                            <button class="btn btn-default btn-outline" type="button" onclick="window.location.reload();" title="刷新">
+                                <i class="glyphicon glyphicon-repeat"></i>
+                            </button>
+                        </div>
+                        </div>
+
+                        </div>
+                        <div class="fixed-table-container" style="padding-bottom: 0px;">
+                            <div class="fixed-table-header" style="display: none;">
+                                <table></table>
+                            </div>
+                            <div class="fixed-table-body">
+                                <table id="exampleTableToolbar" data-mobile-responsive="true" class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="name" tabindex="0">
+                                            <div class="th-inner ">序号</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th data-field="name" tabindex="0">
+                                            <div class="th-inner ">帖子标题</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner ">用户类型</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner ">用户名称</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th data-field="name" tabindex="0">
+                                            <div class="th-inner ">所属模块</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th data-field="name" tabindex="0">
+                                            <div class="th-inner ">是否置顶</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th data-field="name" tabindex="0">
+                                            <div class="th-inner ">是否加精</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th data-field="name" tabindex="0">
+                                            <div class="th-inner ">浏览次数</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th data-field="name" tabindex="0">
+                                            <div class="th-inner ">评论次数</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th data-field="name" tabindex="0">
+                                            <div class="th-inner ">状态</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner ">创建时间</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {foreach name="posts" item="post"}
+                                    <tr class="no-records-found">
+                                        <td>{$key+1}</td>
+                                        <td>{$post->title}</td>
+                                        <td>
+                                            {eq name="$post->user_type" value="1"}
+                                            管理员
+                                            {else/}
+                                            用户
+                                            {/eq}
+                                        </td>
+                                        <td>
+                                            {eq name="$post->user_type" value="1"}
+                                            {$post->administrator->username}
+                                            {else/}
+                                            {$post->users->nickname}
+                                            {/eq}
+                                        </td>
+                                        <td>{$post->module_id}</td>
+                                        <td>
+                                            <div class="switch">
+                                                <div class="onoffswitch">
+                                                    <input type="checkbox" {eq name="$post->is_top" value="1"}checked=""{/eq}  class="onoffswitch-checkbox statusChange" id="is_top-{$post->is_top}-{$post->id}">
+                                                    <label class="onoffswitch-label" for="is_top-{$post->is_top}-{$post->id}">
+                                                        <span class="onoffswitch-inner"></span>
+                                                        <span class="onoffswitch-switch"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="switch">
+                                                <div class="onoffswitch">
+                                                    <input type="checkbox" {eq name="$post->is_good" value="1"}checked=""{/eq}  class="onoffswitch-checkbox statusChange" id="is_good-{$post->is_good}-{$post->id}">
+                                                    <label class="onoffswitch-label" for="is_good-{$post->is_good}-{$post->id}">
+                                                        <span class="onoffswitch-inner"></span>
+                                                        <span class="onoffswitch-switch"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{$post->lookover}</td>
+                                        <td>{$post->comment}</td>
+                                        <td>
+                                            <div class="switch">
+                                                <div class="onoffswitch">
+                                                    <input type="checkbox" {eq name="$post->status" value="1"}checked=""{/eq}  class="onoffswitch-checkbox statusChange" id="status-{$post->status}-{$post->id}">
+                                                    <label class="onoffswitch-label" for="status-{$post->status}-{$post->id}">
+                                                        <span class="onoffswitch-inner"></span>
+                                                        <span class="onoffswitch-switch"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{$post->create_time}</td>
+                                    </tr>
+                                    {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="float: right">{$posts->render()}</div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!-- End Example Toolbar -->
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="js"}
+<script>
+    $(".statusChange").change(function () {
+        var info = $(this).attr('id').split('-');
+        var name = info[0];
+        var status = (info[1]==1)?2:1;
+        var id = info[2];
+        sendChange(id,name,status);
+    });
+</script>
+{/block}

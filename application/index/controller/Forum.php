@@ -3,6 +3,7 @@
 namespace app\index\controller;
 
 use think\Db;
+use think\Request;
 
 class Forum extends Base
 {
@@ -39,9 +40,21 @@ class Forum extends Base
         return $this->fetch();
     }
 
-    public function forum()
+    public function forum(Request $request)
     {
-        return $this->fetch();
+        if ($request->isGet()){
+            $data = input('param.');
+            $res = Db::name('module')->field('name')->find($data['id']);
+            $kindEditor = 1;
+            if (strpos($res['name'],'官方') !== false){
+                $kindEditor = 0;
+            }
+            $this->assign([
+                'kindEditor' => $kindEditor,
+                'module'     => $res['name']
+            ]);
+            return $this->fetch();
+        }
     }
 
     //推荐帖子
