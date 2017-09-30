@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\forum\forum.html";i:1506669259;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/index\view\forum\forum.html";i:1506761305;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -133,41 +133,39 @@
                                 <table summary="forum_41" cellspacing="0" cellpadding="0" id="threadlisttableid">
                                     <!--帖子记录开始-->
                                     <tbody id="stickthread_29">
-                                    <tr>
-
-
-                                        <td colspan="5">
-                                            <div class="forum-list-content">
-                                                <ul class="js-threadList">
-                                                    <li>
-
-                                                        <a class="forum-list-item-avatar" target="_blank" href="home.php?mod=space&amp;uid=1">
-                                                            <img src="picture/avatar_1.php">
-                                                        </a>
-                                                        <dl class="forum-list-item-summary">
-                                                            <dt>
-                                                                <h3 class="common">
-                                                                    <a href="forum.php?mod=viewthread&amp;tid=29&amp;extra=page%3D1" onclick="atarget(this)">坚果 Pro 全款预订细则</a>
-                                                                    <span title="精华 1" class="icon icon-finepick"></span>
-                                                                </h3>
-                                                            </dt>
-                                                            <dd>
-                                                                <a href="home.php?mod=space&amp;uid=1" c="1" mid="card_4872">admin</a>
-                                                                <span>发表于 2017-6-10</span>
-                                                            </dd>
-                                                        </dl>
-                                                        <div class="forum-list-item-info">
-                                                            <span><i class="icon-forum-view"></i>49</span>
-                                                            <span><i class="icon-forum-comment"></i>0</span>
-                                                        </div>
-
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-
-
-                                    </tr>
+                                        <?php if(is_array($posts) || $posts instanceof \think\Collection || $posts instanceof \think\Paginator): if( count($posts)==0 ) : echo "" ;else: foreach($posts as $key=>$post): ?>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="forum-list-content">
+                                                    <ul class="js-threadList">
+                                                        <li>
+                                                            <a class="forum-list-item-avatar" target="_blank" href="">
+                                                                <img src="<?php echo $post->users->headimg; ?>" alt="">
+                                                            </a>
+                                                            <dl class="forum-list-item-summary">
+                                                                <dt>
+                                                                    <h3 class="common">
+                                                                        <a href="/posts/<?php echo $post->id; ?>"><?php echo $post->title; ?></a>
+                                                                        <?php if($post->is_good == '1'): ?>
+                                                                        <span title="精华" class="icon icon-finepick"></span>
+                                                                        <?php endif; ?>
+                                                                    </h3>
+                                                                </dt>
+                                                                <dd>
+                                                                    <a href="/user/<?php echo $post->users->id; ?>"><?php echo $post->users->nickname; ?></a>
+                                                                    <span>发表于 <?php echo $post->create_time; ?></span>
+                                                                </dd>
+                                                            </dl>
+                                                            <div class="forum-list-item-info">
+                                                                <span><i class="icon-forum-view"></i><?php echo $post->lookover; ?></span>
+                                                                <span><i class="icon-forum-comment"></i><?php echo $post->comment; ?></span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; endif; else: echo "" ;endif; ?>
                                     </tbody>
                                     <!--帖子记录结束-->
                                 </table><!-- end of table "forum_G[fid]" branch 1/3 -->
@@ -176,11 +174,10 @@
                     </div>
 
                     <!--分页开始-->
-                    <a style="display: none;" class="bm_h" href="javascript:;" rel="forum.php?mod=forumdisplay&amp;fid=41&amp;page=2" curpage="1" id="autopbn" totalpage="2" picstyle="0" forumdefstyle="">下一页 »</a>
-                    <script src="js/autoloadpage.js" type="text/javascript"></script>
                     <div class="forum-list-pager clearfix">
                         <div class="pager-wrapper clearfix">
-                            <div class="pg"><strong>1</strong><a href="forum.php?mod=forumdisplay&amp;fid=41&amp;page=2">2</a><label><input type="text" name="custompage" class="px" size="2" title="输入页码，按回车快速跳转" value="1" onkeydown="if(event.keyCode==13) {window.location='forum.php?mod=forumdisplay&amp;fid=41&amp;page='+this.value;; doane(event);}"><span title="共 2 页"> / 2 页</span></label><a href="forum.php?mod=forumdisplay&amp;fid=41&amp;page=2" class="nxt">下一页</a></div>             </div>
+                            <?php echo $posts->render(); ?>
+                        </div>
                     </div>
                     <!--分页结束-->
                 </div>
@@ -202,12 +199,12 @@
                <span class="avatar">
                                                    <img src="picture/common_41_icon_1.png" alt="">
                                        </span>
-                        <p><span class="name"><?php echo $module; ?></span></p>
+                        <p><span class="name"><?php echo $module['name']; ?></span></p>
                     </div>
                     <ul class="profile-col-3 clearfix">
-                        <li><span>今日</span><em>0</em></li>
-                        <li><span>发帖数量</span><em>1</em></li>
-                        <li><span>排名</span><em>2</em></li>
+                        <li><span>今日</span><em><?php echo $module['post_child_num']; ?></em></li>
+                        <li><span>发帖数量</span><em><?php echo $module['post_num']; ?></em></li>
+                        <li><span>排名</span><em><?php echo $module['sort']; ?></em></li>
                     </ul>
                 </div>
             </div><!--[/diy]-->

@@ -136,9 +136,7 @@
         var form = $("form");
         $("#editor_id").val(editor.text());
         var url = "/admin/{$controller}";
-        $.post(url,form.serialize(),function () {
-
-        });
+        $.post(url,form.serialize(),success);
     });
 </script>
 {/block}

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/admin\view\index\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506733112;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:67:"D:\wamp64\www\bbs\public/../application/admin\view\index\index.html";i:1506039767;s:62:"D:\wamp64\www\bbs\public/../application/admin\view\layout.html";i:1506750802;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -101,7 +101,7 @@
                     <ul class="nav nav-second-level">
                         <li>
                             <a class="J_menuItem" href="<?php echo url('admin/module/index'); ?>">论坛模块管理</a>
-                            <a class="J_menuItem" href="<?php echo url('admin/posts/index'); ?>">论坛模块管理</a>
+                            <a class="J_menuItem" href="<?php echo url('admin/posts/index'); ?>">帖子管理</a>
                         </li>
                     </ul>
                 </li>
@@ -189,7 +189,7 @@
 
     //请求成功回调函数
     function success(res) {
-        layer.msg(res.msg,{time:2000}, function () {
+        layer.msg(res.msg,{time:1000}, function () {
             if (res.code == 1) {
                 window.location = document.referrer;
             }else{
@@ -220,7 +220,7 @@
     });
     //删除数据请求回调函数或者修改数据重新刷新页面
     function successDel(res) {
-        layer.msg(res.msg,{time:2000}, function () {
+        layer.msg(res.msg,{time:1000}, function () {
             if (res.code == 1) {
                 window.location.reload();
             }else{
@@ -240,7 +240,9 @@
             type : "PATCH",
             url  : "/admin/<?php echo $controller; ?>/changeInfo",
             data : {id:id,name:name,value:value},
-            success : successDel
+            success : function (res) {
+                layer.msg(res.msg,{time:1000});
+            }
         });
     }
 </script>

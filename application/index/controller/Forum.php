@@ -2,6 +2,7 @@
 
 namespace app\index\controller;
 
+use app\common\model\Posts;
 use think\Db;
 use think\Request;
 
@@ -44,14 +45,27 @@ class Forum extends Base
     {
         if ($request->isGet()){
             $data = input('param.');
-            $res = Db::name('module')->field('name')->find($data['id']);
+            //帖子信息
+            $posts = (new Posts())->where('module_id='.$data['id'].' AND status = 1')->field('content,update_time',true)->order('score DESC')->paginate(10);
+            //模块信息
+            $module = Db::name('module')->field('name,post_num')->find($data['id']);
             $kindEditor = 1;
-            if (strpos($res['name'],'官方') !== false){
+            if (strpos($module['name'],'官方') !== false){
                 $kindEditor = 0;
             }
+            //子贴数量以及排名
+            $res = Db::name('day_posts')->where('date',date('Y-m-d'))->field('module_id,post_num')->order('post_num DESC')->select();
+            foreach ($res as $key => $value){
+                if ($data['id'] == $value['module_id']){
+                    $module['sort'] = $key+1;
+                    $module['post_child_num'] = $value['post_num'];
+                    break;
+                }
+            }
             $this->assign([
+                'posts'      => $posts,
                 'kindEditor' => $kindEditor,
-                'module'     => $res['name']
+                'module'     => $module
             ]);
             return $this->fetch();
         }
