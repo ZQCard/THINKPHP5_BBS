@@ -46,7 +46,7 @@ class Forum extends Base
         if ($request->isGet()){
             $data = input('param.');
             //帖子信息
-            $posts = (new Posts())->where('module_id='.$data['id'].' AND status = 1')->field('content,update_time',true)->order('score DESC')->paginate(10);
+            $posts = (new Posts())->where('module_id='.$data['id'].' AND status = 1')->field('content,update_time',true)->order('is_top,is_good,score DESC')->paginate(10);
             //模块信息
             $module = Db::name('module')->field('name,post_num')->find($data['id']);
             $kindEditor = 1;
@@ -54,14 +54,21 @@ class Forum extends Base
                 $kindEditor = 0;
             }
             //子贴数量以及排名
-            $res = Db::name('day_posts')->where('date',date('Y-m-d'))->field('module_id,post_num')->order('post_num DESC')->select();
-            foreach ($res as $key => $value){
-                if ($data['id'] == $value['module_id']){
-                    $module['sort'] = $key+1;
-                    $module['post_child_num'] = $value['post_num'];
-                    break;
+            $res = Db::name('day_posts')->where('date',date('Y-m-d'))->where('module_id',$data['id'])->field('module_id,post_num')->order('post_num DESC')->select();
+            if (!empty($res)){
+                foreach ($res as $key => $value){
+                    if ($data['id'] == $value['module_id']){
+                        $module['sort'] = $key+1;
+                        $module['post_child_num'] = $value['post_num'];
+                        break;
+                    }
                 }
+            }else{
+                $res = Db::name('day_posts')->where('date',date('Y-m-d'))->field('id')->count();
+                $module['sort'] = $res+1;
+                $module['post_child_num'] = 0;
             }
+
             $this->assign([
                 'posts'      => $posts,
                 'kindEditor' => $kindEditor,

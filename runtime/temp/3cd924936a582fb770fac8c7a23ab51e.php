@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1506757448;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1506663648;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"D:\wamp64\www\bbs\public/../application/index\view\information\information.html";i:1507535555;s:62:"D:\wamp64\www\bbs\public/../application/index\view\layout.html";i:1507537501;}*/ ?>
 <!doctype html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -51,8 +51,11 @@
                                     <span class="user-name hide-row"><a href="home.php?mod=space&amp;uid=3" target="_blank" title="访问我的空间"><?php echo \think\Cookie::get('bbszhouqiusername'); ?></a></span>
                                 </p>
                             </li>
-                            <li class="user-alert"><a href="home.php?mod=space&amp;do=notice">提醒</a></li>
-                            <li class="user-message"><a href="home.php?mod=space&amp;do=pm" id="pm_ntc">消息</a></li>
+                            <li class="user-message">
+                                <a href="home.php?mod=space&amp;do=pm">
+                                    消息 <span style="color: red"  id="userNotice"></span>
+                                </a>
+                            </li>
                             <li class="user-favorite"><a href="home.php?mod=space&amp;do=favorite">收藏</a></li>
                             <li class="user-setting"><a href="home.php?mod=spacecp">设置</a></li>
                             <li class="user-logout"><a id="logout">退出</a></li>
@@ -253,6 +256,18 @@
 <script>
     var uid = "<?php echo \think\Session::get('bbszhouqiuid'); ?>";
     var nickname = "<?php echo \think\Session::get('bbszhouqiusername'); ?>";
+    //获取消息数量
+    getMessageNum();
+    function getMessageNum() {
+        if (!uid) return false;
+        $.post("<?php echo url('common/getMessageNum'); ?>",{uid:uid},function (res) {
+            var num = 0;
+            if (res.code == 1){
+                num = res.msg.message_num;
+            }
+            $("#userNotice").html('('+num+')');
+        })
+    }
     //检测是否登陆
     function isLogin() {
         if (!uid){
@@ -265,6 +280,7 @@
             });
             return false;
         }
+        return true;
     }
     //添加表单提交
     $("#formSubmitAdd").click(function () {
@@ -294,7 +310,7 @@
         });
     }
 
-    //二维码生产
+    //二维码生成
     /*jQuery(function(){
         $(".getQRCode").mouseenter(function () {
             $type = 'users';

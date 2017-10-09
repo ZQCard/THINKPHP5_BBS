@@ -5,6 +5,7 @@ use curl\Curl;
 use think\Controller;
 use geetcode\Geetcode;
 use think\Db;
+use think\Request;
 
 /**
  * Class Common  前台公共方法类
@@ -161,5 +162,17 @@ class Common extends Controller
             return $data;
         }
         return $data;
+    }
+
+
+    public function getMessageNum(Request $request)
+    {
+        if ($request->isPost()){
+            $uid = session('bbszhouqiuid');
+            if (input('post.uid') == $uid){
+                $res = Db::name('users')->where('id',$uid)->field('message_num')->find();
+                $this->success($res);
+            }
+        }
     }
 }
