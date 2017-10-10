@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\model;
+namespace app\common\model;
 use app\admin\controller\Common AS CommonFunction;
 
 class Module extends Base

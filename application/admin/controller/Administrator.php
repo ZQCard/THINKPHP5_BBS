@@ -1,7 +1,7 @@
 <?php
 
 namespace app\admin\controller;
-use app\admin\model\Administrator AS AdministratorModel;
+use app\common\model\Administrator AS AdministratorModel;
 use think\Loader;
 use think\Request;
 

@@ -14,6 +14,13 @@ class Base extends Model
 {
     //忽略非表单字段
     protected $field = true;
+
+    public function getStatusAttr($value)
+    {
+        $status = [1 => '正常', 2 => '冻结'];
+        return $status[$value];
+    }
+
     /**
      * @param $data  表单提交数据
      * @return bool  操作是否成功

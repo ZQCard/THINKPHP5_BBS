@@ -5,23 +5,22 @@ namespace app\admin\controller;
 use think\Db;
 use think\Loader;
 use think\Request;
-use app\admin\model\Module AS ModuleModel;
+use app\common\model\Module AS ModuleModel;
 
 class Module extends Base
 {
     public function index()
     {
         $ModuleModel = Db::name($this->request->controller());
-        $list = $ModuleModel->where(['pid'=>0])->order(['is_del','sort'=>'desc'])->paginate(1);
+        $list = $ModuleModel->where(['pid'=>0])->order(['sort'=>'desc'])->paginate(1);
         $data = [];
         foreach ($list as $key => $value){
-            $value['is_del'] = ($value['is_del'] == 1)?'未删除':'已删除';
+
             $data[] = $value;
-            $res = $ModuleModel->where(['pid'=>$value['id']])->order(['is_del','sort'=>'desc'])->select();
+            $res = $ModuleModel->where(['pid'=>$value['id']])->order(['sort'=>'desc'])->select();
             foreach ($res as $k => $v)
             {
                 $v['name'] = '|----'.$v['name'];
-                $v['is_del'] = ($v['is_del'] == 1)?'未删除':'已删除';
                 $data[]  = $v;
             }
         }
@@ -87,7 +86,7 @@ class Module extends Base
         if ($this->request->isDelete())
         {
             $data = input('param.');
-            $res = \app\admin\model\Module::destroy(intval($data['id']));
+            $res = \app\common\model\Module::destroy(intval($data['id']));
             ($res != false)?$this->success('删除成功'):$this->error('删除失败');
         }
     }

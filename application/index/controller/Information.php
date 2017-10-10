@@ -53,7 +53,7 @@ class Information extends Base
 
         $recommend = $this->recInfo();
         //查看评论
-        $comment = (new InformationComment())->where('post_id = '.$id)->order('create_time DESC')->paginate(4);
+        $comment = (new InformationComment())->where('information_id = '.$id)->order('create_time DESC')->paginate(4);
         foreach ($comment as $key => $value){
             $comment[$key]->is_upvote = $this->is_in_array($this->uid,$value->upvote_user);
             $comment[$key]->is_oppose = $this->is_in_array($this->uid,$value->oppose_user);

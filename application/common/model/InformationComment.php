@@ -17,12 +17,12 @@ class InformationComment extends Base
     protected static function init()
     {
         //评论之后推送消息给资讯发出者
-        InformationComment::afterInsert(function ($comment){
+        InformationComment::beforeInsert(function ($comment){
             $data['post_user_id'] = $comment->reply_user_id;
             $data['post_user_name'] = $comment->reply_user_name;
             $data['get_user_id'] = $comment->post_user_id;
             $data['info'] = '评论咨询';
-            $data['content_id'] = $comment->post_id;
+            $data['content_id'] = $comment->information_id;
             $data['user_type'] = 1;
             (new Message())->save($data);
         });

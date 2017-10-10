@@ -58,12 +58,18 @@ class Posts extends Base
     //关联管理员模型
     public function administrator()
     {
-        return $this->belongsTo('administrator','user_id')->field('id,username');
+        return $this->belongsTo('administrator','user_id')->field('id,username,headimg');
     }
 
     //关联用户模型
     public function users()
     {
-        return $this->belongsTo('users','user_id')->field('id,nickname,headimg');
+            return $this->belongsTo('users','user_id');
+    }
+
+    //关联模块模型
+    public function module()
+    {
+        return $this->belongsTo('module')->field('name');
     }
 }

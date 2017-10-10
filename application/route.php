@@ -16,6 +16,9 @@ Route::group('admin',function (){
     Route::get('test','admin/test/index');
 });
 
+Route::pattern([
+    'id'    =>  '\d+',
+]);
 
 //前台路由
 //资讯路由
@@ -24,6 +27,9 @@ Route::get('information','index/information/index');
 //论坛
 Route::get('forum/:id','index/forum/forum');
 Route::get('forum','index/forum/index');
+//帖子
+Route::get('posts/:id','index/posts/index');
+
 //登陆注册验证退出
 Route::rule('register','index/login/register','GET|POST');
 Route::rule('login','index/login/index','GET|POST');

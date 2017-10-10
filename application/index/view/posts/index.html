@@ -1,0 +1,188 @@
+{extend name="layout" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_forum_viewthread.css">
+{/block}
+{block name="content"}
+<div id="wp" class="wp">
+    <div id="ct" class="wp cl">
+        <div id="pgt" class="pgs mbm cl ">
+            <div class="pgt"></div>
+            <span class="y pgb"><a href="#" onClick="javascript :history.back(-1);">返回列表</a></span>
+            <a class="btn-default js-needLogin-btn" id="newspecial" href="javascript:;" title="发布新帖">发帖</a>
+        </div>
+        <table>
+            <tr id="postlist" class="pl bm">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td class="pls ptn pbn">
+                                <div class="hm ptn">
+                                    <span class="xg1">查看:</span> <span class="xi1">{$post->lookover}</span><span class="pipe">|</span><span class="xg1">回复:</span> <span class="xi1">{$post->comment}</span>
+                                </div>
+                            </td>
+                            <td class="plc ptm pbn vwthd">
+                                <h1 class="ts">
+                                    <a href="forum.php?mod=forumdisplay&amp;fid=41&amp;filter=typeid&amp;typeid=2">[{$post->module->name}]</a>
+                                    <span id="thread_subject">{$post->title}</span>
+                                </h1>
+                                <span class="xg1">
+                                    <a href="forum.php?mod=viewthread&amp;tid=29" onclick="return copyThreadUrl(this, 'Discuz! Board')">[复制链接]</a>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table cellspacing="0" cellpadding="0" class="ad">
+                    <tbody>
+                        <tr>
+                            <td class="pls">
+                            </td>
+                            <td class="plc">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="post_29">
+                    <table id="pid29" class="plhin" summary="pid29" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td class="pls " rowspan="2">
+                                    <div class="authi">
+                                        <a href="" target="_blank" class="xw1" style="padding-left: 50px;">
+                                            {$post->user_username}
+                                        </a>
+                                    </div>
+                                    <div id="favatar29" class="pls favatar">
+                                        <div>
+                                            <div class="avatar">
+                                                <a href="home.php?mod=space&amp;uid=1" class="avtm" target="_blank">
+                                                    <img src="{$post->user_headimg}" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="tns xg2">
+                                            <table cellspacing="0" cellpadding="0">
+                                                <tbody>
+                                                <tr>
+                                                    <th>
+                                                        <p>
+                                                            <a href="#" class="xi2">
+                                                                {$post->user_fans_num}
+                                                            </a>
+                                                        </p>
+                                                        粉丝
+                                                    </th>
+                                                    <th>
+                                                        <p>
+                                                            <a href="#" class="xi2">
+                                                                {$post->user_post_num}
+                                                            </a>
+                                                        </p>
+                                                        帖子
+                                                    </th>
+                                                    <td>
+                                                        <p>
+                                                            <a href="#" class="xi2">
+                                                                {$post->user_points}
+                                                            </a>
+                                                        </p>
+                                                        积分
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <p>
+                                            <em>
+                                                <a href="#" target="_blank">
+                                                    {eq name="$post->user_type" value="1"}
+                                                        管理员
+                                                    {else/}
+                                                        用户
+                                                    {/eq}
+                                                </a>
+                                            </em>
+                                        </p>
+                                        <p>
+                                            <span>
+                                                新手上路
+                                            </span>
+                                        </p>
+                                        <dl class="pil cl">
+                                            <dt>积分</dt>
+                                            <dd>
+                                                <a href="#" class="xi2">{$post->user_points}</a>
+                                            </dd>
+                                        </dl>
+
+                                        <dl class="pil cl"></dl><ul class="xl xl2 o cl">
+                                        <li class="pm2"><a href="home.php?mod=spacecp&amp;ac=pm&amp;op=showmsg&amp;handlekey=showmsg_1&amp;touid=1&amp;pmid=0&amp;daterange=2&amp;pid=29&amp;tid=29" onclick="showWindow('sendpm', this.href);" title="发消息" class="xi2">发消息</a></li>
+                                    </ul>
+                                    </div>
+                                </td>
+                                <td class="plc">
+                                    <div class="authi">
+                                        <img class="authicn vm" id="authicon29" src="__STATIC__/index/picture/online_admin.gif">
+                                        <em id="authorposton29">发表于 {$post->create_time}</em>
+                                    </div>
+                                    <div class="t_fsz">
+                                        <table cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="t_f" id="postmessage_29">
+                                                        <table cellspacing="0" class="t_table" style="width:98%">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    {$post->content}
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="modact"><a href="forum.php?mod=misc&amp;action=viewthreadmod&amp;tid=29" title="帖子模式" onclick="showWindow('viewthreadmod', this.href)">本主题由 admin 于 2017-6-10 20:58 加入精华</a></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="plc plm">
+                                    <div id="p_btn" class="mtw mbm hm cl">
+                                        <a href="home.php?mod=spacecp&amp;ac=favorite&amp;type=thread&amp;id=29&amp;formhash=c48dbc69" id="k_favorite" onclick="showWindow(this.id, this.href, 'get', 0);" onmouseover="this.title = $('favoritenumber').innerHTML + ' 人收藏'" title="收藏本帖"><i><img src="__STATIC__/index/images/fav_1.gif" alt="收藏">收藏<span id="favoritenumber" style="display:none">0</span></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="pls"></td>
+                                <td class="plc" style="overflow:visible;">
+                                    <div class="po hin">
+                                        <div class="pob cl">
+                                            <em>
+                                                <a class="fastre" href="forum.php?mod=post&amp;action=reply&amp;fid=41&amp;tid=29&amp;reppost=29&amp;extra=page%3D1&amp;page=1" onclick="showWindow('reply', this.href)">回复</a>
+                                            </em>
+
+                                            <p>
+                                                <a href="javascript:;" id="mgc_post_29" onmouseover="showMenu(this.id)" class="showmenu" style="display: none;"></a>
+                                                <a href="javascript:;" onclick="showWindow('miscreport29', 'misc.php?mod=report&amp;rtype=post&amp;rid=29&amp;tid=29&amp;fid=41', 'get', -1);return false;">举报</a>
+                                            </p>
+
+                                            <ul id="mgc_post_29_menu" class="p_pop mgcmn" style="display: none;">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </tr>
+        </table>
+    </div>
+</div>
+{/block}
+<!--主要内容结束-->
+{block name="js"}
+
+{/block}

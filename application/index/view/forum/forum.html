@@ -18,19 +18,19 @@
                             <ul class="forum-list-panel-category">
                                 <li id="ttp_all"><a href="forum.php?mod=forumdisplay&amp;fid=41">全部</a></li>
                             </ul>
+                            {eq name="$kindEditor" value="1"}
                             <button id="filter-post-btn" class="btn-post js-needLogin-btn" onclick="showWindow('newthread', 'forum.php?mod=post&amp;action=newthread&amp;fid=41')" title="发布新帖">发布新帖</button>
+                            {/eq}
                         </div>
                         <div class="forum-list-panel-bottom">
                             <div class="forum-list-panel-filter clearfix">
                                 <span>筛选：</span>
                             </div>
                             <div class="forum-list-panel-options clearfix">
-                                <ul>
-                                    <li><a href="forum.php?mod=forumdisplay&amp;fid=41">默认</a></li>
+                                <ul style="float: right">
                                     <li><a href="forum.php?mod=forumdisplay&amp;fid=41&amp;filter=lastpost&amp;orderby=lastpost" class="xi2">最新</a></li>
                                     <li><a href="forum.php?mod=forumdisplay&amp;fid=41&amp;filter=digest&amp;digest=1" class="xi2">精华</a></li>
-                                    <li><a href="forum.php?mod=forumdisplay&amp;fid=41&amp;filter=reply&amp;orderby=views">查看</a></li>
-                                    <li><a href="forum.php?mod=forumdisplay&amp;fid=41&amp;filter=reply&amp;orderby=replies">回复/查看</a></li>
+                                    <li><a href="forum.php?mod=forumdisplay&amp;fid=41&amp;filter=reply&amp;orderby=views">置顶</a></li>
                                 </ul>
                             </div>
                         </div>
