@@ -42,8 +42,8 @@
                         </tr>
                     </tbody>
                 </table>
-                <div id="post_29">
-                    <table id="pid29" class="plhin" summary="pid29" cellspacing="0" cellpadding="0">
+                <div>
+                    <table class="plhin" cellspacing="0" cellpadding="0">
                         <tbody>
                             <tr>
                                 <td class="pls " rowspan="2">
@@ -150,7 +150,13 @@
                             <tr>
                                 <td class="plc plm">
                                     <div id="p_btn" class="mtw mbm hm cl">
-                                        <a href="home.php?mod=spacecp&amp;ac=favorite&amp;type=thread&amp;id=29&amp;formhash=c48dbc69" id="k_favorite" onclick="showWindow(this.id, this.href, 'get', 0);" onmouseover="this.title = $('favoritenumber').innerHTML + ' 人收藏'" title="收藏本帖"><i><img src="__STATIC__/index/images/fav_1.gif" alt="收藏">收藏<span id="favoritenumber" style="display:none">0</span></i></a>
+
+                                        <div id="favorite_before" {neq name="$post->favorite" value="0"} style="display: none;"{/neq}>
+                                            <a href="#" id="k_favorite" onmouseover="this.title = {$post->favorite_num} + ' 人收藏'" title="收藏本帖"><i><img src="__STATIC__/index/images/fav_1.gif" alt="收藏">收藏<span id="favoritenumber" style="display:none">0</span></i></a>
+                                        </div>
+                                        <div id="favorite_back" {neq name="$post->favorite" value="1"} style="display: none;"{/neq}>
+                                            <a href="#" id="k_favorite2"><i><img src="__STATIC__/index/images/fav_grey.gif">收藏<span id="favorite_num">（{$post->favorite_num}）</span></i></a>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -160,7 +166,7 @@
                                     <div class="po hin">
                                         <div class="pob cl">
                                             <em>
-                                                <a class="fastre" href="forum.php?mod=post&amp;action=reply&amp;fid=41&amp;tid=29&amp;reppost=29&amp;extra=page%3D1&amp;page=1" onclick="showWindow('reply', this.href)">回复</a>
+                                                <a class="fastre" href="#reply">回复</a>
                                             </em>
 
                                             <p>
@@ -180,9 +186,62 @@
             </tr>
         </table>
     </div>
+    <div class="pren pbm cl" style="margin-top: 50px;">
+        <form action="{:url('comment')}" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="token" name="__token__" value="{$Request.token}" />
+            <p></p>
+            <textarea id="editor_id" name="content" style="width:100%;height:300px;margin: 0 auto;">{empty name="sessionUid "}登陆以后才能发布评论噢{/empty}</textarea>
+            <div class="fastpost-content-bottom ptm pnpost">
+                <p style="width: 130px;float: right;" id="reply" class="btn-post btn-post-B"><strong>回复</strong></p>
+            </div>
+        </form>
+    </div>
 </div>
 {/block}
 <!--主要内容结束-->
 {block name="js"}
+<script  src="__STATIC__/plugins/kindeditor/kindeditor-all-min.js"></script>
+<script  src="__STATIC__/plugins/kindeditor/lang/zh-CN.js"></script>
+<script>
+    //加入收藏
+    $("#k_favorite2").click(function () {
+        layer.msg('您已经收藏过了噢')
+    });
 
+    $("#k_favorite").click(function () {
+        var article_id   = "{$post->id}";
+        var article_user = "{$post->user_id}";
+        var article_type = "{$post->user_type}";
+        var data = {
+            'article_id':article_id,
+            'article_type':article_type,
+            'article_user':article_user,
+            'user_id':uid
+        };
+        $.post("{:url('common/favorite')}",data,function (res) {
+            layer.msg(res.msg,{time:1000},function () {
+                if (res.code == 1){
+                    //更改数字
+                    var number = $("#favorite_num").html();
+                    number = number.substr(1,1);
+                    number++;
+                    $("#favorite_num").html('（'+number+'）');
+
+                    $("#favorite_before").html($("#favorite_back").html());
+                }else{
+                    window.location.reload();
+                }
+            });
+        });
+    });
+    //编辑器
+    KindEditor.ready(function(K) {
+        editor  = K.create('#editor_id');
+        $("#reply").click(function(){
+            var res = isLogin();
+            if(!res) return false;
+            
+        });
+    });
+</script>
 {/block}

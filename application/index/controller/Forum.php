@@ -10,7 +10,7 @@ class Forum extends Base
 {
     public function index()
     {
-        $moduleData = Db::name('module')->where('status',1)->where('is_del',1)->field('id,name,pid,post_num,update_time,pic')->select();
+        $moduleData = Db::name('module')->where('status',1)->field('id,name,pid,post_num,update_time,pic')->select();
         $module = [];
         //一级模块
         foreach ($moduleData as $key=>$value)
@@ -33,9 +33,9 @@ class Forum extends Base
                 }
             }
         }
-        $recInfo = $this->recPost();
+        $recInfo = $this->recommend();
         $this->assign([
-            'recInfo' => $recInfo,
+            'recommend' => $recInfo,
             'module'  => $module
         ]);
         return $this->fetch();
@@ -47,29 +47,36 @@ class Forum extends Base
             $data = input('param.');
             //帖子信息
             $posts = (new Posts())->where('module_id='.$data['id'].' AND status = 1')->field('content,update_time',true)->order('is_top,is_good,score DESC')->paginate(10);
-            //模块信息
+            //当前模块信息
             $module = Db::name('module')->field('name,post_num')->find($data['id']);
             $kindEditor = 1;
             if (strpos($module['name'],'官方') !== false){
                 $kindEditor = 0;
             }
-            //子贴数量以及排名
-            $res = Db::name('day_posts')->where('date',date('Y-m-d'))->where('module_id',$data['id'])->field('module_id,post_num')->order('post_num DESC')->select();
-            if (!empty($res)){
-                foreach ($res as $key => $value){
-                    if ($data['id'] == $value['module_id']){
-                        $module['sort'] = $key+1;
-                        $module['post_child_num'] = $value['post_num'];
-                        break;
-                    }
+            //全部模块信息
+            $moduleInfo = Db::name('module')->where('status=1 AND pid != 0')->field('id,name')->select();
+            foreach ($moduleInfo as $key => $value){
+                if (strpos($value['name'],'官方') !== false){
+                    unset($moduleInfo[$key]);
                 }
-            }else{
-                $res = Db::name('day_posts')->where('date',date('Y-m-d'))->field('id')->count();
-                $module['sort'] = $res+1;
+            }
+            //子贴数量以及排名
+            $res = Db::name('day_posts')->where('date',date('Y-m-d'))->field('module_id,post_num')->order('post_num DESC')->select();
+            //排名数组
+
+            foreach ($res as $key => $value){
+                if ($data['id'] == $value['module_id']){
+                    $module['sort'] = $key + 1;
+                    $module['post_child_num'] = $value['post_num'];
+                }
+            }
+            if (!isset($module['sort'])){
+                $module['sort'] = count($res) + 1;
                 $module['post_child_num'] = 0;
             }
-
             $this->assign([
+                'moduleInfo'=> $moduleInfo,
+                'module_id'  => $data['id'],
                 'posts'      => $posts,
                 'kindEditor' => $kindEditor,
                 'module'     => $module
@@ -79,8 +86,10 @@ class Forum extends Base
     }
 
     //推荐帖子
-    private function recPost()
+    private function recommend()
     {
-        return '';
+        $postModel = new Posts();
+        $recommend = $postModel->where('status=1')->order('score DESC')->limit(10)->select();
+        return $recommend;
     }
 }

@@ -23,17 +23,18 @@ class Information extends Base
 
     public function information($id)
     {
+        //浏览一次增加资讯评分100分并且更新浏览次数
+        $res = $this->updateInfo($id);
+        if (!$res){
+            echo '数据更新失败';die;
+        }
+
         $Query = Db::name($this->request->controller());
         $information = $Query->where("status = 1 AND is_del = 1")->find($id);
         if (is_null($information)){
             echo '参数错误';die;
         }
 
-        //浏览一次增加资讯评分100分并且更新浏览次数
-        $res = $this->updateInfo($id);
-        if (!$res){
-            echo '数据更新失败';die;
-        }
         //查找上一篇和下一篇
         $res = $Query->where('id','<',$id)->limit(1)->order('id desc')->field('id,title')->find();
         $information['prev_has'] = 0;

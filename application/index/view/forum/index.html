@@ -48,75 +48,25 @@
                             <div id="portal_block_3" class="block move-span">
                                 <div id="portal_block_3_content" class="dxb_bc">
                                     <div class="right-module ">
-                <h4>帖子推荐</h4>
-                <ul class="thread-list"><li>
-
-                    <a target="_blank" href="forum.php?mod=viewthread&amp;tid=39"><img src="picture/191614swy7upuupi7y6p98_1.png" alt="转至锤子"></a>
-                    <dl>
-                        <dt><a target="_blank" href="forum.php?mod=viewthread&amp;tid=39">转至锤子</a></dt>
-                        <dd>
-                            一次性转移其它安卓手机数据。
-                        </dd>
-
-                    </dl>
-
-                </li><li>
-
-                    <a target="_blank" href="forum.php?mod=viewthread&amp;tid=38"><img src="picture/191545khayuhmeif7mavhv_1.png" alt="锤子桌面"></a>
-                    <dl>
-                        <dt><a target="_blank" href="forum.php?mod=viewthread&amp;tid=38">锤子桌面</a></dt>
-                        <dd>
-                            从未如此美观、易用、人性化。
-                        </dd>
-
-                    </dl>
-
-                </li><li>
-
-                    <a target="_blank" href="forum.php?mod=viewthread&amp;tid=37"><img src="picture/191455ibhn8va8zplu6h4l_1.png" alt="HandShaker"></a>
-                    <dl>
-                        <dt><a target="_blank" href="forum.php?mod=viewthread&amp;tid=37">HandShaker</a></dt>
-                        <dd>
-                            在 Mac&amp;PC 上方便地管理手机。
-                        </dd>
-
-                    </dl>
-
-                </li><li>
-
-                    <a target="_blank" href="forum.php?mod=viewthread&amp;tid=36"><img src="picture/191427dk66qj2z686li8qt_1.png" alt="锤子邮件"></a>
-                    <dl>
-                        <dt><a target="_blank" href="forum.php?mod=viewthread&amp;tid=36">锤子邮件</a></dt>
-                        <dd>
-                            简洁、易用、优雅、精美。
-                        </dd>
-
-                    </dl>
-
-                </li><li>
-
-                    <a target="_blank" href="forum.php?mod=viewthread&amp;tid=35"><img src="picture/191403pbse8bgeb1e1b2gr_1.png" alt="锤子便笺"></a>
-                    <dl>
-                        <dt><a target="_blank" href="forum.php?mod=viewthread&amp;tid=35">锤子便笺</a></dt>
-                        <dd>
-                            雅致的信纸、精心的排版。
-                        </dd>
-
-                    </dl>
-
-                </li><li>
-
-                    <a target="_blank" href="forum.php?mod=viewthread&amp;tid=34"><img src="picture/191206y9z3otzpo2qc9o59_1.png" alt="锤子时钟"></a>
-                    <dl>
-                        <dt><a target="_blank" href="forum.php?mod=viewthread&amp;tid=34">锤子时钟</a></dt>
-                        <dd>
-                            时钟拟物化的界面风格和动画。
-                        </dd>
-
-                    </dl>
-
-                </li></ul>
-            </div>
+                                        <h4>帖子推荐</h4>
+                                        <ul class="thread-list">
+                                            {foreach name="recommend" item="recommend"}
+                                            <li>
+                                                <a target="_blank" href="forum.php?mod=viewthread&amp;tid=34">
+                                                    <img src="{$recommend->users->headimg}" alt="{$recommend->users->nickname}">
+                                                </a>
+                                                <dl>
+                                                    <dt>
+                                                        <a href="/posts/{$recommend->id}">{$recommend->users->nickname}</a>
+                                                    </dt>
+                                                    <dd>
+                                                        {$recommend->title}
+                                                    </dd>
+                                                </dl>
+                                            </li>
+                                            {/foreach}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

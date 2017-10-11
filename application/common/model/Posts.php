@@ -8,8 +8,6 @@
 
 namespace app\common\model;
 
-
-use app\admin\model\Module;
 use think\Db;
 
 class Posts extends Base
@@ -17,6 +15,12 @@ class Posts extends Base
     protected static function init()
     {
         Posts::beforeInsert(function ($post){
+            //如果是会员，发帖添加积分50
+            if ($post->user_type == 2){
+                $query = Db::name('users');
+                $query->where('id',$post->user_id)->setInc('points',50);
+                $query->where('id',$post->user_id)->setInc('post_num');
+            }
             //增加主模块发贴数量
             Db::name('module')->where('id',$post->module_id)->setInc('post_num');
 
@@ -64,7 +68,7 @@ class Posts extends Base
     //关联用户模型
     public function users()
     {
-            return $this->belongsTo('users','user_id');
+            return $this->belongsTo('users','user_id')->field('id,nickname,points,post_num,headimg,level_id,fans_num');
     }
 
     //关联模块模型

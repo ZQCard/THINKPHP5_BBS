@@ -13,15 +13,17 @@ use think\Validate;
 class Posts extends Validate
 {
     protected $rule = [
-        'title' =>  'require|max:80|token',
-        'content' =>  'require',
+        'user_id'   => 'require',
+        'title'     =>  'require|max:80|token',
+        'content'   =>  'require',
         'module_id' =>  'require',
     ];
 
     protected $message = [
-        'title.require' =>  '标题不得为空',
-        'title.max' =>  '标题不得超过80个字',
-        'content.require' =>  '内容不得为空',
+        'user_id.require'   => '非法用户',
+        'title.require'     =>  '标题不得为空',
+        'title.max'         =>  '标题不得超过80个字',
+        'content.require'   =>  '内容不得为空',
         'module_id.require' =>  '所属栏目不得为空',
     ];
 }

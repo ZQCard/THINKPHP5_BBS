@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-09-30 16:49:11
+Date: 2017-10-10 17:26:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,6 +23,7 @@ CREATE TABLE `bbs_administrator` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL COMMENT '用户名',
   `password` char(32) NOT NULL COMMENT '密码',
+  `headimg` varchar(255) DEFAULT '__STATIC__/index/images/github.png',
   `message_num` int(11) DEFAULT '0' COMMENT '未读消息数量',
   `phone` varchar(20) NOT NULL COMMENT '联系电话',
   `auth_id` tinyint(1) DEFAULT '1' COMMENT '1超级管理员 2普通管理员',
@@ -35,12 +36,12 @@ CREATE TABLE `bbs_administrator` (
   `create_time` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='管理员表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of bbs_administrator
 -- ----------------------------
-INSERT INTO `bbs_administrator` VALUES ('1', 'zhouqi', 'e10adc3949ba59abbe56e057f20f883e', '4', '15162550544', '1', '1', '16', '1', '1', 'cd9781d30fd9fcf3aa976a39c3b490a5', '1506673953', '1504836050');
+INSERT INTO `bbs_administrator` VALUES ('1', 'zhouqi', 'e10adc3949ba59abbe56e057f20f883e', '__STATIC__/index/images/github.png\r\n', '4', '15162550544', '1', '1', '17', '2', '1', 'b77aa0455bc45dafa0bd16d3f8d4e456', '1507625186', '1504836050');
 
 -- ----------------------------
 -- Table structure for `bbs_banner`
@@ -152,7 +153,7 @@ INSERT INTO `bbs_day_posts` VALUES ('5', '13', '1', '2017-09-30');
 INSERT INTO `bbs_day_posts` VALUES ('6', '14', '1', '2017-09-30');
 INSERT INTO `bbs_day_posts` VALUES ('7', '15', '1', '2017-09-30');
 INSERT INTO `bbs_day_posts` VALUES ('8', '16', '1', '2017-09-30');
-INSERT INTO `bbs_day_posts` VALUES ('9', '9', '233', '2017-09-29');
+INSERT INTO `bbs_day_posts` VALUES ('9', '9', '2', '2017-10-09');
 
 -- ----------------------------
 -- Table structure for `bbs_email_log`
@@ -199,7 +200,7 @@ CREATE TABLE `bbs_information` (
 -- ----------------------------
 -- Records of bbs_information
 -- ----------------------------
-INSERT INTO `bbs_information` VALUES ('2', '有的人', '1', '学编程论坛欢迎你', 'http://ovxzi670j.bkt.clouddn.com/bbs_information_1e141201709172036396422.jpg', '学编程论坛欢迎你', '1', '<p>      欢迎来到学编程论坛，本论坛是使用Thinkphp5搭建的论坛，目前还在初期阶段。</p><p>      本论坛的主要目的就是为了和大家一起讨论PHP学习中遇到的一些困难，在不断的解决困难中，提升大家的解决问题能力。</p><p>      我也是一个刚学习PHP不久的程序员，但是我希望可以和大家一起努力。</p><p>      编程的路上，我们一起前行！</p>', '<p>      欢迎来到学编程论坛，本论坛是使用Thinkphp5搭建的论坛，目前还在初期阶段。</p>', '712', '5', '61689600', '1', '1', '1506300597', '1505652326');
+INSERT INTO `bbs_information` VALUES ('2', '有的人', '1', '学编程论坛欢迎你', 'http://ovxzi670j.bkt.clouddn.com/bbs_information_1e141201709172036396422.jpg', '学编程论坛欢迎你', '1', '<p>      欢迎来到学编程论坛，本论坛是使用Thinkphp5搭建的论坛，目前还在初期阶段。</p><p>      本论坛的主要目的就是为了和大家一起讨论PHP学习中遇到的一些困难，在不断的解决困难中，提升大家的解决问题能力。</p><p>      我也是一个刚学习PHP不久的程序员，但是我希望可以和大家一起努力。</p><p>      编程的路上，我们一起前行！</p>', '<p>      欢迎来到学编程论坛，本论坛是使用Thinkphp5搭建的论坛，目前还在初期阶段。</p>', '814', '5', '70502400', '1', '1', '1506300597', '1505652326');
 
 -- ----------------------------
 -- Table structure for `bbs_information_comment`
@@ -207,8 +208,7 @@ INSERT INTO `bbs_information` VALUES ('2', '有的人', '1', '学编程论坛欢
 DROP TABLE IF EXISTS `bbs_information_comment`;
 CREATE TABLE `bbs_information_comment` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `pid` int(11) DEFAULT '0' COMMENT '父级id',
-  `post_id` int(11) NOT NULL COMMENT '发送的信息id',
+  `information_id` int(11) NOT NULL COMMENT '发送的信息id',
   `post_user_id` int(11) NOT NULL COMMENT '发送用户id',
   `reply_user_id` int(11) NOT NULL COMMENT '回复用户id',
   `reply_user_name` varchar(60) NOT NULL COMMENT '回复者昵称',
@@ -221,13 +221,16 @@ CREATE TABLE `bbs_information_comment` (
   `update_time` int(11) NOT NULL,
   `create_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='消息表';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='消息表';
 
 -- ----------------------------
 -- Records of bbs_information_comment
 -- ----------------------------
-INSERT INTO `bbs_information_comment` VALUES ('34', '0', '2', '1', '1', 'zhouqi', null, null, '0', null, '1', '加油', '1506581311', '1506581311');
-INSERT INTO `bbs_information_comment` VALUES ('35', '0', '2', '1', '1', 'zhouqi', null, null, '0', null, '1', '<img src=\"http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif\" border=\"0\" alt=\"\" />', '1506581957', '1506581957');
+INSERT INTO `bbs_information_comment` VALUES ('34', '2', '1', '1', 'zhouqi', '0', 'a:0:{}', '0', null, '1', '加油', '1506581311', '1506581311');
+INSERT INTO `bbs_information_comment` VALUES ('35', '2', '1', '1', 'zhouqi', '0', 'a:0:{}', '0', null, '1', '<img src=\"http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif\" border=\"0\" alt=\"\" />', '1506581957', '1506581957');
+INSERT INTO `bbs_information_comment` VALUES ('36', '2', '1', '1', 'zhouqi', '0', null, '0', null, '1', '<img src=\"http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif\" border=\"0\" alt=\"\" />', '1507615165', '1507615165');
+INSERT INTO `bbs_information_comment` VALUES ('37', '2', '1', '1', 'zhouqi', '0', null, '0', null, '1', '<img src=\"http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif\" border=\"0\" alt=\"\" />', '1507615174', '1507615174');
+INSERT INTO `bbs_information_comment` VALUES ('38', '2', '1', '1', 'zhouqi', '0', null, '0', null, '1', '<img src=\"http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif\" border=\"0\" alt=\"\" />', '1507615257', '1507615257');
 
 -- ----------------------------
 -- Table structure for `bbs_level`
@@ -287,7 +290,7 @@ CREATE TABLE `bbs_message` (
   `update_time` int(11) NOT NULL,
   `create_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='//消息处理表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='//消息处理表';
 
 -- ----------------------------
 -- Records of bbs_message
@@ -304,6 +307,8 @@ INSERT INTO `bbs_message` VALUES ('9', '1', 'zhouqi', '1', '点赞成功', '35',
 INSERT INTO `bbs_message` VALUES ('10', '0', '', '1', '点赞成功', '35', '2', '0', '2', '1506753365', '1506753365');
 INSERT INTO `bbs_message` VALUES ('11', '0', '', '1', '点赞成功', '35', '2', '0', '2', '1506754095', '1506754095');
 INSERT INTO `bbs_message` VALUES ('12', '0', '', '1', '点赞成功', '34', '2', '0', '2', '1506754105', '1506754105');
+INSERT INTO `bbs_message` VALUES ('13', '1', 'zhouqi', '1', '点赞成功', '35', '2', '0', '2', '1507535547', '1507535547');
+INSERT INTO `bbs_message` VALUES ('14', '1', 'zhouqi', '1', '点赞成功', '34', '2', '0', '2', '1507535667', '1507535667');
 
 -- ----------------------------
 -- Table structure for `bbs_module`
@@ -322,7 +327,7 @@ CREATE TABLE `bbs_module` (
   `update_time` int(11) DEFAULT NULL,
   `create_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='模块表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='模块表';
 
 -- ----------------------------
 -- Records of bbs_module
@@ -365,8 +370,34 @@ CREATE TABLE `bbs_posts` (
 -- ----------------------------
 -- Records of bbs_posts
 -- ----------------------------
-INSERT INTO `bbs_posts` VALUES ('5', '1', '00000000001', '1', '2<img src=\"http://www.studycoding.top/static/plugins/kindeditor/plugins/emoticons/images/0.gif\" border=\"0\" alt=\"\" />', '2', '1', '0', '0', '0', '9', '1', '1506760385', '1506760385', '1506760385');
+INSERT INTO `bbs_posts` VALUES ('5', '测试发帖', '00000000001', '2', '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', '2', '1', '0', '5', '6', '9', '1', '1506760385', '1506760385', '1506760385');
 INSERT INTO `bbs_posts` VALUES ('6', '2', '00000000001', '1', '2', '2', '2', '0', '0', '0', '9', '1', '1506760399', '1506760399', '1506760399');
+
+-- ----------------------------
+-- Table structure for `bbs_posts_comment`
+-- ----------------------------
+DROP TABLE IF EXISTS `bbs_posts_comment`;
+CREATE TABLE `bbs_posts_comment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) NOT NULL COMMENT '发送的信息id',
+  `post_user_id` int(11) NOT NULL COMMENT '发送用户id',
+  `user_type` tinyint(1) NOT NULL DEFAULT '2' COMMENT '用户类型1管理员2用户',
+  `reply_user_id` int(11) NOT NULL COMMENT '回复用户id',
+  `reply_user_name` varchar(60) NOT NULL COMMENT '回复者昵称',
+  `upvote` mediumint(9) DEFAULT '0' COMMENT '点赞票数',
+  `upvote_user` text COMMENT '点赞用户序列化子字符串',
+  `oppose` mediumint(9) DEFAULT '0' COMMENT '反对票数',
+  `oppose_user` text COMMENT '返回用户序列化字符串',
+  `status` tinyint(1) DEFAULT '1' COMMENT '0删除1正常',
+  `content` text,
+  `update_time` int(11) NOT NULL,
+  `create_time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='消息表';
+
+-- ----------------------------
+-- Records of bbs_posts_comment
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `bbs_test`
@@ -403,6 +434,7 @@ CREATE TABLE `bbs_users` (
   `post_num` mediumint(9) DEFAULT '0' COMMENT '发帖数量',
   `copy_num` mediumint(9) DEFAULT '0' COMMENT '回帖数量',
   `message_num` int(11) DEFAULT '0' COMMENT '消息数量',
+  `fans_num` int(11) DEFAULT '0' COMMENT '粉丝数量',
   `birth_day` date DEFAULT '1994-01-01',
   `is_validate` tinyint(1) DEFAULT '0' COMMENT '是否验证邮箱',
   `login_times` mediumint(9) DEFAULT '0' COMMENT '登陆次数',
@@ -415,12 +447,12 @@ CREATE TABLE `bbs_users` (
   `update_time` int(11) DEFAULT NULL,
   `create_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of bbs_users
 -- ----------------------------
-INSERT INTO `bbs_users` VALUES ('1', 'zhouqi', '123456', '有的人', '445864742@qq.com', '0', '__STATIC__/index/images/github.png', '1', '', '1', '0', '0', '0', '8', '1994-01-01', '1', '7', '127.0.0.1', '浙江省', '杭州市', '浙江省', '杭州市', '88f6a772fbc15b8a3d337dc25243eacb', '1506757522', '1506580785');
+INSERT INTO `bbs_users` VALUES ('1', 'zhouqi', '123456', '有的人', '445864742@qq.com', '0', '__STATIC__/index/images/github.png', '1', '', '1', '0', '0', '0', '10', '0', '1994-01-01', '1', '9', '127.0.0.1', '浙江省', '杭州市', '浙江省', '杭州市', '952dc096c933346d44e86309e358976d', '1507614884', '1506580785');
 
 -- ----------------------------
 -- Table structure for `bbs_users_hash`

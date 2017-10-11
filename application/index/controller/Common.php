@@ -1,10 +1,12 @@
 <?php
 namespace app\index\controller;
 
+use app\index\model\Favorite;
 use curl\Curl;
 use think\Controller;
 use geetcode\Geetcode;
 use think\Db;
+use think\Loader;
 use think\Request;
 
 /**
@@ -173,6 +175,17 @@ class Common extends Controller
                 $res = Db::name('users')->where('id',$uid)->field('message_num')->find();
                 $this->success($res);
             }
+        }
+    }
+
+    public function favorite(Request $request)
+    {
+        if ($request->isPost()){
+            $data = input('param.');
+            $validate = Loader::validate('favorite');
+            ($validate->check($data))||$this->error($validate->getError());
+            $res = (new Favorite())->save($data);
+            (false !== $res)?$this->success('收藏成功'):$this->error('收藏失败');
         }
     }
 }
