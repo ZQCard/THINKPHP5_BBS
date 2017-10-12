@@ -13,6 +13,8 @@ use think\Db;
 
 class PostsComment extends Base
 {
+    protected $dateFormat = 'Y-m-d H:i:s';
+
     //模型事件
     protected static function init()
     {

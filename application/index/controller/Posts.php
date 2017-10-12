@@ -51,27 +51,27 @@ class Posts extends Base
 
         //处理评论
         $commentModel = new PostsComment();
-        $comment = $commentModel->where('post_id',$id)->order('upvote DESC')->limit(3)->select();
-        foreach ($comment as $key => $value){
+        $comments = $commentModel->where('post_id',$id)->order('upvote DESC')->paginate(3);
+        foreach ($comments as $key => $value){
             if ($value->reply_user_type == 1){//管理员
-                $comment[$key]->user_username = $value->administrator->username;
-                $comment[$key]->user_headimg  = $value->administrator->headimg;
-                $comment[$key]->user_points   = '保密';
-                $comment[$key]->user_post_num = '保密';
-                $comment[$key]->user_fans_num = '保密';
+                $comments[$key]->user_username = $value->administrator->username;
+                $comments[$key]->user_headimg  = $value->administrator->headimg;
+                $comments[$key]->user_points   = '保密';
+                $comments[$key]->user_post_num = '保密';
+                $comments[$key]->user_fans_num = '保密';
             } elseif($value->reply_user_type == 2){//用户
-                $comment[$key]->user_username = $value->users->nickname;
-                $comment[$key]->user_headimg  = $value->users->headimg;
-                $comment[$key]->user_points   = $value->users->points;
-                $comment[$key]->user_post_num = $value->users->post_num;
-                $comment[$key]->user_fans_num = $value->users->fans_num;
+                $comments[$key]->user_username = $value->users->nickname;
+                $comments[$key]->user_headimg  = $value->users->headimg;
+                $comments[$key]->user_points   = $value->users->points;
+                $comments[$key]->user_post_num = $value->users->post_num;
+                $comments[$key]->user_fans_num = $value->users->fans_num;
             }
-            $comment[$key]->content = $this->incLength($value->content);
+            $comments[$key]->content = $this->incLength($value->content);
         }
         $post->content = $this->incLength($post->content);
         $this->assign([
             'post'     => $post,
-            'comment'  => $comment
+            'comments'  => $comments
         ]);
         return $this->fetch();
     }

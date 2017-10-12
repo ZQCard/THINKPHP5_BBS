@@ -13,7 +13,6 @@ Route::group('admin',function (){
     Route::resource('information','admin/information');
     Route::resource('config','admin/config');
     Route::resource('posts','admin/posts');
-    Route::get('test','admin/test/index');
 });
 
 Route::pattern([
@@ -36,7 +35,6 @@ Route::rule('login','index/login/index','GET|POST');
 Route::get('check','index/users/check');
 Route::get('logout','index/common/logout');
 Route::get('sendMail','app\index\controller\Common::sendEmail');
-
 
 //测试控制器
 Route::get('test','index/test/index');

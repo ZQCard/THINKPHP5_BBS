@@ -26,6 +26,14 @@
                             {$information['content']}
                         </div>
                     </div>
+                    <div id="p_btn" class="mtw mbm hm cl">
+                        <div id="favorite_before" {neq name="$information['favorite']" value="0"} style="display: none;"{/neq}>
+                                <a href="#" id="k_favorite" onmouseover="this.title = {$information['favorite_num']} + ' 人收藏'" title="收藏本帖"><i><img src="__STATIC__/index/images/fav_1.gif" alt="收藏">收藏<span id="favoritenumber" style="display:none">0</span></i></a>
+                        </div>
+                        <div id="favorite_back" {neq name="$information['favorite']" value="1"} style="display: none;"{/neq}>
+                            <a href="#" id="k_favorite2"><i><img src="__STATIC__/index/images/fav_grey.gif">收藏<span id="favorite_num">（{$information['favorite_num']}）</span></i></a>
+                        </div>
+                    </div>
                     <div class="pren pbm cl" style="margin-top: 50px;">
                         <em style="float: left; margin-left: 100px;">上一篇：{eq name="$information['prev_has']" value="1"}<a href="/information/{$information['prev_id']}">{$information['prev_title']}</a>{else/}没有了{/eq}</em>
                         <em style="float: right; margin-right: 100px;">下一篇：{eq name="$information['back_has']" value="1"}<a href="/information/{$information['back_id']}">{$information['back_title']}</a>{else/}没有了{/eq}</em>
@@ -127,6 +135,41 @@
 <script  src="__STATIC__/plugins/kindeditor/kindeditor-all-min.js"></script>
 <script  src="__STATIC__/plugins/kindeditor/lang/zh-CN.js"></script>
 <script>
+    //加入收藏
+    $("#k_favorite2").click(function () {
+        layer.msg('您已经收藏过了噢')
+    });
+
+    $("#k_favorite").click(function () {
+        var res = isLogin();
+        if(!res) return false;
+        var article_id   = "{$information['id']}";
+        var article_user = "{$information['post_user_id']}";
+        var article_type = 2;
+        var data = {
+            'article_id':article_id,
+            'article_type':article_type,
+            'article_user':article_user,
+            'user_id':uid
+        };
+        $.post("{:url('common/favorite')}",data,function (res) {
+            layer.msg(res.msg,{time:1000},function () {
+                if (res.code == 1){
+                    //更改数字
+                    var number = $("#favorite_num").html();
+                    number = number.substr(1,1);
+                    number++;
+                    $("#favorite_num").html('（'+number+'）');
+
+                    $("#favorite_before").html($("#favorite_back").html());
+                }else{
+                    window.location.reload();
+                }
+            });
+        });
+    });
+
+    
     //编辑器
     KindEditor.ready(function(K) {
         editor  = K.create('#editor_id');

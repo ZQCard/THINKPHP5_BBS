@@ -17,9 +17,9 @@
                             <h2><a href="/information/{$information['id']}" target="_blank" style="">{$information['title']}</a> </h2>
                             <ul class="post-info">
                                 <li class="author">{$information['author']}</li>
-                                <li class="time">发表于：{$information['create_time']|date="Y-m-d",###}</li>
-                                <li class="review">{$information['look']}</li>
-                                <li class="browse">{$information['comment']}</li>
+                                <li class="time">发表于：{$information['create_time']|date="Y-m-d H:i:s",###}</li>
+                                <li class="review"><i class="icon-forum-view"></i> &nbsp;&nbsp;&nbsp;{$information['look']}</li>
+                                <li class="browse"><i class="icon-forum-comment"></i>&nbsp;&nbsp;&nbsp;{$information['comment']}</li>
                             </ul>
                             <div class="content-picture" style="margin-top: 20px;">
                                 <a href="/information/{$information['id']}"><img src="{$information['pic']}"></a>

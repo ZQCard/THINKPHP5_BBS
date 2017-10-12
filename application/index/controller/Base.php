@@ -20,6 +20,7 @@ class Base extends Controller
         //查找首页导航和友情连接
         $navData = Db::name('category')->where('status',1)->field('name,link')->order('sort desc')->select();
         $linkData = Db::name('link')->where("status = 1 AND end_time >=".$this->now)->field('name,link')->order('sort desc')->select();
+        $headImg = Db::name('users')->where('id',$this->uid)->field('headimg')->find();
         //找到网站keywords和description
         $configData = Db::name('config')->where('key','keywords')->whereOr('key','description')->select();
         $config = [];
@@ -27,10 +28,11 @@ class Base extends Controller
             $config[$value['key']] = $value['value'];
         }
         $this->assign([
-            'config' => $config,
-            'sessionUid' => $sessionUid,
-            'navData'    => $navData,
-            'linkData'   => $linkData,
+            'headImg'   =>$headImg['headimg'],
+            'config'    => $config,
+            'sessionUid'=> $sessionUid,
+            'navData'   => $navData,
+            'linkData'  => $linkData,
         ]);
     }
 }

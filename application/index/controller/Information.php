@@ -13,6 +13,7 @@ class Information extends Base
     {
         $Query = Db::name($this->request->controller());
         $informations = $Query->where("status = 1 AND is_del = 1")->field('id,author,title,brief,pic,look,comment,create_time')->order('look desc')->paginate(5);
+
         $recommend = $this->recInfo();
         $this->assign([
             'informations' => $informations,
@@ -31,6 +32,17 @@ class Information extends Base
 
         $Query = Db::name($this->request->controller());
         $information = $Query->where("status = 1 AND is_del = 1")->find($id);
+
+        //是否收藏
+        $favorite = json_decode($information['favorite_users']);
+        $information['favorite'] = 0;
+        if (is_array($favorite)){
+            if (in_array($this->uid,$information)){
+                $information['favorite'] = 1;
+            }
+        }
+        $information['favorite_num'] = count($favorite);
+
         if (is_null($information)){
             echo '参数错误';die;
         }

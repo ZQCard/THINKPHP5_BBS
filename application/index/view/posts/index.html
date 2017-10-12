@@ -171,7 +171,7 @@
             <hr>
             <div style="margin-top: 50px;"></div>
             <!--回复的帖子开始-->
-            {foreach name="comment" item="comment"}
+            {foreach name="comments" item="comment"}
             <tr class="pl bm">
                 <div>
                     <table class="plhin" cellspacing="0" cellpadding="0">
@@ -282,6 +282,9 @@
             </div>
             </tr>
             {/foreach}
+            <div style="margin-left: 45%">
+                {$comments->render()}
+            </div>
             <!--回复的帖子结束-->
         </table>
     </div>
@@ -307,6 +310,8 @@
     });
 
     $("#k_favorite").click(function () {
+        var res = isLogin();
+        if(!res) return false;
         var article_id   = "{$post->id}";
         var article_user = "{$post->user_id}";
         var article_type = "{$post->user_type}";

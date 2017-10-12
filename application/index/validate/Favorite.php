@@ -18,4 +18,8 @@ class Favorite extends Validate
         'article_type' => 'require',
         'article_user' => 'require',
     ];
+
+    protected $message = [
+        'user_id.require'   =>  '请登录后重试',
+    ];
 }

@@ -12,6 +12,8 @@ use think\Db;
 
 class Posts extends Base
 {
+    protected $dateFormat = 'Y-m-d H:i:s';
+
     protected static function init()
     {
         Posts::beforeInsert(function ($post){
