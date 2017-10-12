@@ -8,7 +8,6 @@
         <div id="pgt" class="pgs mbm cl ">
             <div class="pgt"></div>
             <span class="y pgb"><a href="#" onClick="javascript :history.back(-1);">返回列表</a></span>
-            <a class="btn-default js-needLogin-btn" id="newspecial" href="javascript:;" title="发布新帖">发帖</a>
         </div>
         <table>
             <tr id="postlist" class="pl bm">
@@ -28,16 +27,6 @@
                                 <span class="xg1">
                                     <a href="forum.php?mod=viewthread&amp;tid=29" onclick="return copyThreadUrl(this, 'Discuz! Board')">[复制链接]</a>
                                 </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table cellspacing="0" cellpadding="0" class="ad">
-                    <tbody>
-                        <tr>
-                            <td class="pls">
-                            </td>
-                            <td class="plc">
                             </td>
                         </tr>
                     </tbody>
@@ -116,7 +105,7 @@
                                         </dl>
 
                                         <dl class="pil cl"></dl><ul class="xl xl2 o cl">
-                                        <li class="pm2"><a href="home.php?mod=spacecp&amp;ac=pm&amp;op=showmsg&amp;handlekey=showmsg_1&amp;touid=1&amp;pmid=0&amp;daterange=2&amp;pid=29&amp;tid=29" onclick="showWindow('sendpm', this.href);" title="发消息" class="xi2">发消息</a></li>
+                                        <li class="pm2"><a href="#" title="发消息" class="xi2">发消息</a></li>
                                     </ul>
                                     </div>
                                 </td>
@@ -156,24 +145,19 @@
                                         </div>
                                         <div id="favorite_back" {neq name="$post->favorite" value="1"} style="display: none;"{/neq}>
                                             <a href="#" id="k_favorite2"><i><img src="__STATIC__/index/images/fav_grey.gif">收藏<span id="favorite_num">（{$post->favorite_num}）</span></i></a>
-                                        </div>
+
+                                            </div>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pls"></td>
-                                <td class="plc" style="overflow:visible;">
+                                <td class="pls" style="overflow:visible;">
                                     <div class="po hin">
                                         <div class="pob cl">
                                             <em>
                                                 <a class="fastre" href="#reply">回复</a>
                                             </em>
-
-                                            <p>
-                                                <a href="javascript:;" id="mgc_post_29" onmouseover="showMenu(this.id)" class="showmenu" style="display: none;"></a>
-                                                <a href="javascript:;" onclick="showWindow('miscreport29', 'misc.php?mod=report&amp;rtype=post&amp;rid=29&amp;tid=29&amp;fid=41', 'get', -1);return false;">举报</a>
-                                            </p>
-
                                             <ul id="mgc_post_29_menu" class="p_pop mgcmn" style="display: none;">
                                             </ul>
                                         </div>
@@ -184,11 +168,125 @@
                     </table>
                 </div>
             </tr>
+            <hr>
+            <div style="margin-top: 50px;"></div>
+            <!--回复的帖子开始-->
+            {foreach name="comment" item="comment"}
+            <tr class="pl bm">
+                <div>
+                    <table class="plhin" cellspacing="0" cellpadding="0">
+                        <tbody>
+                        <tr>
+                            <td class="pls " rowspan="2">
+                                <div class="authi">
+                                    <a href="" target="_blank" class="xw1" style="padding-left: 50px;">
+                                        {$comment->user_username}
+                                    </a>
+                                </div>
+                                <div  class="pls favatar">
+                                    <div>
+                                        <div class="avatar">
+                                            <a href="home.php?mod=space&amp;uid=1" class="avtm" target="_blank">
+                                                <img src="{$comment->user_headimg}" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="tns xg2">
+                                        <table cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                            <tr>
+                                                <th>
+                                                    <p>
+                                                        <a href="#" class="xi2">
+                                                            {$comment->user_fans_num}
+                                                        </a>
+                                                    </p>
+                                                    粉丝
+                                                </th>
+                                                <th>
+                                                    <p>
+                                                        <a href="#" class="xi2">
+                                                            {$comment->user_post_num}
+                                                        </a>
+                                                    </p>
+                                                    帖子
+                                                </th>
+                                                <td>
+                                                    <p>
+                                                        <a href="#" class="xi2">
+                                                            {$comment->user_points}
+                                                        </a>
+                                                    </p>
+                                                    积分
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p>
+                                        <em>
+                                            <a href="#" target="_blank">
+                                                {eq name="$comment->reply_user_type" value="1"}
+                                                管理员
+                                                {else/}
+                                                用户
+                                                {/eq}
+                                            </a>
+                                        </em>
+                                    </p>
+                                    <p>
+                                                        <span>
+                                                            新手上路
+                                                        </span>
+                                    </p>
+                                    <dl class="pil cl">
+                                        <dt>积分</dt>
+                                        <dd>
+                                            <a href="#" class="xi2">{$comment->user_points}</a>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="pil cl"></dl><ul class="xl xl2 o cl">
+                                    <li class="pm2"><a href="#" title="发消息" class="xi2">发消息</a></li>
+                                </ul>
+                                </div>
+                            </td>
+                            <td class="plc">
+                                <div class="authi">
+                                    <em id="">于 {$comment->create_time} 回帖</em>
+                                </div>
+                                <div class="t_fsz">
+                                    <table cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                        <tr>
+                                            <td class="t_f" id="">
+                                                <table cellspacing="0" class="t_table" style="width:98%">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            {$comment->content}
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            </div>
+            </tr>
+            {/foreach}
+            <!--回复的帖子结束-->
         </table>
     </div>
     <div class="pren pbm cl" style="margin-top: 50px;">
         <form action="{:url('comment')}" method="post" enctype="multipart/form-data">
-            <input type="hidden" id="token" name="__token__" value="{$Request.token}" />
             <p></p>
             <textarea id="editor_id" name="content" style="width:100%;height:300px;margin: 0 auto;">{empty name="sessionUid "}登陆以后才能发布评论噢{/empty}</textarea>
             <div class="fastpost-content-bottom ptm pnpost">
@@ -240,7 +338,19 @@
         $("#reply").click(function(){
             var res = isLogin();
             if(!res) return false;
-            
+            var post_id         = "{$post->id}";
+            var post_user_id    = "{$post->user_id}";
+            var user_type       = "{$post->user_type}";
+            var content         = editor.text();
+            var token           = "{$Request.token}";
+            var data = {
+                'post_id'       :post_id,
+                'post_user_id'  :post_user_id,
+                'user_type'     :user_type,
+                'content'       :content,
+                '__token__'     :token
+            };
+            $.post("{:url('comment')}",data,original);
         });
     });
 </script>

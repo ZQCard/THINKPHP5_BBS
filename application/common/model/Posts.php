@@ -76,4 +76,12 @@ class Posts extends Base
     {
         return $this->belongsTo('module')->field('name');
     }
+
+    //关联评论
+    /*
+    public function postsComment()
+    {
+        return $this->hasMany('postsComment','post_id')->field('id,content');
+    }
+    */
 }

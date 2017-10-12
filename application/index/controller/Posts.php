@@ -9,6 +9,7 @@
 namespace app\index\controller;
 
 use app\common\model\Posts AS PostModel;
+use app\common\model\PostsComment;
 use think\Db;
 use think\Loader;
 use think\Request;
@@ -19,7 +20,11 @@ class Posts extends Base
     {
         $postModel = new PostModel();
         $postModel->where('id',$id)->setInc('lookover');
+        //一对多模型
         $post = $postModel->find($id);
+        /*$res = $post->postsComment;
+        foreach ($res as $key => $value){
+        }*/
         //是否收藏
         $favorite = json_decode($post->favorite_users);
         $post->favorite = 0;
@@ -43,13 +48,35 @@ class Posts extends Base
             $post->user_post_num = $post->users->post_num;
             $post->user_fans_num = $post->users->fans_num;
         }
+
+        //处理评论
+        $commentModel = new PostsComment();
+        $comment = $commentModel->where('post_id',$id)->order('upvote DESC')->limit(3)->select();
+        foreach ($comment as $key => $value){
+            if ($value->reply_user_type == 1){//管理员
+                $comment[$key]->user_username = $value->administrator->username;
+                $comment[$key]->user_headimg  = $value->administrator->headimg;
+                $comment[$key]->user_points   = '保密';
+                $comment[$key]->user_post_num = '保密';
+                $comment[$key]->user_fans_num = '保密';
+            } elseif($value->reply_user_type == 2){//用户
+                $comment[$key]->user_username = $value->users->nickname;
+                $comment[$key]->user_headimg  = $value->users->headimg;
+                $comment[$key]->user_points   = $value->users->points;
+                $comment[$key]->user_post_num = $value->users->post_num;
+                $comment[$key]->user_fans_num = $value->users->fans_num;
+            }
+            $comment[$key]->content = $this->incLength($value->content);
+        }
         $post->content = $this->incLength($post->content);
         $this->assign([
-            'post' => $post
+            'post'     => $post,
+            'comment'  => $comment
         ]);
         return $this->fetch();
     }
 
+    //发送帖子
     public function posts(Request $request)
     {
         if ($request->isPost()){
@@ -61,6 +88,20 @@ class Posts extends Base
             ($validate->check($data)) || $this->error($validate->getError());
             $res = (new PostModel())->saveData($data);
             (false !== $res)?$this->success('发帖成功,积分+50'):$this->error('发帖失败');
+        }
+    }
+
+    //发送评论
+    public function comment(Request $request)
+    {
+        if ($request->isPost()){
+            $data = input('param.');
+            $data['reply_user_id']   = $this->uid;
+            $data['reply_user_name'] = session($this->salt.'username');
+            $validate = Loader::validate('posts_comment');
+            ($validate->check($data)) || $this->error($validate->getError());
+            $res = (new PostsComment())->allowField(true)->save($data);
+            ($res !== false)?$this->success('评论成功!'):$this->error('评论失败');
         }
     }
 

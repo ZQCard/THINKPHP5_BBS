@@ -20,7 +20,7 @@ class Users extends Validate
         'password.min'     => '密码不得小于6位',
         'password.require' => '密码不得为空',
         'username.unique'  => '用户名已存在',
-        'email.email'  => '邮箱不正确',
+        'email.email'  => '邮箱格式不正确',
         'email.unique'  => '邮箱已存在',
 
     ];

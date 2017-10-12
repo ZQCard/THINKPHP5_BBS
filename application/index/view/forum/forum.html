@@ -108,9 +108,9 @@
                             <input id="title" type="text" name="title" value="" placeholder="请输入帖子标题">
                         </label>
                         <p></p>
-                        <textarea id="editor_id" name="content" style="width:100%;height:300px;margin: 0 auto;">{empty name="sessionUid "}登陆以后才能发布评论噢{/empty}</textarea>
+                        <textarea id="editor_id" name="content" style="width:100%;height:300px;margin: 0 auto;">{empty name="sessionUid "}登陆以后才能发布帖子噢{/empty}</textarea>
                         <div class="fastpost-content-bottom ptm pnpost">
-                            <p style="width: 130px;float: right;" id="posts" class="btn-post btn-post-B"><strong>发表评论</strong></p>
+                            <p style="width: 130px;float: right;" id="posts" class="btn-post btn-post-B"><strong>发表帖子</strong></p>
                         </div>
                     </form>
                 </div>
@@ -118,10 +118,9 @@
             </div>
             <div class="sidebar">
                 <div class="profile">
-                    <a href="home.php?mod=spacecp&amp;ac=favorite&amp;type=forum&amp;id=41&amp;handlekey=favoriteforum&amp;formhash=ba9699b0" class="collect"><i class="icon-fav-star"></i>收藏本版</a>
                     <div class="profile-card">
                         <span class="avatar">
-                            <img src="picture/common_41_icon_1.png" alt="">
+                            <img src="{$module['pic']}" alt="">
                         </span>
                         <p><span class="name">{$module['name']}</span></p>
                     </div>

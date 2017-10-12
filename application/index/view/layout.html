@@ -190,7 +190,10 @@
             window.location.reload();
         });
     }
-
+    //只显示错误信息
+    function showMsg(res){
+        layer.msg(res.msg,{time:2000})
+    }
     //二维码生成
     /*jQuery(function(){
         $(".getQRCode").mouseenter(function () {

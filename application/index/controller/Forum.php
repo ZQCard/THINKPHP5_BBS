@@ -48,21 +48,13 @@ class Forum extends Base
             //帖子信息
             $posts = (new Posts())->where('module_id='.$data['id'].' AND status = 1')->field('content,update_time',true)->order('is_top,is_good,score DESC')->paginate(10);
             //当前模块信息
-            $module = Db::name('module')->field('name,post_num')->find($data['id']);
+            $module = Db::name('module')->field('name,post_num,pic')->find($data['id']);
             $kindEditor = 1;
             if (strpos($module['name'],'官方') !== false){
                 $kindEditor = 0;
             }
-            //全部模块信息
-            $moduleInfo = Db::name('module')->where('status=1 AND pid != 0')->field('id,name')->select();
-            foreach ($moduleInfo as $key => $value){
-                if (strpos($value['name'],'官方') !== false){
-                    unset($moduleInfo[$key]);
-                }
-            }
             //子贴数量以及排名
             $res = Db::name('day_posts')->where('date',date('Y-m-d'))->field('module_id,post_num')->order('post_num DESC')->select();
-            //排名数组
 
             foreach ($res as $key => $value){
                 if ($data['id'] == $value['module_id']){
@@ -74,6 +66,14 @@ class Forum extends Base
                 $module['sort'] = count($res) + 1;
                 $module['post_child_num'] = 0;
             }
+            //全部模块信息
+            $moduleInfo = Db::name('module')->where('status=1 AND pid != 0')->field('id,name')->select();
+            foreach ($moduleInfo as $key => $value){
+                if (strpos($value['name'],'官方') !== false){
+                    unset($moduleInfo[$key]);
+                }
+            }
+
             $this->assign([
                 'moduleInfo'=> $moduleInfo,
                 'module_id'  => $data['id'],
