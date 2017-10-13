@@ -15,6 +15,37 @@ use think\Request;
  */
 class Common extends Controller
 {
+    /**
+     * @param $uid  用户id
+     * @return array 信息数组
+     */
+    public static function checkUid($uid)
+    {
+        $uid = (int)$uid;
+        $salt = config('SALT');
+        $sid = session($salt.'uid');
+        $message = [1,''];
+        $flag = true;
+        if ($uid !== $sid){
+            $message = [0,'非法用户'];
+            $flag = false;
+        }
+        if ($flag){
+            $user = Db::name('users')->field('status,is_validate')->find();
+
+            if ($user['is_validate'] === 0){
+                $message = [0,'请进行邮箱验证'];
+            }
+
+            if ($user['status'] === 0){
+                $message = [0,'用户已经被冻结'];
+            }
+        }
+
+        return $message;
+    }
+
+
     //极验滑动验证码展示接口
     public function StartCaptchaServlet()
     {

@@ -13,6 +13,15 @@ use think\Request;
 
 class Users extends Base
 {
+    //用户收藏
+    public function favorite($id)
+    {
+        $res = Common::checkUid($id);
+        if ($res['0'] === 0)$this->error($res[1]);
+
+    }
+
+    //重新发送邮件
     public function resendMail(Request $request)
     {
         if ($request->isPost()){
@@ -37,6 +46,9 @@ class Users extends Base
             $this->success('邮件发送成功,请前去邮箱验证');
         }
     }
+
+
+    //验证hash
     public function check()
     {
         $data = input('param.');

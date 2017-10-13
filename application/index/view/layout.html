@@ -55,7 +55,7 @@
                                     消息 <span style="color: red"  id="userNotice"></span>
                                 </a>
                             </li>
-                            <li class="user-favorite"><a href="home.php?mod=space&amp;do=favorite">收藏</a></li>
+                            <li class="user-favorite"><a href="#">我的收藏</a></li>
                             <li class="user-setting"><a href="home.php?mod=spacecp">设置</a></li>
                             <li class="user-logout"><a id="logout">退出</a></li>
                         </ul>
@@ -214,6 +214,13 @@
             $('#output').html('');
         });
     });*/
+
+    //查看我的收藏
+    $(".user-favorite").click(function () {
+        var res = isLogin();
+        if (!res) return false;
+        window.location.href = "/favorite/"+uid;
+    });
 </script>
 <!--顶部内容结束-->
 {block name="js"}
