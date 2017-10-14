@@ -41,9 +41,10 @@ class Favorite extends Base
             }
             $data['post_user_id'] = $favorite->user_id;
             $data['post_user_name'] = session(config('SALT').'username');
-            $data['get_user_id'] = $favorite->article_user;
+            $data['get_user_id'] = $favorite->article_user_id;
             $data['content_id'] = $favorite->article_id;
-            $data['user_type'] = $favorite->article_type;
+            $data['user_type'] = $favorite->user_type;
+            $data['type'] = 3;
             (new Message())->save($data);
         });
     }

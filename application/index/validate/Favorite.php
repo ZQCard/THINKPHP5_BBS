@@ -16,10 +16,9 @@ class Favorite extends Validate
         'user_id'      => 'require',
         'article_id'   => 'require',
         'article_type' => 'require',
-        'article_user' => 'require',
-    ];
-
-    protected $message = [
-        'user_id.require'   =>  '请登录后重试',
+        'article_title' => 'require',
+        'article_user_id' => 'require',
+        'article_user_nickname' => 'require',
+        'user_type' => 'require',
     ];
 }

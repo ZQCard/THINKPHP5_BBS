@@ -2,7 +2,7 @@
 {block name="title"}{$information['title']}{/block}
 {block name="keywords"},{$information['title']}{/block}
 {block name="content"}
-<div id="wp" class="wp">
+<div id="wp" class="wp" style="min-height: 847px;">
     <div class="main clearfix">
         <div class="container-sm mtm">
             <div class="section clearfix">
@@ -28,10 +28,10 @@
                     </div>
                     <div id="p_btn" class="mtw mbm hm cl">
                         <div id="favorite_before" {neq name="$information['favorite']" value="0"} style="display: none;"{/neq}>
-                                <a href="#" id="k_favorite" onmouseover="this.title = {$information['favorite_num']} + ' 人收藏'" title="收藏本帖"><i><img src="__STATIC__/index/images/fav_1.gif" alt="收藏">收藏<span id="favoritenumber" style="display:none">0</span></i></a>
+                                <a href="javascript:;" id="k_favorite" onmouseover="this.title = {$information['favorite_num']} + ' 人收藏'" title="收藏本帖"><i><img src="__STATIC__/index/images/fav_1.gif" alt="收藏">收藏<span id="favoritenumber" style="display:none">0</span></i></a>
                         </div>
                         <div id="favorite_back" {neq name="$information['favorite']" value="1"} style="display: none;"{/neq}>
-                            <a href="#" id="k_favorite2"><i><img src="__STATIC__/index/images/fav_grey.gif">收藏<span id="favorite_num">（{$information['favorite_num']}）</span></i></a>
+                            <a href="javascript:;" id="k_favorite2"><i><img src="__STATIC__/index/images/fav_grey.gif">收藏<span id="favorite_num">（{$information['favorite_num']}）</span></i></a>
                         </div>
                     </div>
                     <div class="pren pbm cl" style="margin-top: 50px;">
@@ -144,13 +144,18 @@
         var res = isLogin();
         if(!res) return false;
         var article_id   = "{$information['id']}";
-        var article_user = "{$information['post_user_id']}";
-        var article_type = 2;
+        var article_title = "{$information['title']}";
+        var article_user_id = "{$information['post_user_id']}";
+        var user_type = 1;
+        var article_user_nickname = "{$information['author']}";
         var data = {
+            'user_id':uid,
             'article_id':article_id,
-            'article_type':article_type,
-            'article_user':article_user,
-            'user_id':uid
+            'article_type':1,
+            'article_title':article_title,
+            'article_user_id':article_user_id,
+            'user_type':user_type,
+            'article_user_nickname':article_user_nickname,
         };
         $.post("{:url('common/favorite')}",data,function (res) {
             layer.msg(res.msg,{time:1000},function () {

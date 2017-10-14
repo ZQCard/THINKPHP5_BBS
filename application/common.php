@@ -103,3 +103,54 @@ function removeValue($value,$data=array()){
     }
     return $data;
 }
+
+/**
+ * @param $timestamp    时间戳
+ * @return string       距离现在的汉字时间
+ */
+function timeToString($timestamp){
+    $str = '';
+    $seconds = time() - $timestamp;
+    $str = '刚刚';
+
+    if ($seconds > 60){
+        $str = '几分钟前';
+    }
+    if ($seconds > 10*60){
+        $str = '十分钟前';
+    }
+    if ($seconds > 30*60){
+        $str = '30分钟前';
+    }
+    if ($seconds>1*60*60){
+        $str = '1 小时前';
+    }
+
+    if ($seconds>5*60*60){
+        $str = '5 小时前';
+    }
+
+    if ($seconds>12*60*60){
+        $str = '12 小时前';
+    }
+
+    if ($seconds>24*60*60){
+        $str = '一天前';
+    }
+
+    if ($seconds>2*24*60*60){
+        $str = '两天天前';
+    }
+    if ($seconds>5*24*60){
+        $str = '五天前';
+    }
+    if ($seconds>7*24*60*60){
+        $str = '一周前';
+    }
+
+    if ($seconds>2*7*24*60*60){
+        $str = date('H:i:s',$timestamp);
+    }
+
+    return $str;
+}

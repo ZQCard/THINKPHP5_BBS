@@ -1,0 +1,73 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="wp" class="wp" style="min-height: 847px;">
+    <div id="ct" class="ct2_a wp cl">
+        <div class="mn">
+            <!--[diy=diycontenttop]--><div id="diycontenttop" class="area"></div><!--[/diy]-->
+            <div class="bm bw0">
+                <h1 class="mt bbs">
+                    全部收藏
+                </h1>
+                    <ul>
+                        <!--收藏开始-->
+                        {foreach name="favorites" item="favorite"}
+                        <li id="{$favorite['id']}" class="bbda ptm pbm">
+                            <button class="y favoriteDel" >删除</button>
+                            <span class="xg1 y" style="margin-right: 50px;">
+                                <span title="">{$favorite['create_time']}</span>
+                            </span>
+                            <input type="checkbox"  name="favorite[]" class="pc" value="">
+                            <span>
+                                <img src="__STATIC__/index/images/thread.gif" alt="thread" class="t">
+                            </span>
+                            <a href="{eq name="$favorite['article_title']" value="1"}/information/{$favorite['article_id']}{else/}/posts/{$favorite['article_id']}{/eq}">
+                                {$favorite['article_title']}
+                            </a>
+                        </li>
+                        {/foreach}
+                        <!--收藏结束-->
+                    </ul>
+                    {$page}
+                    <p class="mtm pns">
+                        <label for="chkall"><input type="checkbox" id="chkall" class="pc vm">全选</label>
+                        <button type="submit" name="delsubmit" value="true" class="pn vm"><em>删除选中收藏</em></button>
+                    </p>
+            </div>
+            <div id="diycontentbottom" class="area"></div>
+        </div>
+        <div class="appl">
+            <div class="tbn">
+                <h2 class="mt bbda">收藏</h2>
+                <ul>
+                    <li {empty name="$type"}class="a"{/empty}><a href="/favorite/{$id}">全部收藏</a></li>
+                    <li {eq name="$type" value="1"}class="a"{/eq}><a href="/favorite/{$id}/type/1">帖子</a></li>
+                    <li {eq name="$type" value="2"}class="a"{/eq}><a href="/favorite/{$id}/type/2">文章</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+<!--主要内容结束-->
+{block name="js"}
+<script type="text/javascript">
+    $("#chkall").click(function () {
+        if ($(this).attr('checked') == 'checked'){
+            $(".pc").removeAttr('checked');
+        }else{
+            $(".pc").attr('checked','');
+        }
+    });
+    $(".favoriteDel").click(function () {
+        var id = $(this).parent().attr('id');
+        $.ajax({
+            type : "DELETE",
+            url : "{:url('users/favoriteDel')}",
+            data : {'id':id},
+            success : function (res) {
+                console.log(res)
+            }
+        });
+    });
+</script>
+{/block}

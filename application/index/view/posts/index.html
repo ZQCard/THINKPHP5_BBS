@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_forum_viewthread.css">
 {/block}
 {block name="content"}
-<div id="wp" class="wp">
+<div id="wp" class="wp" style="min-height: 847px;">
     <div id="ct" class="wp cl">
         <div id="pgt" class="pgs mbm cl ">
             <div class="pgt"></div>
@@ -313,13 +313,18 @@
         var res = isLogin();
         if(!res) return false;
         var article_id   = "{$post->id}";
-        var article_user = "{$post->user_id}";
-        var article_type = "{$post->user_type}";
+        var article_user_id = "{$post->user_id}";
+        var user_type = "{$post->user_type}";
+        var article_title = "{$post->title}";
+        var article_user_nickname = "{$post->user_username}";
         var data = {
+            'user_id':uid,
             'article_id':article_id,
-            'article_type':article_type,
-            'article_user':article_user,
-            'user_id':uid
+            'article_type':2,
+            'article_title':article_title,
+            'article_user_id':article_user_id,
+            'user_type':user_type,
+            'article_user_nickname':article_user_nickname,
         };
         $.post("{:url('common/favorite')}",data,function (res) {
             layer.msg(res.msg,{time:1000},function () {
@@ -332,7 +337,7 @@
 
                     $("#favorite_before").html($("#favorite_back").html());
                 }else{
-                    window.location.reload();
+                    //window.location.reload();
                 }
             });
         });
