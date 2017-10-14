@@ -141,10 +141,10 @@
                                     <div id="p_btn" class="mtw mbm hm cl">
 
                                         <div id="favorite_before" {neq name="$post->favorite" value="0"} style="display: none;"{/neq}>
-                                            <a href="#" id="k_favorite" onmouseover="this.title = {$post->favorite_num} + ' 人收藏'" title="收藏本帖"><i><img src="__STATIC__/index/images/fav_1.gif" alt="收藏">收藏<span id="favoritenumber" style="display:none">0</span></i></a>
+                                            <a href="javascript:;" id="k_favorite" onmouseover="this.title = {$post->favorite_num} + ' 人收藏'" title="收藏本帖"><i><img src="__STATIC__/index/images/fav_1.gif" alt="收藏">收藏<span id="favoritenumber" style="display:none">0</span></i></a>
                                         </div>
                                         <div id="favorite_back" {neq name="$post->favorite" value="1"} style="display: none;"{/neq}>
-                                            <a href="#" id="k_favorite2"><i><img src="__STATIC__/index/images/fav_grey.gif">收藏<span id="favorite_num">（{$post->favorite_num}）</span></i></a>
+                                            <a href="javascript:;" id="k_favorite2"><i><img src="__STATIC__/index/images/fav_grey.gif">收藏<span id="favorite_num">（{$post->favorite_num}）</span></i></a>
 
                                             </div>
                                     </div>

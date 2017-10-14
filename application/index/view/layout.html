@@ -194,6 +194,14 @@
     function showMsg(res){
         layer.msg(res.msg,{time:2000})
     }
+    //成功刷新页面错误显示数据
+    function successOrFail(res) {
+        layer.msg(res.msg,{time:2000}, function () {
+            if (res.code == 1){
+                window.location.reload();
+            }
+        });
+    }
     //二维码生成
     /*jQuery(function(){
         $(".getQRCode").mouseenter(function () {

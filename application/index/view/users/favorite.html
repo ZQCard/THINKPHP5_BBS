@@ -12,11 +12,11 @@
                         <!--收藏开始-->
                         {foreach name="favorites" item="favorite"}
                         <li id="{$favorite['id']}" class="bbda ptm pbm">
-                            <button class="y favoriteDel" >删除</button>
+                            <button class="y favoriteDel" data-title="{$favorite['article_title']}">删除</button>
                             <span class="xg1 y" style="margin-right: 50px;">
                                 <span title="">{$favorite['create_time']}</span>
                             </span>
-                            <input type="checkbox"  name="favorite[]" class="pc" value="">
+                            <input type="checkbox"  name="favorite[]" class="pc" value="{$favorite['id']}">
                             <span>
                                 <img src="__STATIC__/index/images/thread.gif" alt="thread" class="t">
                             </span>
@@ -29,8 +29,9 @@
                     </ul>
                     {$page}
                     <p class="mtm pns">
-                        <label for="chkall"><input type="checkbox" id="chkall" class="pc vm">全选</label>
-                        <button type="submit" name="delsubmit" value="true" class="pn vm"><em>删除选中收藏</em></button>
+                        <button id="delSome" class="pn vm" style="margin-left: 20%"><em>删除选中收藏</em></button>
+                        <button id="delAll" class="pn vm" style="background-color: red;margin-left: 20%"><em>删除所有收藏</em></button>
+
                     </p>
             </div>
             <div id="diycontentbottom" class="area"></div>
@@ -51,23 +52,55 @@
 <!--主要内容结束-->
 {block name="js"}
 <script type="text/javascript">
-    $("#chkall").click(function () {
-        if ($(this).attr('checked') == 'checked'){
-            $(".pc").removeAttr('checked');
-        }else{
-            $(".pc").attr('checked','');
-        }
+    //删除所有收藏
+    $("#delAll").click(function () {
+        someOrAll('all');
     });
+    //删除部分收藏
+    $("#delSome").click(function () {
+        someOrAll('some');
+    });
+    //删除单个收藏
     $(".favoriteDel").click(function () {
-        var id = $(this).parent().attr('id');
-        $.ajax({
-            type : "DELETE",
-            url : "{:url('users/favoriteDel')}",
-            data : {'id':id},
-            success : function (res) {
-                console.log(res)
-            }
-        });
+        var id    = $(this).parent().attr('id');
+        var title = $(this).data('title');
+        favoriteDel(id,title);
     });
+
+    //多个收藏删除
+    function someOrAll(type){
+        var list = $("input[type='checkbox']");
+        var id = '';
+        var info = (type == 'all')?'全部收藏':'这些收藏';
+        if (type == 'all'){
+            for (var i = 0; i < list.length; i++){
+                id = list[i].value+'-'+id;
+            }
+        }else if (type == 'some'){
+            for (var i = 0; i < list.length; i++){
+                if (list[i].checked){
+                    id = list[i].value+'-'+id;
+                }
+            }
+            if(!id){
+                layer.msg('您未选中任何值');
+                return ;
+            }
+        }
+        favoriteDel(id,'这些收藏');
+    }
+    //删除函数
+    function favoriteDel(id,title) {
+        layer.confirm('是否删除 '+title+' 吗?', {
+            btn: ['确定','取消']
+        }, function(){
+            $.ajax({
+                type : "DELETE",
+                url : "{:url('users/favoriteDel')}",
+                data : {'id':id},
+                success : successOrFail
+            });
+        });
+    }
 </script>
 {/block}

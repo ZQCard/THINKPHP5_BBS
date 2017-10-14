@@ -8,6 +8,7 @@
 
 namespace app\index\controller;
 
+use app\index\model\Favorite;
 use think\Db;
 use think\Request;
 
@@ -32,7 +33,6 @@ class Users extends Base
 
         foreach ($favorites as $key => $value){
             $favorites[$key]['create_time'] = timeToString($value['create_time']);
-
         }
         $page = $list->render();
         $this->assign([
@@ -42,6 +42,27 @@ class Users extends Base
             'favorites' => $favorites,
         ]);
         return $this->fetch();
+    }
+
+    public function favoriteDel(Request $request)
+    {
+        if ($request->isDelete()){
+            if (!($this->uid))$this->error('非法用户');
+            $query = Db::name('favorite');
+            $data = input('param.');
+            //id集合
+            $ids = explode('-',$data['id']);
+            $ids = array_filter($ids);
+            //找出用户所有的收藏
+            $resId = $query->where('user_id',$this->uid)->column('id');
+            foreach ($ids as $value){
+                if (!in_array($value,$resId)){
+                    $this->error('数据删除错误,存在不属于自己的收藏信息');
+                }
+            }
+            $res = Favorite::destroy($ids);
+            (false !== $res)?$this->success('删除成功'):$this->error('删除失败');
+        }
     }
 
     //重新发送邮件
@@ -91,16 +112,5 @@ class Users extends Base
         return $this->fetch();
     }
 
-    public function favoriteDel(Request $request)
-    {
-        if ($request->isDelete()){
-            $data = input('param.');
-            $query = Db::name('favorite');
-            if (!($this->uid))$this->error('非法用户');
-            $res = $query->where('user_id',$this->uid)->where('id',$data['id'])->find();
-            if (!$res)$this->error('不可以删除不属于自己的收藏');
-            $res = $query->delete($data['id']);
-            (false !== $res)?$this->success('删除成功'):$this->error('删除失败');
-        }
-    }
+
 }

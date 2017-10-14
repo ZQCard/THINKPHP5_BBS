@@ -141,7 +141,7 @@ function timeToString($timestamp){
     if ($seconds>2*24*60*60){
         $str = '两天天前';
     }
-    if ($seconds>5*24*60){
+    if ($seconds>5*24*60*60){
         $str = '五天前';
     }
     if ($seconds>7*24*60*60){

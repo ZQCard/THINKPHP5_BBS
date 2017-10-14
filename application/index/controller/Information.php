@@ -37,7 +37,7 @@ class Information extends Base
         $favorite = json_decode($information['favorite_users']);
         $information['favorite'] = 0;
         if (is_array($favorite)){
-            if (in_array($this->uid,$information)){
+            if (in_array($this->uid,$favorite)){
                 $information['favorite'] = 1;
             }
         }
