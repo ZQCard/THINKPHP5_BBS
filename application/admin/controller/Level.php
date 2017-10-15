@@ -9,11 +9,19 @@
 namespace app\admin\controller;
 
 
+use think\Db;
 use think\Loader;
 use app\common\model\Level AS LevelModel;
 
 class Level extends Base
 {
+    public function index()
+    {
+        $data = Db::name('level')->order('number')->paginate(8);
+        $this->assign('data',$data);
+        return $this->fetch();
+    }
+
     public function save()
     {
         $data = input('param.');

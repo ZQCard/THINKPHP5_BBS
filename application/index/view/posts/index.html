@@ -7,7 +7,7 @@
     <div id="ct" class="wp cl">
         <div id="pgt" class="pgs mbm cl ">
             <div class="pgt"></div>
-            <span class="y pgb"><a href="#" onClick="javascript :history.back(-1);">返回列表</a></span>
+            <span class="y pgb"><a href="/forum/{$post['module_id']}">返回列表</a></span>
         </div>
         <table>
             <tr id="postlist" class="pl bm">
@@ -21,11 +21,11 @@
                             </td>
                             <td class="plc ptm pbn vwthd">
                                 <h1 class="ts">
-                                    <a href="forum.php?mod=forumdisplay&amp;fid=41&amp;filter=typeid&amp;typeid=2">[{$post->module->name}]</a>
+                                    <a href="/forum/{$post->module_id}">[{$post->module->name}]</a>
                                     <span id="thread_subject">{$post->title}</span>
                                 </h1>
                                 <span class="xg1">
-                                    <a href="forum.php?mod=viewthread&amp;tid=29" onclick="return copyThreadUrl(this, 'Discuz! Board')">[复制链接]</a>
+                                    <a href="javascript:;" data-link="{:config('DOMAIN')}/posts/{$post->id}" class="copyLink">[复制链接]</a>
                                 </span>
                             </td>
                         </tr>
@@ -94,7 +94,19 @@
                                         </p>
                                         <p>
                                             <span>
-                                                新手上路
+                                                {eq name="$post->user_type" value="2"}
+                                                <!--改变图标开始-->
+                                                {php}
+                                                $icon = explode('-',$post->level_icon);
+                                                array_shift($icon);
+                                                foreach($icon as $value){
+                                                     echo '<img src="'.$value.'" title="'.$post->user_level.' 级">';
+                                                }
+                                                {/php}
+                                                <!--改变图标结束-->
+                                                {else/}
+                                                保密
+                                                {/eq}
                                             </span>
                                         </p>
                                         <dl class="pil cl">
@@ -235,9 +247,21 @@
                                         </em>
                                     </p>
                                     <p>
-                                                        <span>
-                                                            新手上路
-                                                        </span>
+                                        <span>
+                                            {eq name="$comment->user_type" value="2"}
+                                            <!--改变图标开始-->
+                                                {php}
+                                                $icon = explode('-',$comment->level_icon);
+                                                array_shift($icon);
+                                                foreach($icon as $value){
+                                                     echo '<img src="'.$value.'" title="'.$comment->user_level.' 级">';
+                                                }
+                                                {/php}
+                                            <!--改变图标结束-->
+                                                {else/}
+                                                保密
+                                                {/eq}
+                                        </span>
                                     </p>
                                     <dl class="pil cl">
                                         <dt>积分</dt>
@@ -253,8 +277,9 @@
                             </td>
                             <td class="plc">
                                 <div class="authi">
-                                    <em id="">于 {$comment->create_time} 回帖</em>
+                                    <b><em>于 {$comment->create_time} 回帖</em></b>
                                 </div>
+                                <p></p>
                                 <div class="t_fsz">
                                     <table cellspacing="0" cellpadding="0">
                                         <tbody>
@@ -263,7 +288,7 @@
                                                 <table cellspacing="0" class="t_table" style="width:98%">
                                                     <tbody>
                                                     <tr>
-                                                        <td>
+                                                        <td style="min-width: 800px;">
                                                             {$comment->content}
                                                         </td>
                                                     </tr>
@@ -280,6 +305,7 @@
                 </tbody>
             </table>
             </div>
+            <hr>
             </tr>
             {/foreach}
             <div style="margin-left: 45%">
@@ -303,6 +329,7 @@
 {block name="js"}
 <script  src="__STATIC__/plugins/kindeditor/kindeditor-all-min.js"></script>
 <script  src="__STATIC__/plugins/kindeditor/lang/zh-CN.js"></script>
+<script  src="__STATIC__/index/js/jquery.zclip.min.js"></script>
 <script>
     //加入收藏
     $("#k_favorite2").click(function () {
@@ -337,7 +364,7 @@
 
                     $("#favorite_before").html($("#favorite_back").html());
                 }else{
-                    //window.location.reload();
+                    window.location.reload();
                 }
             });
         });
@@ -362,6 +389,22 @@
             };
             $.post("{:url('comment')}",data,original);
         });
+    });
+
+    //点击复制链接
+    $(".copyLink").zclip({
+        path: "ZeroClipboard.swf",
+        copy: function(){
+            return $(".this").data('link');
+        },
+        beforeCopy:function(){/* 按住鼠标时的操作 */
+            $(this).css("color","orange");
+        },
+        afterCopy:function(){
+            var copysuc = $("<div class='copy-tips'><div class='copy-tips-wrap'>☺ 复制成功</div></div>");
+            $("body").find(".copy-tips").remove().end().append(copysuc);
+            $(".copy-tips").fadeOut(3000);
+        }
     });
 </script>
 {/block}

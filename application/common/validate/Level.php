@@ -15,7 +15,8 @@ class Level extends Validate
     protected $rule = [
         'name'  => 'require|token|max:20',
         'point' => 'require|number',
-        'icon'  => 'require'
+        'icon'  => 'require',
+        'number'=> 'require|number'
     ];
 
     protected $field = [

@@ -11,6 +11,7 @@ class Forum extends Base
     public function index()
     {
         $moduleData = Db::name('module')->where('status',1)->field('id,name,pid,post_num,update_time,pic')->select();
+
         $module = [];
         //一级模块
         foreach ($moduleData as $key=>$value)
@@ -21,6 +22,7 @@ class Forum extends Base
                 unset($moduleData[$key]);
             }
         }
+
         //查找子模块
         foreach ($module as $key => $value)
         {
@@ -33,7 +35,9 @@ class Forum extends Base
                 }
             }
         }
+
         $recInfo = $this->recommend();
+
         $this->assign([
             'recommend' => $recInfo,
             'module'  => $module

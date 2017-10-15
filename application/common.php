@@ -154,3 +154,30 @@ function timeToString($timestamp){
 
     return $str;
 }
+
+/**
+ * @param $level    数据库中的等级配置
+ * @param $point    当前积分
+ * @return array    ['分配的等级','对应的ICON链接字符串组成的数组']
+ *                  eg: [81,
+ *                          [
+ *                              'img1',
+ *                              'img2',
+ *                              'img3',
+ *                              'img4',
+ *                              ]
+ *                      ]
+ */
+function processLevel($level,$point)
+{
+    $processRes = [0 => 0,1 => ''];
+    foreach ($level as $key => $value){
+        $levelArray[$key] = (int)($point/$value['point']);
+        $processRes[0] += $value['number'] * $levelArray[$key];
+        for ($i = 0 ; $i < $levelArray[$key]; $i++){
+            $processRes[1] = $processRes[1].'-'.$value['icon'];
+        }
+        $point = $point%$value['point'];
+    }
+    return $processRes;
+}

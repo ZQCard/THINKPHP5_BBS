@@ -70,7 +70,7 @@ class Posts extends Base
     //关联用户模型
     public function users()
     {
-            return $this->belongsTo('users','user_id')->field('id,nickname,points,post_num,headimg,level_id,fans_num');
+            return $this->belongsTo('users','user_id')->field('id,nickname,points,post_num,headimg,fans_num');
     }
 
     //关联模块模型

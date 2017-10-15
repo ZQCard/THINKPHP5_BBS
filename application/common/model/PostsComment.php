@@ -42,6 +42,6 @@ class PostsComment extends Base
     //关联用户模型
     public function users()
     {
-        return $this->belongsTo('users','reply_user_id')->field('id,nickname,points,post_num,headimg,level_id,fans_num');
+        return $this->belongsTo('users','reply_user_id')->field('id,nickname,points,post_num,headimg,fans_num');
     }
 }

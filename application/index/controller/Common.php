@@ -213,10 +213,15 @@ class Common extends Controller
     {
         if ($request->isPost()){
             $data = input('param.');
+            $res = Common::checkUid($data['user_id']);
+            if ($res['0'] === 0)$this->error($res[1]);
+            //不得收藏自己的文章
+            if ($data['article_user_id'] == $data['user_id']) return $this->error('不能收藏自己的帖子');
             $validate = Loader::validate('favorite');
             ($validate->check($data))||$this->error($validate->getError());
             $res = (new Favorite())->save($data);
             (false !== $res)?$this->success('收藏成功'):$this->error('收藏失败');
         }
     }
+
 }

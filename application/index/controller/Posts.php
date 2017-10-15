@@ -20,11 +20,7 @@ class Posts extends Base
     {
         $postModel = new PostModel();
         $postModel->where('id',$id)->setInc('lookover');
-        //一对多模型
         $post = $postModel->find($id);
-        /*$res = $post->postsComment;
-        foreach ($res as $key => $value){
-        }*/
         //是否收藏
         $favorite = json_decode($post->favorite_users);
         $post->favorite = 0;
@@ -34,7 +30,8 @@ class Posts extends Base
             }
         }
         $post->favorite_num = count($favorite);
-
+        //处理积分等级
+        $postsLevel = Db::name('level')->field('point,icon,number')->order('point DESC')->select();
         if ($post->user_type == 1){//管理员
             $post->user_username = $post->administrator->username;
             $post->user_headimg  = $post->administrator->headimg;
@@ -47,6 +44,9 @@ class Posts extends Base
             $post->user_points   = $post->users->points;
             $post->user_post_num = $post->users->post_num;
             $post->user_fans_num = $post->users->fans_num;
+            $level = processLevel($postsLevel,$post->user_points);
+            $post->user_level = $level[0];
+            $post->level_icon = $level[1];
         }
 
         //处理评论
@@ -65,10 +65,15 @@ class Posts extends Base
                 $comments[$key]->user_points   = $value->users->points;
                 $comments[$key]->user_post_num = $value->users->post_num;
                 $comments[$key]->user_fans_num = $value->users->fans_num;
+                $level = processLevel($postsLevel,$comments[$key]->user_points);
+                $comments[$key]->user_level = $level[0];
+                $comments[$key]->level_icon = $level[1];
             }
             $comments[$key]->content = $this->incLength($value->content);
         }
+        //处理过短的帖子
         $post->content = $this->incLength($post->content);
+
         $this->assign([
             'post'     => $post,
             'comments'  => $comments
@@ -119,4 +124,6 @@ class Posts extends Base
         }
         return $content;
     }
+
+
 }
