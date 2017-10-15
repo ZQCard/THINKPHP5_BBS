@@ -10,7 +10,6 @@ class Banner extends Base
         Banner::beforeUpdate(function ($banner){
             if ($banner->pic !== Banner::get($banner->id)->pic){
                 return CommonFunction::deleteFile(Banner::get($banner->id)->pic);
-
             }
             return true;
         });

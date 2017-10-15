@@ -28,8 +28,7 @@ use think\Request;
         return $this->fetch();
     }
 
-    abstract public function save(Request $request);
-    abstract public function update(Request $request);
+
 
 
     public function edit()

@@ -11,7 +11,6 @@ namespace app\admin\controller;
 use app\common\model\Posts AS PostsModel;
 use think\Db;
 use think\Loader;
-use think\Request;
 
 class Posts extends Base
 {
@@ -35,20 +34,16 @@ class Posts extends Base
     }
 
 
-    public function save(Request $request)
+    public function save()
     {
-        if ($request->isPost()){
-            $res = $this->saveData(input('param.'));
-            ($res !== false)?$this->success('发帖成功'):$this->error('发帖失败');
-        }
+        $res = $this->saveData(input('param.'));
+        ($res !== false)?$this->success('发帖成功'):$this->error('发帖失败');
     }
 
-    public function update(Request $request)
+    public function update()
     {
-        if ($request->isPut()){
-            $res = $this->saveData(input('param.'));
-            ($res !== false)?$this->success('发帖成功'):$this->error('发帖失败');
-        }
+        $res = $this->saveData(input('param.'));
+        ($res !== false)?$this->success('发帖成功'):$this->error('发帖失败');
     }
 
     public function saveData($data)
@@ -59,12 +54,10 @@ class Posts extends Base
         return $res;
     }
 
-    public function getChild(Request $request)
+    public function getChild()
     {
-        if ($request->isPost()){
-            $pid = input('param.pid');
-            $childModule = Db::name('module')->where('pid',$pid)->field('id,name')->select();
-            ($childModule != false)?$this->success('查找成功','',$childModule):$this->error('没有子分类');
-        }
+        $pid = input('param.pid');
+        $childModule = Db::name('module')->where('pid',$pid)->field('id,name')->select();
+        ($childModule != false)?$this->success('查找成功','',$childModule):$this->error('没有子分类');
     }
 }

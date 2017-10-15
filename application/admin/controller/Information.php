@@ -3,7 +3,6 @@
 namespace app\admin\controller;
 
 use think\Loader;
-use think\Request;
 use app\admin\model\Information AS InformationModel;
 
 class Information extends Base
@@ -27,25 +26,21 @@ class Information extends Base
         return $this->fetch();
     }
 
-    public function update(Request $request)
+    public function update()
     {
-        if ($request->isPut()){
-            $data = input('param.');
-            $data['post_user_id'] = session($this->salt.'aid');
-            $res = $this->saveData($data);
-            ($res !== false)?$this->success('修改文章成功'):$this->error('修改文章失败');
-        }
+        $data = input('param.');
+        $data['post_user_id'] = session($this->salt.'aid');
+        $res = $this->saveData($data);
+        ($res !== false)?$this->success('修改文章成功'):$this->error('修改文章失败');
     }
 
-    public function save(Request $request)
+    public function save()
     {
-        if ($request->isPost()){
-            $data = input('param.');
-            $data['post_user_id'] = session($this->salt.'aid');
-            $data['score'] = time();
-            $res = $this->saveData($data);
-            ($res !== false)?$this->success('添加文章成功'):$this->error('添加文章失败');
-        }
+        $data = input('param.');
+        $data['post_user_id'] = session($this->salt.'aid');
+        $data['score'] = time();
+        $res = $this->saveData($data);
+        ($res !== false)?$this->success('添加文章成功'):$this->error('添加文章失败');
     }
 
     public function saveData($data)

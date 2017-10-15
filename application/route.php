@@ -13,6 +13,7 @@ Route::group('admin',function (){
     Route::resource('information','admin/information');
     Route::resource('config','admin/config');
     Route::resource('posts','admin/posts');
+    Route::resource('level','admin/level');
 });
 
 Route::pattern([

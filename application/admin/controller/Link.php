@@ -1,9 +1,9 @@
 <?php
 
 namespace app\admin\controller;
+
 use app\admin\model\Link AS LinkModel;
 use think\Loader;
-use think\Request;
 
 class Link extends Base
 {
@@ -19,21 +19,16 @@ class Link extends Base
         return $this->fetch();
     }
 
-    public function save(Request $request)
+    public function save()
     {
-        if ($request->isPost())
-        {
-            $res = $this->saveData(input('param.'));
-            ($res !== false)?$this->success('添加友情链接成功'):$this->error('添加友情链接失败');
-        }
+        $res = $this->saveData(input('param.'));
+        ($res !== false)?$this->success('添加友情链接成功'):$this->error('添加友情链接失败');
     }
 
-    public function update(Request $request)
+    public function update()
     {
-        if ($request->isPut()){
-            $res = $this->saveData(input('param.'));
-            ($res !== false)?$this->success('修改友情链接成功'):$this->error('修改友情链接失败');
-        }
+        $res = $this->saveData(input('param.'));
+        ($res !== false)?$this->success('修改友情链接成功'):$this->error('修改友情链接失败');
     }
 
     public function saveData($data)
