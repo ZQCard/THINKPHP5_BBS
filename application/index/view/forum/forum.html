@@ -51,7 +51,7 @@
                                                     <ul class="js-threadList">
                                                         <li>
                                                             <a class="forum-list-item-avatar" target="_blank" href="">
-                                                                <img src="{$post->users->headimg}" alt="">
+                                                                <img src="{$post->headimg}" alt="">
                                                             </a>
                                                             <dl class="forum-list-item-summary">
                                                                 <dt>
@@ -63,7 +63,9 @@
                                                                     </h3>
                                                                 </dt>
                                                                 <dd>
-                                                                    <a href="/user/{$post->users->id}">{$post->users->nickname}</a>
+                                                                    {eq name="$post->user_type" value="2"}<a href="/user/{$post->users_id}">{$post->nickname}</a>
+                                                                    {else/}{$post->nickname}{/eq}
+                                                                    &nbsp;&nbsp;
                                                                     <span>发表于 {$post->create_time}</span>
                                                                 </dd>
                                                             </dl>

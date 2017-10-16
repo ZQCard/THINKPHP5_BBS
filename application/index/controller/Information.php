@@ -124,7 +124,8 @@ class Information extends Base
             //$backJson['num'] = 点赞值
             $query = Db::name('information_comment');
             $data  = input('param.');
-            $res   = Db::name('users')->find($data['uid'])&&Db::name('administrator')->find($data['uid']);
+            if ($data['uid']!=$this->uid)$this->error('非法用户');
+            $res   = Db::name('users')->find($data['uid'])||Db::name('administrator')->find($data['uid']);
             if (!$res){
                 $backJson['status'] = 2;
                 $backJson['message'] = '请登录后再操作';

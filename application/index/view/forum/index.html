@@ -53,11 +53,11 @@
                                             {foreach name="recommend" item="recommend"}
                                             <li>
                                                 <a target="_blank" href="forum.php?mod=viewthread&amp;tid=34">
-                                                    <img src="{$recommend->users->headimg}" alt="{$recommend->users->nickname}">
+                                                    <img src="{$recommend->headimg}" alt="{$recommend->nickname}">
                                                 </a>
                                                 <dl>
                                                     <dt>
-                                                        <a href="/posts/{$recommend->id}">{$recommend->users->nickname}</a>
+                                                        <a href="/posts/{$recommend->id}">{$recommend->nickname}</a>
                                                     </dt>
                                                     <dd>
                                                         {$recommend->title}

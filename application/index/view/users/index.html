@@ -59,7 +59,7 @@
                                         <button id="sendMail">发送验证码到邮箱</button>
                                     {/eq}
                                     {else/}
-                                    已验证
+                                    该功能暂时取消
                                     {/eq}
                                 </li>
                             </ul>
@@ -99,10 +99,10 @@
                                 </li>
                             </ul>
                             <ul id="pbbs" class="pf_l">
-                                <li><em>在线时间</em>5 小时</li><li><em>注册时间</em>{$user->create_time}</li>
+                                <li><em>在线时间</em>等待开发中</li><li><em>注册时间</em>{$user->create_time}</li>
                                 <li><em>最后访问</em>{$user->update_time}</li>
-                                <li><em>注册所在地</em>{$user->reg_province}{$user->reg_city}</li>
-                                <li><em>上次访问 IP</em>{$user->last_login_ip} - - {$user->province}{$user->city}</li>
+                                <li><em>注册地址</em>{$user->reg_province}- - {$user->reg_city}</li>
+                                <li><em>上次访问IP</em>{$user->province}- - {$user->city}</li>
                                 <li><em>上次活动时间</em>{$user->create_time}</li>
                             </ul>
                         </div>

@@ -171,7 +171,7 @@
 
     //退出登陆
     $("#logout").click(function () {
-        $.get('/logout',{},original);
+        $.get('/logout',{},locationHref);
     });
 
     //请求成功回调函数
@@ -183,6 +183,12 @@
             }else{
                 window.location.reload();
             }
+        });
+    }
+    //显示信息跳转到指定页面
+    function locationHref(res){
+        layer.msg(res.msg,{time:2000,shade: 0.3}, function () {
+            window.location = res.url;
         });
     }
     //原页刷新函数

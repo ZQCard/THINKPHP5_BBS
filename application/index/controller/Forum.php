@@ -35,9 +35,16 @@ class Forum extends Base
                 }
             }
         }
-
         $recInfo = $this->recommend();
-
+        foreach ($recInfo as $key => $value){
+            if ($value->user_type == 1){
+                $recInfo[$key]->headimg  = $value->administrator->headimg;
+                $recInfo[$key]->nickname = '管理员:'.$value->administrator->username;
+            }else{
+                $recInfo[$key]->headimg  = $value->users->headimg;
+                $recInfo[$key]->nickname = $value->users->username;
+            }
+        }
         $this->assign([
             'recommend' => $recInfo,
             'module'  => $module
@@ -51,6 +58,18 @@ class Forum extends Base
             $data = input('param.');
             //帖子信息
             $posts = (new Posts())->where('module_id='.$data['id'].' AND status = 1')->field('content,update_time',true)->order('is_top,is_good,score DESC')->paginate(10);
+            foreach ($posts as $key => $value){
+                if ($value->user_type == 1){
+                    $posts[$key]->headimg  = $value->administrator->headimg;
+                    $posts[$key]->nickname = '管理员:'.$value->administrator->username;
+                    $posts[$key]->users_id  = $value->administrator->id;
+                }else{
+                    $posts[$key]->headimg  = $value->users->headimg;
+                    $posts[$key]->nickname = $value->users->username;
+                    $posts[$key]->users_id  = $value->users->user_id;
+                }
+            }
+
             //当前模块信息
             $module = Db::name('module')->field('name,post_num,pic')->find($data['id']);
             $kindEditor = 1;

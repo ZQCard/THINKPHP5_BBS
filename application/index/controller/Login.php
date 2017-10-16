@@ -47,7 +47,7 @@ class Login extends Base
 
             $user = $User->where('username',$data['username'])->field('id,username,password,login_times')->find();
             (!$user)&&$this->error('用户不存在');
-            if ($data['password'] != $user->password)$this->error('用户名或密码错误');
+            if (md5($data['password']) != $user->password)$this->error('用户名或密码错误');
             $ip = $request->ip();
             $location = getLocation($ip);
             $saveData['province'] = $location['province'];
@@ -94,6 +94,9 @@ class Login extends Base
             $location = getLocation($request->ip());
             $data['reg_province'] = $location['province'];
             $data['reg_city'] = $location['city'];
+            $data['province'] = $location['province'];
+            $data['city'] = $location['city'];
+            $data['last_login_ip'] = $request->ip();
             $Users = new Users();
             $res = $Users->save($data);
             (!$res)&&$this->error('用户保存失败');
@@ -109,7 +112,7 @@ class Login extends Base
             session($salt.'uid',$uid);
             cookie($salt.'token',$token);
             $Users->save(['verify_token'=>md5($token)],['id'=>$uid]);
-            ($res !== false)?$this->success('注册成功,请去邮箱激活账号'):$this->error('注册失败');
+            ($res !== false)?$this->success('注册成功'):$this->error('注册失败');
         }else{
             return $this->fetch();
         }

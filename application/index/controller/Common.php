@@ -31,12 +31,7 @@ class Common extends Controller
             $flag = false;
         }
         if ($flag){
-            $user = Db::name('users')->field('status,is_validate')->find();
-
-            if ($user['is_validate'] === 0){
-                $message = [0,'请进行邮箱验证'];
-            }
-
+            $user = Db::name('users')->field('status')->find();
             if ($user['status'] === 0){
                 $message = [0,'用户已经被冻结'];
             }
@@ -101,7 +96,7 @@ class Common extends Controller
         session($salt.'username',null);
         session($salt.'uid',null);
         cookie($salt.'token',null);
-        $this->success('退出成功');
+        $this->success('退出成功','/index');
     }
 
     //抓取博客园新闻链接  返回5条
