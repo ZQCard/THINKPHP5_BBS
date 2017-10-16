@@ -154,49 +154,6 @@ class Common extends Controller
         return config('DOMAIN').'/'.$type.'/'.$id;
     }
 
-    public static function sendEmail($uid,$email,$message,$title="学编程论坛邮件通知")
-    {
-        $data = [];
-        $data['status'] = 1;
-        $data['message'] = '邮件发送成功';
-        //保存用户今日邮件发送记录数值
-        $now =  date('Y-m-d');
-        $insertData['user_id']   = $uid;
-        $insertData['times']     = 1;
-        $insertData['send_time'] = $now;
-        $query = Db::name('email_log');
-        $res = $query->where('user_id',$uid)->field('id,times,limit_times')->find();
-        if ($res){
-            if ($res['end_time'] = $now){
-                if ($res['times']>$res['limit_times']){
-                    $data['status']  = 2;
-                    $data['message'] = '每天只能发20封邮件信息哦~!~';
-                    return $data;
-                }
-                $res = $query->where('user_id',$uid)->setInc('times');
-            }else{
-                $res = $query->where('id',$res['id'])->update($insertData);
-            }
-        }else{
-            $res = $query->insert($insertData);
-        }
-
-        if (!$res){
-            $data['status']  = 2;
-            $data['message'] = '邮件记录保存失败';
-            return $data;
-        }
-
-        //发送邮件
-        $res = \phpmailer\Email::send($email,$title,$message);
-        if (!$res){
-            $data['status']  = 2;
-            $data['message'] = '邮件发送失败';
-            return $data;
-        }
-        return $data;
-    }
-
 
     public function getMessageNum(Request $request)
     {
@@ -225,6 +182,7 @@ class Common extends Controller
             (false !== $res)?$this->success('收藏成功'):$this->error('收藏失败');
         }
     }
+
 
     //miss路由
     public function miss()

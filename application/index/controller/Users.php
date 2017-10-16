@@ -91,7 +91,7 @@ class Users extends Base
         }
     }
 
-    //重新发送邮件
+    /*//重新发送邮件
     public function resendMail(Request $request)
     {
         if ($request->isPost()){
@@ -136,7 +136,7 @@ class Users extends Base
             ]);
         }
         return $this->fetch();
-    }
+    }*/
 
 
 }

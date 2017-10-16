@@ -98,22 +98,7 @@ class Login extends Base
             $res = $Users->save($data);
             (!$res)&&$this->error('用户保存失败');
             $uid = $Users->getLastInsID();
-            $message = "欢迎注册爱编程论坛,请点击下面网址进行激活账号^_^~,有效时间为24小时.";
-            $hash = getHash($uid);
-            $href = config('DOMAIN').'/check/uid/'.$uid.'/hash/'.$hash;
-            $message = $message.$href;
 
-            //保存hash验证值
-            $res = saveHash($uid,$hash);
-            if (!$res){
-                $data['status']  = 2;
-                $data['message'] = '保存hash验证值失败';
-                return $data;
-            }
-            $res = Common::sendEmail($uid,$data['email'],$message);
-            if ($res['status'] == 2){
-                $this->error($res['message']);
-            }
             //注册成功预置信息
             $salt = config('SALT');
             $num = mt_rand(1,1000);
