@@ -1,6 +1,6 @@
 {extend name="layout" /}
 {block name="content"}
-<div id="wp" class="wp" style="min-height: 847px;">
+<div id="wp" class="wp" style="min-height: 700px;">
     <div id="ct" class="ptm wp cl">
         <div class="mn">
             <div class="bm" id="main_message">
@@ -24,7 +24,7 @@
                                         <tbody>
                                             <tr>
                                                 <th><span class="rq">*</span><label >用户名:</label></th>
-                                                <td><input type="text" name="username" class="px" tabindex="1" value="" autocomplete="off" size="25" maxlength="15"></td>
+                                                <td><input type="text" name="username" class="px" tabindex="1" value="" placeholder="用户名为6-20位" autocomplete="off" size="25" maxlength="15"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -35,7 +35,7 @@
                                         <tbody>
                                             <tr>
                                                 <th><span class="rq">*</span><label >密码:</label></th>
-                                                <td><input type="password" name="password" size="25" tabindex="1" class="px"></td>
+                                                <td><input type="password" placeholder="密码不得小于6位" name="password" size="25" tabindex="1" class="px"></td>
                                             </tr>
                                         </tbody>
                                     </table>

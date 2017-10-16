@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="__STATIC__/index/css/style_2_forum_viewthread.css">
 {/block}
 {block name="content"}
-<div id="wp" class="wp" style="min-height: 847px;">
+<div id="wp" class="wp" style="min-height: 700px;">
     <div id="ct" class="wp cl">
         <div id="pgt" class="pgs mbm cl ">
             <div class="pgt"></div>
@@ -24,9 +24,6 @@
                                     <a href="/forum/{$post->module_id}">[{$post->module->name}]</a>
                                     <span id="thread_subject">{$post->title}</span>
                                 </h1>
-                                <span class="xg1">
-                                    <a href="javascript:;" data-link="{:config('DOMAIN')}/posts/{$post->id}" class="copyLink">[复制链接]</a>
-                                </span>
                             </td>
                         </tr>
                     </tbody>
@@ -329,7 +326,6 @@
 {block name="js"}
 <script  src="__STATIC__/plugins/kindeditor/kindeditor-all-min.js"></script>
 <script  src="__STATIC__/plugins/kindeditor/lang/zh-CN.js"></script>
-<script  src="__STATIC__/index/js/jquery.zclip.min.js"></script>
 <script>
     //加入收藏
     $("#k_favorite2").click(function () {
@@ -389,22 +385,6 @@
             };
             $.post("{:url('comment')}",data,original);
         });
-    });
-
-    //点击复制链接
-    $(".copyLink").zclip({
-        path: "ZeroClipboard.swf",
-        copy: function(){
-            return $(".this").data('link');
-        },
-        beforeCopy:function(){/* 按住鼠标时的操作 */
-            $(this).css("color","orange");
-        },
-        afterCopy:function(){
-            var copysuc = $("<div class='copy-tips'><div class='copy-tips-wrap'>☺ 复制成功</div></div>");
-            $("body").find(".copy-tips").remove().end().append(copysuc);
-            $(".copy-tips").fadeOut(3000);
-        }
     });
 </script>
 {/block}

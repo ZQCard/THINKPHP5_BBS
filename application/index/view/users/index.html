@@ -1,0 +1,131 @@
+{extend name="layout" /}
+{block name="css"}
+<link rel="stylesheet" href="__STATIC__/index/css/style_2_home_space.css">
+{/block}
+{block name="content"}
+<div id="wp" class="wp" style="min-height: 847px;">
+
+    <div id="pt" class="bm cl">
+        <div class="z">
+            <a href="/user/{$user->id}">{$user->nickname}</a> <em>›</em>
+            个人资料
+        </div>
+    </div>
+    <style id="diy_style" type="text/css"></style>
+    <div class="wp">
+        <!--[diy=diy1]--><div id="diy1" class="area"></div><!--[/diy]-->
+    </div><div id="uhd">
+    <div class="h cl">
+        <div class="mn">
+            <ul>
+                <li class="addf">
+                    <a href="javascript:;" title="加为好友" class="xi2">加为好友</a>
+                </li>
+                <li class="pm2">
+                    <a href="javascript:;" title="发送消息">发送消息</a>
+                </li>
+            </ul>
+        </div>
+        <div class="icn avt"><a href="/user/{$user->id}"><img src="{$user->headimg}"></a></div>
+        <h2 class="mt">
+            {$user->nickname}
+        </h2>
+        <p>
+            <a href="{:config('DOMAIN')}/user/{$user->id}" class="xg1">{:config('DOMAIN')}/user/{$user->id}</a>
+        </p>
+    </div>
+    <ul class="tb cl" style="padding-left: 75px;">
+        <li class="a"><a href="javascript:;">个人资料</a></li>
+    </ul>
+</div>
+    <div id="ct" class="ct1 wp cl">
+        <div class="mn">
+            <!--[diy=diycontenttop]--><div id="diycontenttop" class="area"></div><!--[/diy]-->
+            <div class="bm bw0">
+                <div class="bm_c">
+                    <div class="bm_c u_profile">
+
+                        <div class="pbm mbm bbda cl">
+                            <h2 class="mbn">
+                                {$user->nickname}
+                                <span class="xw0">(UID: {$user->id})</span>
+                            </h2>
+                            <ul class="pf_l cl pbm mbm">
+                                <li><em>拥有积分</em>{$user->points}</li>
+                                <li><em>邮箱状态</em>
+                                    {eq name="$user->is_validate" value="0"}
+                                    未验证&nbsp;&nbsp;&nbsp;
+                                    {eq name="$Think.session.bbszhouqiuid" value="$id"}
+                                        <button id="sendMail">发送验证码到邮箱</button>
+                                    {/eq}
+                                    {else/}
+                                    已验证
+                                    {/eq}
+                                </li>
+                            </ul>
+                            <ul>
+                            </ul>
+                            <ul class="cl bbda pbm mbm">
+                                <li>
+                                    <em class="xg2">统计信息</em>
+                                    <a href="home.php?mod=space&amp;uid=3&amp;do=friend&amp;view=me&amp;from=space" target="_blank">好友数 {$user->friend_num}</a>
+                                    <span class="pipe">|</span>
+                                    <a href="home.php?mod=space&amp;uid=3&amp;do=thread&amp;view=me&amp;type=thread&amp;from=space" target="_blank">粉丝数 {$user->fans_num}</a>
+                                    <span class="pipe">|</span>
+                                    <a href="home.php?mod=space&amp;uid=3&amp;do=thread&amp;view=me&amp;type=reply&amp;from=space" target="_blank">发帖数 {$user->post_num}</a>
+                                    <span class="pipe">|</span>
+                                    <a href="home.php?mod=space&amp;uid=3&amp;do=thread&amp;view=me&amp;type=thread&amp;from=space" target="_blank">评论数 {$user->copy_num}</a>
+                                </li>
+                            </ul>
+                            <ul class="pf_l cl">
+                                <li><em>性别</em>{$user->sex}</li>
+                                <li><em>生日</em>{$user->birthday}</li>
+                            </ul>
+                        </div>
+                        <div class="pbm mbm bbda cl">
+                            <h2 class="mbn">活跃概况</h2>
+                            <ul>
+                                <li>
+                                    <em class="xg1">用户等级&nbsp;&nbsp;</em>
+                                    <!--改变图标开始-->
+                                    {php}
+                                    $icon = explode('-',$user->level_icon);
+                                    array_shift($icon);
+                                    foreach($icon as $value){
+                                         echo '<img src="'.$value.'" title="'.$user->user_level.' 级">';
+                                    }
+                                    {/php}
+                                    <!--改变图标结束-->
+                                </li>
+                            </ul>
+                            <ul id="pbbs" class="pf_l">
+                                <li><em>在线时间</em>5 小时</li><li><em>注册时间</em>{$user->create_time}</li>
+                                <li><em>最后访问</em>{$user->update_time}</li>
+                                <li><em>注册所在地</em>{$user->reg_province}{$user->reg_city}</li>
+                                <li><em>上次访问 IP</em>{$user->last_login_ip} - - {$user->province}{$user->city}</li>
+                                <li><em>上次活动时间</em>{$user->create_time}</li>
+                            </ul>
+                        </div>
+                    </div><!--[diy=diycontentbottom]--><div id="diycontentbottom" class="area"></div><!--[/diy]--></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wp mtn">
+        <!--[diy=diy3]--><div id="diy3" class="area"></div><!--[/diy]-->
+    </div>
+</div>
+{/block}
+<!--主要内容结束-->
+{block name="js"}
+<script>
+
+    $("#sendMail").click(function () {
+        isLogin();
+        $(this).hide();
+        $.post("{:url('index/users/resendMail')}",{uid:uid},function (res) {
+            layer.alert(res.msg);
+        });
+    });
+</script>
+{/block}

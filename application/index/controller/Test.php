@@ -9,6 +9,15 @@ class Test extends Controller
 {
     public function index()
     {
-        return $this->fetch();
+        $uid = 1;
+        $email = '445864742@qq.com';
+        $message = 'hello';
+        $res = Common::sendEmail($uid,$email,$message);
+        dump($res);
+    }
+
+    public function info()
+    {
+        phpinfo();
     }
 }

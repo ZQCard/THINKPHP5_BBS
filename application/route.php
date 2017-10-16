@@ -20,6 +20,12 @@ Route::pattern([
     'id'    =>  '\d+',
 ]);
 
+//miss路由  上线开启
+if (!config('app_debug')){
+    Route::miss('index/common/miss');
+}
+
+
 //前台路由
 //资讯
 Route::get('information/:id','index/information/information');
@@ -36,12 +42,12 @@ Route::rule('login','index/login/index','GET|POST');
 //验证hash
 Route::get('check','index/users/check');
 Route::get('logout','index/common/logout');
-//发送邮件
-Route::get('sendMail','app\index\controller\Common::sendEmail');
 
 //用户相关
+Route::get('user/:id','index/users/index');
+Route::get('setting','index/users/setting');
 //用户收藏
-Route::get('favorite/:id','index/users/favorite');
+Route::get('favorite','index/users/favorite');
 
 //测试控制器
 Route::get('test','index/test/index');

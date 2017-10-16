@@ -38,6 +38,9 @@ class Email{
         $Email->Password = config('email.EMAIL_PASSWORD');
 
         //发送邮件
-        return ($Email->Send());
+        $Email->Send();
+        echo $Email->ErrorInfo;
+        die;
+        //return ($Email->Send());
     }
 }

@@ -1,6 +1,6 @@
 {extend name="layout" /}
 {block name="content"}
-<div id="wp" class="wp" style="min-height: 847px;">
+<div id="wp" class="wp" style="min-height: 700px;">
     <div id="ct" class="ct2_a wp cl">
         <div class="mn">
             <!--[diy=diycontenttop]--><div id="diycontenttop" class="area"></div><!--[/diy]-->
@@ -40,9 +40,9 @@
             <div class="tbn">
                 <h2 class="mt bbda">收藏</h2>
                 <ul>
-                    <li {empty name="$type"}class="a"{/empty}><a href="/favorite/{$id}">全部收藏</a></li>
-                    <li {eq name="$type" value="1"}class="a"{/eq}><a href="/favorite/{$id}/type/1">帖子</a></li>
-                    <li {eq name="$type" value="2"}class="a"{/eq}><a href="/favorite/{$id}/type/2">文章</a></li>
+                    <li {empty name="$type"}class="a"{/empty}><a href="/favorite">全部收藏</a></li>
+                    <li {eq name="$type" value="1"}class="a"{/eq}><a href="/favorite/type/1">帖子</a></li>
+                    <li {eq name="$type" value="2"}class="a"{/eq}><a href="/favorite/type/2">文章</a></li>
                 </ul>
             </div>
         </div>
@@ -87,7 +87,7 @@
                 return ;
             }
         }
-        favoriteDel(id,'这些收藏');
+        favoriteDel(id,info);
     }
     //删除函数
     function favoriteDel(id,title) {

@@ -921,7 +921,7 @@
 }
 .fastpost-content{
      margin: 30px auto 0;
-   
+
     width: 725px;
 }
 .fastpost-head {
@@ -1100,8 +1100,8 @@ a {
 .header-main {
     height: 59px;
 }
-.header-main h1 {   
-    float: left;  
+.header-main h1 {
+    float: left;
     margin: 18px 0;
     overflow: hidden;
 }
@@ -1158,7 +1158,7 @@ a {
     border-top: 1px solid transparent;
     height: 41px;
 }
-.location h2 {   
+.location h2 {
     background: url(../images/home_1.png) no-repeat left center;
     color: #757575;
     float: left;

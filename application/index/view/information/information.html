@@ -2,7 +2,7 @@
 {block name="title"}{$information['title']}{/block}
 {block name="keywords"},{$information['title']}{/block}
 {block name="content"}
-<div id="wp" class="wp" style="min-height: 847px;">
+<div id="wp" class="wp" style="min-height: 700px;">
     <div class="main clearfix">
         <div class="container-sm mtm">
             <div class="section clearfix">
@@ -137,7 +137,7 @@
 <script>
     //加入收藏
     $("#k_favorite2").click(function () {
-        layer.msg('您已经收藏过了噢')
+        layer.msg('您已经收藏过了噢',{time:2000,icon:7,shade: 0.3})
     });
 
     $("#k_favorite").click(function () {
@@ -220,9 +220,9 @@
             if (data.status == 1){
                 that.attr('src',data.icon);
                 that.next().html(data.num);
-                layer.msg(data.message,{time:2000});
+                layer.msg(data.message,{time:2000,icon:1,shade: 0.3});
             }else{
-                layer.msg(data.message,{time:2000});
+                layer.msg(data.message,{time:2000,icon:7,shade: 0.3});
             }
         });
     }

@@ -9,22 +9,49 @@
 namespace app\index\controller;
 
 use app\index\model\Favorite;
+use app\common\model\Users AS userModel;
 use think\Db;
 use think\Request;
 
 class Users extends Base
 {
-    //用户收藏
-    public function favorite($id,$type='')
+    public function _initialize()
     {
-        $res = Common::checkUid($id);
-        if ($res['0'] === 0)$this->error($res[1]);
+        parent::_initialize();
+
+    }
+    //用户中心
+    public function index($id)
+    {
+        $userModel = new userModel();
+        $user = $userModel::get($id);
+        //处理积分等级
+        $postsLevel = Db::name('level')->field('point,icon,number')->order('point DESC')->select();
+        $level = processLevel($postsLevel,$user->points);
+        $user->user_level = $level[0];
+        $user->level_icon = $level[1];
+        $this->assign([
+            'id'   => $id,
+            'user' => $user,
+        ]);
+        return $this->fetch();
+    }
+
+    public function setting()
+    {
+        return $this->fetch();
+    }
+
+    //用户收藏
+    public function favorite($type='')
+    {
+        if (!($this->uid))$this->error('需要您先登陆噢=￣ω￣=',url('/login'));
         $query = Db::name('favorite');
         //根据条件筛选
         if (empty($type)){
-            $list = $query->where('user_id',$id)->order('create_time DESC')->paginate(8);
+            $list = $query->where('user_id',$this->uid)->order('create_time DESC')->paginate(8);
         }else{
-            $list = $query->where('user_id',$id)->where('article_type',$type)->order('create_time DESC')->paginate(8);
+            $list = $query->where('user_id',$this->uid)->where('article_type',$type)->order('create_time DESC')->paginate(8);
         }
         $favorites = [];
         foreach ($list as $key => $value){
@@ -38,7 +65,6 @@ class Users extends Base
         $this->assign([
             'page'      => $page,
             'type'      => $type,
-            'id'        => $id,
             'favorites' => $favorites,
         ]);
         return $this->fetch();
@@ -46,8 +72,8 @@ class Users extends Base
 
     public function favoriteDel(Request $request)
     {
+        if (!($this->uid))$this->error('需要您先登陆噢=￣ω￣=',url('/login'));
         if ($request->isDelete()){
-            if (!($this->uid))$this->error('非法用户');
             $query = Db::name('favorite');
             $data = input('param.');
             //id集合
@@ -70,6 +96,7 @@ class Users extends Base
     {
         if ($request->isPost()){
             $data = input('param.');
+            if (($this->uid) != $data['uid'])$this->error('非法用户=￣ω￣=',url('/login'));
             $message = "爱编程论坛,请点击下面网址进行激活账号^_^~,有效时间为24小时.";
             $hash = getHash($data['uid']);
             $href = config('DOMAIN').'/check/uid/'.$data['uid'].'/hash/'.$hash;
@@ -95,15 +122,14 @@ class Users extends Base
     //验证hash
     public function check()
     {
+        if (!($this->uid))$this->error('需要您先登陆噢=￣ω￣=',url('/login'));
         $data = input('param.');
         $res = findHash($data['uid'],$data['hash']);
         if ($res){
             $res = Db::name('Users')->where('id',$data['uid'])->update(['is_validate'=>1]);
         }
         if($res !== false){
-            $this->assign([
-                'signal' => 'success'
-            ]);
+            $this->success('验证成功!',url('/user/'.$data['uid']));
         }else{
             $this->assign([
                 'signal' => 'fail'
