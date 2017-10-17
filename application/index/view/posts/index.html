@@ -34,14 +34,14 @@
                             <tr>
                                 <td class="pls " rowspan="2">
                                     <div class="authi">
-                                        <a href="" target="_blank" class="xw1" style="padding-left: 50px;">
+                                        <a href="javascript:;" data-id="{$post->user_id}" data-type="{$post->user_type}" class="avtm location" style="padding-left: 50px;">
                                             {$post->user_username}
                                         </a>
                                     </div>
                                     <div id="favatar29" class="pls favatar">
                                         <div>
                                             <div class="avatar">
-                                                <a href="home.php?mod=space&amp;uid=1" class="avtm" target="_blank">
+                                                <a href="javascript:;" data-id="{$post->user_id}" data-type="{$post->user_type}" class="avtm location">
                                                     <img src="{$post->user_headimg}" alt="">
                                                 </a>
                                             </div>
@@ -80,13 +80,11 @@
                                         </div>
                                         <p>
                                             <em>
-                                                <a href="#" target="_blank">
-                                                    {eq name="$post->user_type" value="1"}
-                                                        管理员
-                                                    {else/}
-                                                        用户
-                                                    {/eq}
-                                                </a>
+                                                {eq name="$post->user_type" value="1"}
+                                                    管理员
+                                                {else/}
+                                                    用户
+                                                {/eq}
                                             </em>
                                         </p>
                                         <p>
@@ -94,11 +92,11 @@
                                                 {eq name="$post->user_type" value="2"}
                                                 <!--改变图标开始-->
                                                 {php}
-                                                $icon = explode('-',$post->level_icon);
-                                                array_shift($icon);
-                                                foreach($icon as $value){
-                                                     echo '<img src="'.$value.'" title="'.$post->user_level.' 级">';
-                                                }
+                                                    $icon = explode('-',$post->level_icon);
+                                                    array_shift($icon);
+                                                    foreach($icon as $value){
+                                                         echo '<img src="'.$value.'" title="'.$post->user_level.' 级">';
+                                                    }
                                                 {/php}
                                                 <!--改变图标结束-->
                                                 {else/}
@@ -187,14 +185,14 @@
                         <tr>
                             <td class="pls " rowspan="2">
                                 <div class="authi">
-                                    <a href="" target="_blank" class="xw1" style="padding-left: 50px;">
+                                    <a href="javascript:;" data-id="{$comment->user_id}" data-type="{$comment->user_type}" class="xw1 location" style="padding-left: 50px;">
                                         {$comment->user_username}
                                     </a>
                                 </div>
                                 <div  class="pls favatar">
                                     <div>
                                         <div class="avatar">
-                                            <a href="home.php?mod=space&amp;uid=1" class="avtm" target="_blank">
+                                            <a href="javascript:;" data-id="{$comment->user_id}" data-type="{$comment->user_type}" class="avtm location">
                                                 <img src="{$comment->user_headimg}" alt="">
                                             </a>
                                         </div>
@@ -233,13 +231,11 @@
                                     </div>
                                     <p>
                                         <em>
-                                            <a href="#" target="_blank">
-                                                {eq name="$comment->reply_user_type" value="1"}
-                                                管理员
-                                                {else/}
-                                                用户
-                                                {/eq}
-                                            </a>
+                                            {eq name="$comment->reply_user_type" value="1"}
+                                            管理员
+                                            {else/}
+                                            用户
+                                            {/eq}
                                         </em>
                                     </p>
                                     <p>
@@ -250,7 +246,7 @@
                                                 $icon = explode('-',$comment->level_icon);
                                                 array_shift($icon);
                                                 foreach($icon as $value){
-                                                     echo '<img src="'.$value.'" title="'.$comment->user_level.' 级">';
+                                                    echo '<img src="'.$value.'" title="'.$comment->user_level.' 级,距离下一级需要 '.$comment->next_level.' 积分">';
                                                 }
                                                 {/php}
                                             <!--改变图标结束-->
@@ -326,6 +322,16 @@
 <script  src="__STATIC__/plugins/kindeditor/kindeditor-all-min.js"></script>
 <script  src="__STATIC__/plugins/kindeditor/lang/zh-CN.js"></script>
 <script>
+    //不同身份的人决定是否跳转
+    $(".location").click(function () {
+        var id = $(this).data('id');
+        var type = $(this).data('type');
+        if (type == 1){
+            layer.msg('管理员没有个人空间噢');
+        }else if (type == 2){
+            window.location.href = "/user/"+id;
+        }
+    });
     //加入收藏
     $("#k_favorite2").click(function () {
         layer.msg('您已经收藏过了噢')
@@ -336,7 +342,7 @@
         if(!res) return false;
         var article_id   = "{$post->id}";
         var article_user_id = "{$post->user_id}";
-        var user_type = "{$post->user_type}";
+        var user_type = 2;
         var article_title = "{$post->title}";
         var article_user_nickname = "{$post->user_username}";
         var data = {

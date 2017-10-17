@@ -35,18 +35,21 @@ class Posts extends Base
         if ($post->user_type == 1){//管理员
             $post->user_username = $post->administrator->username;
             $post->user_headimg  = $post->administrator->headimg;
+            $post->user_id  = $post->administrator->id;
             $post->user_points   = '保密';
             $post->user_post_num = '保密';
             $post->user_fans_num = '保密';
         } elseif($post->user_type == 2){//用户
             $post->user_username = $post->users->nickname;
             $post->user_headimg  = $post->users->headimg;
+            $post->user_id  = $post->users->id;
             $post->user_points   = $post->users->points;
             $post->user_post_num = $post->users->post_num;
             $post->user_fans_num = $post->users->fans_num;
             $level = processLevel($postsLevel,$post->user_points);
-            $post->user_level = $level[0];
-            $post->level_icon = $level[1];
+            $post->user_level    = $level[0];
+            $post->level_icon    = $level[1];
+            $post->next_level    = $level[2];
         }
 
         //处理评论
@@ -56,18 +59,21 @@ class Posts extends Base
             if ($value->reply_user_type == 1){//管理员
                 $comments[$key]->user_username = $value->administrator->username;
                 $comments[$key]->user_headimg  = $value->administrator->headimg;
+                $comments[$key]->user_id  = $value->administrator->id;
                 $comments[$key]->user_points   = '保密';
                 $comments[$key]->user_post_num = '保密';
                 $comments[$key]->user_fans_num = '保密';
             } elseif($value->reply_user_type == 2){//用户
                 $comments[$key]->user_username = $value->users->nickname;
                 $comments[$key]->user_headimg  = $value->users->headimg;
+                $comments[$key]->user_id       = $value->users->id;
                 $comments[$key]->user_points   = $value->users->points;
                 $comments[$key]->user_post_num = $value->users->post_num;
                 $comments[$key]->user_fans_num = $value->users->fans_num;
                 $level = processLevel($postsLevel,$comments[$key]->user_points);
-                $comments[$key]->user_level = $level[0];
-                $comments[$key]->level_icon = $level[1];
+                $comments[$key]->user_level    = $level[0];
+                $comments[$key]->level_icon    = $level[1];
+                $comments[$key]->next_level    = $level[2];
             }
             $comments[$key]->content = $this->incLength($value->content);
         }

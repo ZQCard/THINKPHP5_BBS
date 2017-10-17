@@ -11,6 +11,7 @@ namespace app\index\controller;
 use app\index\model\Favorite;
 use app\common\model\Users AS userModel;
 use think\Db;
+use think\Debug;
 use think\Loader;
 use think\Request;
 
@@ -24,14 +25,14 @@ class Users extends Base
     //用户中心
     public function index($id)
     {
-        $userModel = new userModel();
-        $user = $userModel::get($id);
+        $user = userModel::get($id);
         if ((!$user) || $user['status']==2)$this->error('该用户不存在或被冻结');
         //处理积分等级
-        $postsLevel = Db::name('level')->field('point,icon,number')->order('point DESC')->select();
-        $level = processLevel($postsLevel,$user->points);
+        $pointsLevel = Db::name('level')->field('point,icon,number')->order('point DESC')->select();
+        $level = processLevel($pointsLevel,$user->points);
         $user->user_level = $level[0];
         $user->level_icon = $level[1];
+        $user->nextLevel  = $level[2];
         $this->assign([
             'id'   => $id,
             'user' => $user,
@@ -41,8 +42,8 @@ class Users extends Base
 
     public function setting(Request $request)
     {
-        $userModel = new userModel();
         if ($request->isPost()){
+            $userModel = new userModel();
             $data = input('param.');
             $data['id'] = $this->uid;
             $user = $userModel->field('nickname,email')->find();
@@ -64,7 +65,7 @@ class Users extends Base
             $res = $userModel->saveData($data);
             (false !== $res)?$this->success('信息修改成功'):$this->error('信息修改失败');
         }else{
-            $user = $userModel::get($this->uid);
+            $user = userModel::get($this->uid);
             $this->assign([
                 'user' => $user
             ]);
@@ -75,6 +76,17 @@ class Users extends Base
     public function points()
     {
 
+        $userModel = new userModel();
+        $user = $userModel->field('points')->find($this->uid);
+        $pointsLevel = Db::name('level')->field('point,name,icon,number')->order('number DESC')->select();
+        $level = processLevel($pointsLevel,$user['points']);
+        $user->user_level = $level[0];
+        $user->level_icon = $level[1];
+        $user->nextLevel  = $level[2];
+        $this->assign([
+            'user' => $user
+        ]);
+        return $this->fetch();
     }
     
     //用户收藏

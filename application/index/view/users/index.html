@@ -38,6 +38,7 @@
     </div>
     <ul class="tb cl" style="padding-left: 75px;">
         <li class="a"><a href="javascript:;">个人资料</a></li>
+        <li ><a href="/setting">个人空间</a></li>
     </ul>
 </div>
     <div id="ct" class="ct1 wp cl">
@@ -97,13 +98,13 @@
                             <h2 class="mbn">活跃概况</h2>
                             <ul>
                                 <li>
-                                    <em class="xg1">用户等级&nbsp;&nbsp;</em>
+                                    <em class="xg1">会员等级&nbsp;&nbsp;</em>
                                     <!--改变图标开始-->
                                     {php}
                                     $icon = explode('-',$user->level_icon);
                                     array_shift($icon);
                                     foreach($icon as $value){
-                                         echo '<img src="'.$value.'" title="'.$user->user_level.' 级">';
+                                        echo '<img src="'.$value.'" title="'.$user->user_level.' 级,距离下一级需要 '.$user->nextLevel.' 积分">';
                                     }
                                     {/php}
                                     <!--改变图标结束-->

@@ -170,8 +170,10 @@ function timeToString($timestamp){
  */
 function processLevel($level,$point)
 {
-    $processRes = [0 => 0,1 => ''];
+    $processRes = [0 => 0,1 => '',2=>0];
+    $k = 0;
     foreach ($level as $key => $value){
+        $k++;
         $levelArray[$key] = (int)($point/$value['point']);
         $processRes[0] += $value['number'] * $levelArray[$key];
         for ($i = 0 ; $i < $levelArray[$key]; $i++){
@@ -179,6 +181,8 @@ function processLevel($level,$point)
         }
         $point = $point%$value['point'];
     }
+    $next = $level[$k-1]['point'];
+    $processRes[2] = $next - $point;
     if (empty($processRes[1])){
         $res = end($level);
         $processRes[1] = '-'.$res['icon'];
