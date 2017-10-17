@@ -23,7 +23,7 @@ class Common extends Controller
     {
         $uid = (int)$uid;
         $salt = config('SALT');
-        $sid = session($salt.'uid');
+        $sid = (int)session($salt.'uid');
         $message = [1,''];
         $flag = true;
         if ($uid !== $sid){
