@@ -11,6 +11,7 @@ namespace app\index\controller;
 use app\index\model\Favorite;
 use app\common\model\Users AS userModel;
 use think\Db;
+use think\Loader;
 use think\Request;
 
 class Users extends Base
@@ -25,6 +26,7 @@ class Users extends Base
     {
         $userModel = new userModel();
         $user = $userModel::get($id);
+        if ((!$user) || $user['status']==2)$this->error('该用户不存在或被冻结');
         //处理积分等级
         $postsLevel = Db::name('level')->field('point,icon,number')->order('point DESC')->select();
         $level = processLevel($postsLevel,$user->points);
@@ -37,11 +39,44 @@ class Users extends Base
         return $this->fetch();
     }
 
-    public function setting()
+    public function setting(Request $request)
     {
-        return $this->fetch();
+        $userModel = new userModel();
+        if ($request->isPost()){
+            $data = input('param.');
+            $data['id'] = $this->uid;
+            $user = $userModel->field('nickname,email')->find();
+            if (empty($data['password'])){
+                unset($data['password']);
+                unset($data['repassword']);
+            }
+            if ($user['email'] == $data['email']){
+                unset($data['email']);
+            }
+            if ($user['nickname'] == $data['nickname']){
+                unset($data['nickname']);
+            }
+            if (empty($data['birthday'])){
+                $data['birthday'] = null;
+            }
+            $validate = Loader::validate('users');
+            ($validate->scene('update')->check($data))||$this->error($validate->getError());
+            $res = $userModel->saveData($data);
+            (false !== $res)?$this->success('信息修改成功'):$this->error('信息修改失败');
+        }else{
+            $user = $userModel::get($this->uid);
+            $this->assign([
+                'user' => $user
+            ]);
+            return $this->fetch();
+        }
     }
 
+    public function points()
+    {
+
+    }
+    
     //用户收藏
     public function favorite($type='')
     {

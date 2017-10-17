@@ -1,0 +1,170 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="wp" class="wp" style="min-height: 847px;">
+    <div id="pt" class="bm cl">
+        <div class="z">
+            <a href="./" class="nvhm" title="首页">Discuz! Board</a> <em>›</em>
+            <a href="home.php?mod=spacecp">设置</a> <em>›</em>个人资料
+        </div>
+    </div>
+    <div id="ct" class="ct2_a wp cl">
+        <div class="mn">
+            <div class="bm bw0">
+                <h1 class="mt">个人资料
+                </h1>
+                <!--don't close the div here-->
+                <ul class="tb cl">
+                <li class="a">
+                    <a href="home.php?mod=spacecp&amp;ac=profile&amp;op=base">基本资料</a>
+                </li>
+                </ul>
+                <form action="/setting" method="post" enctype="multipart/form-data" autocomplete="off" target="frame_profile" onsubmit="clearErrorInfo();">
+                    <input type="hidden" name="__token__" value="{$Request.token}" />
+                    <table cellspacing="0" cellpadding="0" class="tfm" id="profilelist">
+                        <tbody>
+                        <tr>
+                            <th>用户名</th>
+                            <td>{$user->username}</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr id="tr_nickname">
+                            <th id="th_nickname">本站昵称</th>
+                            <td id="td_nickname">
+                                <input type="text" name="nickname" value="{$user->nickname}">
+                                <p class="d"></p>
+                            </td>
+                        </tr>
+                        <tr id="tr_gender">
+                            <th id="th_gender">性别</th>
+                            <td id="td_gender">
+                                <select name="sex" class="ps" tabindex="1">
+                                    <option value="0"{eq name="$user->sex" value="0"}selected{/eq}>保密</option>
+                                    <option value="1"{eq name="$user->sex" value="1"}selected{/eq}>男</option>
+                                    <option value="2"{eq name="$user->sex" value="2"}selected{/eq}>女</option>
+                                </select>
+                                <div class="rq mtn" id="showerror_gender"></div>
+                                <p class="d"></p>
+                            </td>
+                        </tr>
+                        <tr id="tr_headimg">
+                            <th id="th_headimg">头像</th>
+                            <td id="td_headimg">
+                                <label>
+                                    {empty name="$user->headimg"}
+                                    <img style="max-height:100%;max-width:100%;width:120px;height:120px;vertical-align:middle;" class="fileimg" src="__STATIC__/admin/img/up.jpg" />
+                                    {else/}
+                                    <img style="max-height:100%;max-width:100%;width:120px;height:120px;vertical-align:middle;" class="fileimg" src="{$user->headimg}" />
+                                    {/empty}
+                                    <input type="file" style="display: none;" id="file" class="files" />
+                                    <input type="hidden" name="headimg" id="nowPic" value="{$user->headimg}">
+                                </label>
+                            </td>
+                        </tr>
+                        <tr id="tr_password">
+                            <th id="th_password">密码</th>
+                            <td id="td_password">
+                                <input type="password" name="password"  placeholder="不填则为不修改" value="">
+                            </td>
+                        </tr>
+                        <tr id="tr_repassword">
+                            <th id="th_repassword">确认密码</th>
+                            <td id="td_repassword">
+                                <input type="password" name="repassword"  placeholder="不填则为不修改" value="">
+                            </td>
+                        </tr>
+                        <tr id="tr_birthday">
+                            <th id="th_birthday">生日</th>
+                            <td id="td_birthday">
+                                <input type="text" name="birthday" value="{$user->birthday}"  aria-required="true" placeholder="选择日期" onclick="fPopCalendar(event,this,this)" readonly="readonly">
+                            </td>
+                        </tr>
+                        <tr id="tr_realname">
+                            <th id="th_realname">真实姓名</th>
+                            <td id="td_realname">
+                                <input type="text" name="true_name" placeholder="不填则为空" value="{$user->true_name}">
+                                <p class="d"></p>
+                            </td>
+                        </tr>
+                        <tr id="tr_email">
+                            <th id="th_email">邮箱</th>
+                            <td id="td_email">
+                                <input type="text" name="email" placeholder="不填则为空" value="{$user->email}">
+                                <p class="d"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>信息程度</th>
+                            <td>
+                                <select name="is_show">
+                                    <option value="0">公开</option>
+                                    <option value="1">好友可见</option>
+                                    <option value="3">保密</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <td colspan="2">
+                                <a href="javascript:;" id="formSubmitAdd" class="pn pnc"><strong>保存</strong></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="appl">
+            <div class="tbn">
+                <h2 class="mt bbda">设置</h2>
+                <ul>
+                    <li class="a"><a href="home.php?mod=spacecp&amp;ac=profile">账户信息</a></li>
+                    <li><a href="/points">积分</a></li>
+                    <li><a href="home.php?mod=spacecp&amp;ac=promotion">访问推广</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+<!--主要内容结束-->
+{block name="js"}
+<script src="__STATIC__/admin/js/Calendar.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var url = "{:url('admin/common/upload',['type' => 'user_headimg'])}";
+        $("#file").change(function() {
+            //普通上传
+            var upload = function(f) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', url, true);
+                var formData;
+                formData = new FormData();
+                formData.append('file', f);
+                xhr.onreadystatechange = function(response) {
+                    if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText != "") {
+                        var text = JSON.parse(xhr.responseText);
+                        $(".fileimg").attr("src",text);
+                        $("#file").remove();
+                        $("#nowPic").val(text);
+                    } else if (xhr.status != 200 && xhr.responseText) {
+                    }
+                };
+                xhr.send(formData);
+            };
+            if ($("#file")[0].files.length > 0) {
+                upload($("#file")[0].files[0]);
+            } else {
+                console && console.log("form input error");
+            }
+        })
+    });
+
+    $("#sendMail").click(function () {
+        isLogin();
+        $(this).hide();
+        $.post("{:url('index/users/resendMail')}",{uid:uid},function (res) {
+            layer.alert(res.msg);
+        });
+    });
+</script>
+{/block}

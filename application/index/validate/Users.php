@@ -10,7 +10,7 @@ class Users extends Validate
         'username'  => 'require|max:20|min:6|token|unique:users',
         'email'     => 'email|unique:users',
         'password'  => 'require|checkPsd|min:6',
-
+        'nickname'  => 'max:60|unique:users'
     ];
 
     protected $message = [
@@ -25,8 +25,17 @@ class Users extends Validate
 
     ];
 
+    protected $field = [
+        'username'    => '用户名',
+        'email'    => '邮箱',
+        'password'    => '密码',
+        'birthday'    => '生日',
+        'nickname'    => '昵称',
+    ];
+
     protected $scene = [
         'login' => ['username','password','email'],
+        'update'=> ['nickname','headimg','email','sex','is_show']
     ];
 
     protected function checkPsd($value,$rule,$data)

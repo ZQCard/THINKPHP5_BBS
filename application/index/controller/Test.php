@@ -9,7 +9,7 @@ class Test extends Controller
 {
     public function index()
     {
-        echo md5('zhouqi');
+
     }
 
     public function info()

@@ -149,7 +149,6 @@ class Common extends Controller
         return config('DOMAIN').'/'.$type.'/'.$id;
     }
 
-
     public function getMessageNum(Request $request)
     {
         if ($request->isPost()){

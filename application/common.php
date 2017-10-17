@@ -179,5 +179,9 @@ function processLevel($level,$point)
         }
         $point = $point%$value['point'];
     }
+    if (empty($processRes[1])){
+        $res = end($level);
+        $processRes[1] = '-'.$res['icon'];
+    }
     return $processRes;
 }

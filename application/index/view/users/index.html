@@ -16,6 +16,7 @@
         <!--[diy=diy1]--><div id="diy1" class="area"></div><!--[/diy]-->
     </div><div id="uhd">
     <div class="h cl">
+        {neq name="$id" value="$Think.session.bbszhouqiuid"}
         <div class="mn">
             <ul>
                 <li class="addf">
@@ -26,6 +27,7 @@
                 </li>
             </ul>
         </div>
+        {/neq}
         <div class="icn avt"><a href="/user/{$user->id}"><img src="{$user->headimg}"></a></div>
         <h2 class="mt">
             {$user->nickname}
@@ -78,8 +80,17 @@
                                 </li>
                             </ul>
                             <ul class="pf_l cl">
-                                <li><em>性别</em>{$user->sex}</li>
+                                {eq name="$user->is_show" value="1"}
+                                <li>
+                                    <em>性别</em>
+                                    {eq name="$user->sex" value="0"}未知{/eq}
+                                    {eq name="$user->sex" value="1"}男{/eq}
+                                    {eq name="$user->sex" value="2"}女{/eq}
+                                </li>
                                 <li><em>生日</em>{$user->birthday}</li>
+                                <li><em>真实姓名</em>{$user->true_name}</li>
+                                <li><em>邮箱地址</em>{$user->email}</li>
+                                {/eq}
                             </ul>
                         </div>
                         <div class="pbm mbm bbda cl">
@@ -119,7 +130,6 @@
 <!--主要内容结束-->
 {block name="js"}
 <script>
-
     $("#sendMail").click(function () {
         isLogin();
         $(this).hide();

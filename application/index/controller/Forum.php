@@ -11,7 +11,6 @@ class Forum extends Base
     public function index()
     {
         $moduleData = Db::name('module')->where('status',1)->field('id,name,pid,post_num,update_time,pic')->select();
-
         $module = [];
         //一级模块
         foreach ($moduleData as $key=>$value)
@@ -112,7 +111,7 @@ class Forum extends Base
     private function recommend()
     {
         $postModel = new Posts();
-        $recommend = $postModel->where('status=1')->order('score DESC')->limit(10)->select();
+        $recommend = $postModel->where('status=1')->field('id,title,user_id,user_type')->order('score DESC')->limit(10)->select();
         return $recommend;
     }
 }

@@ -39,15 +39,20 @@ Route::get('posts/:id','index/posts/index');
 //登陆注册验证退出
 Route::rule('register','index/login/register','GET|POST');
 Route::rule('login','index/login/index','GET|POST');
+//个人设置
+Route::rule('setting','index/users/setting','GET|POST');
+
 //验证hash
 Route::get('check','index/users/check');
 Route::get('logout','index/common/logout');
 
 //用户相关
 Route::get('user/:id','index/users/index');
-Route::get('setting','index/users/setting');
+
 //用户收藏
 Route::get('favorite','index/users/favorite');
+//用户积分
+Route::get('points','index/users/points');
 
 //测试控制器
 Route::get('test','index/test/index');

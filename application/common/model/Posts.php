@@ -48,6 +48,7 @@ class Posts extends Base
         //前端状态选择框控制
         $data['status'] = isset($data['status'])?1:2;
         $data['is_top'] = isset($data['is_top'])?1:2;
+        $data['is_good'] = isset($data['is_top'])?1:2;
         $data['score']  = time();
         if (isset($data['id']))
         {

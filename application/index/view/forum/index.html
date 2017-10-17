@@ -52,15 +52,20 @@
                                         <ul class="thread-list">
                                             {foreach name="recommend" item="recommend"}
                                             <li>
-                                                <a target="_blank" href="forum.php?mod=viewthread&amp;tid=34">
+                                                {eq name="$recommend->user_type" value="1"}
+                                                <img src="{$recommend->headimg}" alt="{$recommend->nickname}">
+                                                {else/}
+                                                <a href="user/{$recommend->user_id}">
                                                     <img src="{$recommend->headimg}" alt="{$recommend->nickname}">
                                                 </a>
+                                                {/eq}
+
                                                 <dl>
                                                     <dt>
-                                                        <a href="/posts/{$recommend->id}">{$recommend->nickname}</a>
+                                                        <a href="/posts/{$recommend->id}">{$recommend->title}</a>
                                                     </dt>
                                                     <dd>
-                                                        {$recommend->title}
+                                                      {$recommend->nickname}
                                                     </dd>
                                                 </dl>
                                             </li>

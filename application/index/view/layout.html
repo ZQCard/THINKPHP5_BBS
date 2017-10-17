@@ -56,7 +56,7 @@
                                 </a>
                             </li>
                             <li class="user-favorite"><a href="#">我的收藏</a></li>
-                            <li class="user-setting"><a href="home.php?mod=spacecp">设置</a></li>
+                            <li class="user-setting"><a href="/setting">设置</a></li>
                             <li class="user-logout"><a id="logout">退出</a></li>
                         </ul>
                     </div>
@@ -141,7 +141,7 @@
     getMessageNum();
     function getMessageNum() {
         if (!uid) return false;
-        $.post("{:url('common/getMessageNum')}",{uid:uid},function (res) {
+        $.post("{:url('index/common/getMessageNum')}",{uid:uid},function (res) {
             var num = 0;
             if (res.code == 1){
                 num = res.msg.message_num;
