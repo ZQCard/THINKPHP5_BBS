@@ -23,12 +23,18 @@
                     $icon = explode('-',$user->level_icon);
                     array_shift($icon);
                     foreach($icon as $value){
-                        echo '<img src="'.$value.'" title="'.$user->user_level.' 级,距离下一级需要 '.$user->nextLevel.' 积分">';
+                        echo '<img src="'.$value.'" title="'.$user->user_level.'   级,距离下一级需要 '.$user->nextLevel.' 积分">';
                     }
                     {/php}
                     <!--改变图标结束-->
                 </li>
-                <li class="cl"><em>积分: </em>90 <span class="xg1">( <u>总积分</u>=<u>发帖数</u>+<u>精华帖数</u>X5+<u>威望</u>X2+<u>金钱</u>+<u>贡献</u> )</span></li>
+                <li class="cl"><em>积分: </em>{$user->points} <span class="xg1">(
+                    <u>总积分</u>=0
+                    {foreach name="points" item="point"}
+                    {$point->type}
+                    <u>{$point->bakname}x{$point->num}</u>
+                    {/foreach}
+                    )</span></li>
             </ul>
                 <table summary="转账与兑换" cellspacing="0" cellpadding="0" class="dt mtm">
                     <caption>

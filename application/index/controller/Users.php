@@ -8,6 +8,7 @@
 
 namespace app\index\controller;
 
+use app\common\model\PointsLog;
 use app\index\model\Favorite;
 use app\common\model\Users AS userModel;
 use think\Db;
@@ -75,16 +76,28 @@ class Users extends Base
 
     public function points()
     {
-
         $userModel = new userModel();
         $user = $userModel->field('points')->find($this->uid);
+        //处理积分
+        $points = (new PointsLog())->field('bakname,type,count(id)  AS num')->group('type,bakname')->select();
         $pointsLevel = Db::name('level')->field('point,name,icon,number')->order('number DESC')->select();
         $level = processLevel($pointsLevel,$user['points']);
         $user->user_level = $level[0];
         $user->level_icon = $level[1];
         $user->nextLevel  = $level[2];
         $this->assign([
-            'user' => $user
+            'points' => $points,
+            'user'   => $user
+        ]);
+        return $this->fetch();
+    }
+
+    public function pointslog()
+    {
+
+        $pointsLog = (new PointsLog())->where('user_id',$this->uid)->field('bakname,type,points')->order('create_time')->paginate(15);
+        $this->assign([
+            'pointsLog' => $pointsLog,
         ]);
         return $this->fetch();
     }

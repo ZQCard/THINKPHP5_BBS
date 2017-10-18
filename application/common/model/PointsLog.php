@@ -4,6 +4,10 @@ namespace app\common\model;
 use think\Db;
 
 class PointsLog extends Base{
+    protected function getTypeAttr($value){
+        $status = [1=>'+',2=>'-'];
+        return $status[$value];
+    }
     protected static function init()
     {
         //插入积分记录之前更新用户积分 并且查找对应的积分模块
