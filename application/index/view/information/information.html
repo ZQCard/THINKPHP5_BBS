@@ -168,7 +168,7 @@
 
                     $("#favorite_before").html($("#favorite_back").html());
                 }else{
-                    //window.location.reload();
+                    window.location.reload();
                 }
             });
         });
@@ -177,6 +177,7 @@
     
     //编辑器
     KindEditor.ready(function(K) {
+        var points_type_id = "{$information['points_type_id']}";
         editor  = K.create('#editor_id');
         $("#comment").click(function(){
             isLogin();
@@ -187,6 +188,7 @@
                 'post_user_id':"{$information['post_user_id']}",
                 'reply_user_id':uid,
                 'reply_user_name':"{$Think.cookie.bbszhouqiusername}",
+                'points_type_id' :points_type_id
             };
             $.post("{:url('comment')}",data,original);
         });

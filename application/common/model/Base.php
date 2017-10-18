@@ -29,12 +29,9 @@ class Base extends Model
     {
         //前端状态选择框控制
         $data['status'] = isset($data['status'])?1:2;
-        if (isset($data['id']))
-        {
+        if (isset($data['id'])) {
             $res = $this->isUpdate(true)->save($data);
-        }
-        else
-        {
+        }else{
             $res = $this->isUpdate(false)->save($data);
         }
         return $res;

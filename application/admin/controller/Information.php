@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use think\Db;
 use think\Loader;
 use app\admin\model\Information AS InformationModel;
 
@@ -13,6 +14,26 @@ class Information extends Base
         $data = $BannerModel->field('content',true)->order(['look'=>'desc','comment'=>'desc','status'])->paginate(8);
         $this->assign([
             'data' =>$data,
+        ]);
+        return $this->fetch();
+    }
+
+    public function create()
+    {
+        $pointsType = Db::name('points_type')->field('id,name')->select();
+        $this->assign([
+            'pointsType' => $pointsType
+        ]);
+        return $this->fetch();
+    }
+
+    public function edit()
+    {
+        $pointsType = Db::name('points_type')->field('id,name')->select();
+        $data = Db::name($this->request->controller())->find(input('param.id'));
+        $this->assign([
+            'data_view'  => $data,
+            'pointsType' => $pointsType
         ]);
         return $this->fetch();
     }

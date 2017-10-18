@@ -1,0 +1,54 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="page-wrapper" class="gray-bg dashbard-1">
+
+    <div class="row J_mainContent" id="content-main">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加积分规则</h5>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" method="post" action="" id="commentForm" novalidate="novalidate">
+                        <input type="hidden" name="__token__" value="{$Request.token}" />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">规则名称：</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="name" minlength="2" class="form-control" required="" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">积分量：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="points" required="" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">类型：</label>
+                            <select name="type" id="">
+                                <option value="1">增加</option>
+                                <option value="2">减少</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <a class="btn btn-primary" id="formSubmitAdd2">提交</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    //添加表单提交
+    $("#formSubmitAdd2").click(function () {
+        var form = $("form");
+        var url = "/admin/points_type";
+        $.post(url,form.serialize(),success);
+    });
+</script>
+{/block}

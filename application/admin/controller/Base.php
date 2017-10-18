@@ -5,7 +5,7 @@ use think\Controller;
 use think\Db;
 use think\Request;
 
- abstract class Base extends Controller
+class Base extends Controller
 {
     protected $salt;
     public function _initialize()

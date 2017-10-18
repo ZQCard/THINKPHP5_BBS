@@ -37,6 +37,16 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-3 control-label">所属积分规则：</label>
+                                <div class="col-sm-8">
+                                    <select name="points_type_id">
+                                        {foreach name="pointsType" item="pointsType"}
+                                            <option value="{$pointsType['id']}"  class="form-control">{$pointsType['name']}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label">状态：</label>
                                 <div class="col-sm-8">
                                     <div class="switch">

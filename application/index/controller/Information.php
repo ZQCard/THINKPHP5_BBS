@@ -108,8 +108,14 @@ class Information extends Base
             $data = input('param.');
             $validate = Loader::validate('information_comment');
             ($validate->check($data)) || $this->error($validate->getError());
-            $res = (new InformationComment())->allowField(true)->save($data);
-            ($res !== false)?$this->success('评论成功!'):$this->error('评论失败');
+            $res = Db::name('points_type')->where('id',$data['points_type_id'])->field('points,type,name')->find();
+            if (!$res)$this->error('评论积分不存在');
+            $data['info'] = $res['name'];
+            $data['comment_points'] = $res['points'];
+            $data['points_type']           = $res['type'];
+            ($res['type'] == 1)?$info = '+'.$res['points']:$info = '-'.$res['points'];
+            $res2 = (new InformationComment())->save($data);
+            ($res2 !== false)?$this->success('评论成功!积分'.$info):$this->error('评论失败');
         }
     }
 

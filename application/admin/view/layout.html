@@ -102,6 +102,7 @@
                         <li>
                             <a class="J_menuItem" href="{:url('admin/module/index')}">论坛模块管理</a>
                             <a class="J_menuItem" href="{:url('admin/posts/index')}">帖子管理</a>
+                            <a class="J_menuItem" href="{:url('admin/pointsType/index')}">积分管理</a>
                         </li>
                     </ul>
                 </li>
@@ -166,6 +167,7 @@
     $("#formSubmitAdd").click(function () {
         var form = $("form");
         var url = "/admin/{$controller}";
+        return ;
         $.post(url,form.serialize(),success);
     });
 

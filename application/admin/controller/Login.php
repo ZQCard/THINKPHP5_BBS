@@ -15,7 +15,6 @@ class Login extends Controller
         //验证机制   session    cookie+token+ip
         $salt = config('SALT');
         session($salt.'aid')&&$this->redirect('admin/index/index');
-
         if ($cookie = cookie($salt.'username'))
         {
             $admin = (new Administrator())->where('username',$cookie)->find();

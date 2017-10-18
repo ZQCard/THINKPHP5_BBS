@@ -17,12 +17,14 @@ class Message extends Model
     protected static function init()
     {
         //评论之后推送消息给资讯发出者
-        self::afterInsert(function ($message){
+        self::beforeInsert(function ($message){
+            $res = null;
             if ($message->user_type == 1){//发给管理员
-                Db::name('administrator')->where('id',$message->get_user_id)->setInc('message_num');
+                $res = Db::name('administrator')->where('id',$message->get_user_id)->setInc('message_num');
             }elseif ($message->user_type == 2){//发给用户
-                Db::name('users')->where('id',$message->get_user_id)->setInc('message_num');
+                $res = Db::name('users')->where('id',$message->get_user_id)->setInc('message_num');
             }
+            return $res;
         });
     }
 }

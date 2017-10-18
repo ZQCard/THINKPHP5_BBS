@@ -1,0 +1,73 @@
+{extend name="layout" /}
+{block name="content"}
+<!--右侧部分开始-->
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" id="linkOrder" href="#">
+                        <i class="fa fa-bell"></i> <span class="label label-primary"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="row J_mainContent" id="content-main">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>修改积分规则</h5>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" action="{:url('update')}" id="commentForm" novalidate="novalidate">
+                        <input type="hidden" name="__token__" value="{$Request.token}" />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">规则名称：</label>
+                            <div class="col-sm-8">
+                                <input name="name" value="{$data_view['name']}" minlength="2" type="text" class="form-control" required="" aria-required="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">积分数量：</label>
+                            <div class="col-sm-8">
+                                <input type="text" value="{$data_view['points']}"  minlength="11" class="form-control" required name="points">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">类型：</label>
+                            <select name="type" id="">
+                                <option value="1" {eq name="$data_view['type']" value="1"}selected{/eq}>增加</option>
+                                <option value="2" {eq name="$data_view['type']" value="2"}selected{/eq}>减少</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <a class="btn btn-primary" id="formSubmitEdit2" data-id="{$data_view['id']}">提交</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--右侧部分结束-->
+{/block}
+
+{block name="js"}
+<script>
+    //修改表单提交
+    $("#formSubmitEdit2").click(function () {
+        var form = $("form");
+        var id = $(this).data('id');
+        $.ajax({
+            type    : "PUT",
+            url     : "/admin/points_type/"+id,
+            data    : form.serialize(),
+            success : success
+        });
+    });
+</script>
+{/block}

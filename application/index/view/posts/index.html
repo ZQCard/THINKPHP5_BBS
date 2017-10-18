@@ -342,7 +342,7 @@
         if(!res) return false;
         var article_id   = "{$post->id}";
         var article_user_id = "{$post->user_id}";
-        var user_type = 2;
+        var user_type = "{$post->user_type}";
         var article_title = "{$post->title}";
         var article_user_nickname = "{$post->user_username}";
         var data = {
@@ -378,7 +378,7 @@
             if(!res) return false;
             var post_id         = "{$post->id}";
             var post_user_id    = "{$post->user_id}";
-            var user_type       = "{$post->user_type}";
+            var user_type       = "2";
             var content         = editor.text();
             var token           = "{$Request.token}";
             var data = {

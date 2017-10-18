@@ -14,6 +14,7 @@ Route::group('admin',function (){
     Route::resource('config','admin/config');
     Route::resource('posts','admin/posts');
     Route::resource('level','admin/level');
+    Route::resource('points_type','admin/points_type');
 });
 
 Route::pattern([

@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 
+use app\common\model\PointsLog;
 use app\index\model\Favorite;
 use curl\Curl;
 use think\Controller;
@@ -36,7 +37,6 @@ class Common extends Controller
                 $message = [0,'用户已经被冻结'];
             }
         }
-
         return $message;
     }
 
@@ -175,6 +175,22 @@ class Common extends Controller
             $res = (new Favorite())->save($data);
             (false !== $res)?$this->success('收藏成功'):$this->error('收藏失败');
         }
+    }
+
+    /**
+     * @param $uid      用户id
+     * @param $point    积分
+     * @param $bakname  备注信息
+     * @param $type     操作类型
+     */
+    public static function incrPoint($uid,$points,$type,$info)
+    {
+        $data['user_id'] = $uid;
+        $data['points']  = $points;
+        $data['type']    = $type;
+        $data['bakname'] = $info;
+        $res = (new PointsLog())->saveData($data);
+        return $res;
     }
 
 
