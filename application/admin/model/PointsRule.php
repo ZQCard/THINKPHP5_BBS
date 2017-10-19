@@ -9,7 +9,7 @@
 namespace app\admin\model;
 
 
-class PointsType extends Base
+class PointsRule extends Base
 {
 
 }

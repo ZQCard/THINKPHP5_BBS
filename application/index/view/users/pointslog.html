@@ -1,6 +1,62 @@
 {extend name="layout" /}
 {block name="content"}
+<div id="wp" class="wp" style="min-height: 700px;">
+    <div id="pt" class="bm cl">
+        <div class="z">
+            <a href="./" class="nvhm" title="首页">Discuz! Board</a> <em>›</em>
+            <a href="home.php?mod=spacecp">设置</a> <em>›</em>积分
+        </div>
+    </div>
+    <div id="ct" class="ct2_a wp cl">
+        <div class="mn">
+            <div class="bm bw0">
+                <h1 class="mt">积分
+                </h1>
+                <!--don't close the div here--><ul class="tb cl">
+                <li><a href="/points">我的积分</a></li>
+                <li class="a"><a href="/">积分记录</a></li>
+                <li><a href="/points/rule">积分规则</a></li>
+            </ul><p class="tbmu bw0">
+                <a class="a" href="/" hidefocus="true">系统奖励</a>
+            </p>
+                <table summary="积分获得历史" cellspacing="0" cellpadding="0" class="dt">
+                    <tbody>
+                        <tr>
+                            <th class="xw1" width="80">动作名称</th>
+                            <th class="xw1" width="60">类型</th>
+                            <th class="xw1" width="60">积分</th>
+                            <th class="xw1" width="100">奖励时间</th>
+                        </tr>
+                        {foreach name="pointsLog" item="log"}
+                        <tr>
+                            <td>
+                                <a href="">{$log->bakname}</a>
+                            </td>
+                            <td>{$log->type}</td>
+                            <td>{$log->points}</td>
+                            <td>{$log->create_time}</td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+                <div style="margin-left: 30%;">{$pointsLog->render()}</div>
+            </div>
+        </div>
+        <div class="appl"><div class="tbn">
+            <h2 class="mt bbda">设置</h2>
+            <ul>
+                <li><a href="home.php?mod=spacecp&amp;ac=avatar">修改头像</a></li>
+                <li><a href="home.php?mod=spacecp&amp;ac=profile">个人资料</a></li>
+                <li class="a"><a href="home.php?mod=spacecp&amp;ac=credit">积分</a></li>
+                <li><a href="home.php?mod=spacecp&amp;ac=usergroup">用户组</a></li>
+                <li><a href="home.php?mod=spacecp&amp;ac=privacy">隐私筛选</a></li>
 
+                <li><a href="home.php?mod=spacecp&amp;ac=profile&amp;op=password">密码安全</a></li>
+
+                <li><a href="home.php?mod=spacecp&amp;ac=promotion">访问推广</a></li>
+            </ul>
+        </div></div>
+    </div>	</div>
 {/block}
 <!--主要内容结束-->
 {block name="js"}

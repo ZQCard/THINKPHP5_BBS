@@ -10,9 +10,9 @@ namespace app\admin\controller;
 
 
 use think\Loader;
-use app\admin\model\PointsType as PointsTypeModel;
+use app\admin\model\PointsRule as PointsRuleModel;
 
-class PointsType extends Base
+class PointsRule extends Base
 {
     public function save()
     {
@@ -30,7 +30,7 @@ class PointsType extends Base
     {
         $validate = Loader::validate('pointsType');
         $validate->check($data) || $this->error($validate->getError());
-        $res = (new PointsTypeModel())->saveData($data);
+        $res = (new PointsRuleModel())->saveData($data);
         return $res;
     }
 }

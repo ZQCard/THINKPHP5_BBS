@@ -20,7 +20,7 @@ class Information extends Base
 
     public function create()
     {
-        $pointsType = Db::name('points_type')->field('id,name')->select();
+        $pointsType = Db::name('points_rule')->field('id,name')->select();
         $this->assign([
             'pointsType' => $pointsType
         ]);
@@ -29,7 +29,7 @@ class Information extends Base
 
     public function edit()
     {
-        $pointsType = Db::name('points_type')->field('id,name')->select();
+        $pointsType = Db::name('points_rule')->field('id,name')->select();
         $data = Db::name($this->request->controller())->find(input('param.id'));
         $this->assign([
             'data_view'  => $data,

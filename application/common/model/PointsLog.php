@@ -4,6 +4,8 @@ namespace app\common\model;
 use think\Db;
 
 class PointsLog extends Base{
+    protected $dateFormat = "Y-m-d H:i:s";
+
     protected function getTypeAttr($value){
         $status = [1=>'+',2=>'-'];
         return $status[$value];

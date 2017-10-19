@@ -36,6 +36,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">每日限制次数：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" value="{$data_view['limit_num']}" name="limit_num" required="" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">类型：</label>
                             <select name="type" id="">
                                 <option value="1" {eq name="$data_view['type']" value="1"}selected{/eq}>增加</option>
@@ -64,7 +70,7 @@
         var id = $(this).data('id');
         $.ajax({
             type    : "PUT",
-            url     : "/admin/points_type/"+id,
+            url     : "/admin/points_rule/"+id,
             data    : form.serialize(),
             success : success
         });

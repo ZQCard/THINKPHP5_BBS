@@ -182,6 +182,7 @@ class Common extends Controller
      * @param $point    积分
      * @param $bakname  备注信息
      * @param $type     操作类型
+     * @param $limit    奖励限制数量
      */
     public static function incrPoint($uid,$points,$type,$info)
     {

@@ -14,7 +14,7 @@ Route::group('admin',function (){
     Route::resource('config','admin/config');
     Route::resource('posts','admin/posts');
     Route::resource('level','admin/level');
-    Route::resource('points_type','admin/points_type');
+    Route::resource('points_rule','admin/points_rule');
 });
 
 Route::pattern([
@@ -55,6 +55,7 @@ Route::get('favorite','index/users/favorite');
 //用户积分
 Route::get('points','index/users/points');
 Route::get('points/log','index/users/pointslog');
+Route::get('points/rule','index/users/pointsrule');
 
 //测试控制器
 Route::get('test','index/test/index');

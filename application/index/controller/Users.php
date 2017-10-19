@@ -94,11 +94,15 @@ class Users extends Base
 
     public function pointslog()
     {
-
-        $pointsLog = (new PointsLog())->where('user_id',$this->uid)->field('bakname,type,points')->order('create_time')->paginate(15);
+        $pointsLog = (new PointsLog())->where('user_id',$this->uid)->field('bakname,type,points,create_time')->order('create_time')->paginate(15);
         $this->assign([
             'pointsLog' => $pointsLog,
         ]);
+        return $this->fetch();
+    }
+
+    public function pointsrule()
+    {
         return $this->fetch();
     }
     

@@ -47,6 +47,14 @@
                                             <div class="fht-cell"></div>
                                         </th>
                                         <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner ">每次限制次数</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name" tabindex="0">
+                                            <div class="th-inner ">类型</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="" data-field="name" tabindex="0">
                                             <div class="th-inner">操作</div>
                                             <div class="fht-cell"></div>
                                         </th>
@@ -58,6 +66,7 @@
                                     <tr class="no-records-found">
                                         <td>{$points['name']}</td>
                                         <td>{$points['points']}</td>
+                                        <td>{$points['limit_num']}</td>
                                         <td>
                                             {eq name="$points['type']" value="1"}
                                                 增加
@@ -66,7 +75,7 @@
                                             {/eq}
                                         </td>
                                         <td>
-                                            <a href="{:url('admin/points_type/edit',['id'=>$points['id']])}" type="button" class="btn btn-outline btn-default"  title="修改">
+                                            <a href="{:url('admin/points_rule/edit',['id'=>$points['id']])}" type="button" class="btn btn-outline btn-default"  title="修改">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a type="button" class="btn btn-outline btn-default delete1" data-id="{$points['id']}" data-name="{$points['name']}"  title="删除">
@@ -106,7 +115,7 @@
         var id   = that.data('id');
         var name = that.data('name');
         var type = that.data('type');
-        var url = "/admin/points_type/"+id;
+        var url = "/admin/points_rule/"+id;
 
         //type为2逻辑删除   为1物理删除
         if (type !=2) type = 1

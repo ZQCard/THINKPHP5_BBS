@@ -108,14 +108,26 @@ class Information extends Base
             $data = input('param.');
             $validate = Loader::validate('information_comment');
             ($validate->check($data)) || $this->error($validate->getError());
-            $res = Db::name('points_type')->where('id',$data['points_type_id'])->field('points,type,name')->find();
+            $res = Db::name('points_rule')->where('id',$data['points_rule_id'])->field('points,type,name,limit_num')->find();
             if (!$res)$this->error('评论积分不存在');
             $data['info'] = $res['name'];
             $data['comment_points'] = $res['points'];
-            $data['points_type']           = $res['type'];
-            ($res['type'] == 1)?$info = '+'.$res['points']:$info = '-'.$res['points'];
+            $data['points_rule']           = $res['type'];
+            $data['is_incr_point'] = 1;
+            //判断今日添加次数是否满了
+            $today = strtotime(date('Y-m-d'));
+            $count = Db::name('points_log')->where('user_id',$this->uid)->where('bakname',$data['info'])->where('create_time','>=',$today)->count();
+            if ($res['type'] == 1){
+                $info = '积分 +'.$res['points'];
+            }else{
+                $info = '积分 +'.$res['points'];
+            }
+            if ($count>=$res['limit_num']){
+                $data['is_incr_point'] = 0;
+                $info = '';
+            }
             $res2 = (new InformationComment())->save($data);
-            ($res2 !== false)?$this->success('评论成功!积分'.$info):$this->error('评论失败');
+            ($res2 !== false)?$this->success('评论成功!'.$info):$this->error('评论失败');
         }
     }
 

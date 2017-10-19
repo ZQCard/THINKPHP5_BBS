@@ -1,9 +1,8 @@
 {extend name="layout" /}
 {block name="content"}
-<div id="wp" class="wp" style="min-height: 847px;">
+<div id="wp" class="wp" style="min-height: 700px;">
     <div id="pt" class="bm cl">
         <div class="z">
-            <a href="./" class="nvhm" title="首页">Discuz! Board</a> <em>›</em>
             <a href="home.php?mod=spacecp">设置</a> <em>›</em>积分
         </div>
     </div>
@@ -14,8 +13,8 @@
                 </h1>
                 <!--don't close the div here--><ul class="tb cl">
                 <li class="a"><a href="/points">我的积分</a></li>
-                <li><a href="home.php?mod=spacecp&amp;ac=credit&amp;op=log">积分记录</a></li>
-                <li><a href="home.php?mod=spacecp&amp;ac=credit&amp;op=rule">积分规则</a></li>
+                <li><a href="/points/log">积分记录</a></li>
+                <li><a href="/points/rule">积分规则</a></li>
             </ul><ul class="creditl mtm bbda cl"><li class="xi1 cl"><em> 积分: </em>{$user->points}  &nbsp; </li>
                 <li><em> 会员等级: </em>
                     <!--改变图标开始-->
@@ -39,7 +38,7 @@
                 <table summary="转账与兑换" cellspacing="0" cellpadding="0" class="dt mtm">
                     <caption>
                         <h2 class="mbm xs2">
-                            <a href="home.php?mod=spacecp&amp;ac=credit&amp;op=log" class="xi2 xs1 xw0 y">查看更多»</a>积分记录
+                            <a href="/points/log" class="xi2 xs1 xw0 y">查看更多»</a>积分记录
                         </h2>
                     </caption>
                     <tbody><tr>
