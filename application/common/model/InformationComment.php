@@ -27,12 +27,7 @@ class InformationComment extends Base
             $data['content_id'] = $comment->information_id;
             $data['user_type'] = 1;
             $res1 = (new Message())->save($data);
-            if ($comment->is_incr_point){
-                $res2 = Common::incrPoint($comment->reply_user_id,$comment->comment_points,$comment->points_rule,$comment->info);
-            }else{
-                $res2 = true;
-            }
-            return ($res1&&$res2);
+            return $res1;
         });
     }
 

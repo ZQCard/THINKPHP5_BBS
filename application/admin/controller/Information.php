@@ -18,26 +18,6 @@ class Information extends Base
         return $this->fetch();
     }
 
-    public function create()
-    {
-        $pointsType = Db::name('points_rule')->field('id,name')->select();
-        $this->assign([
-            'pointsType' => $pointsType
-        ]);
-        return $this->fetch();
-    }
-
-    public function edit()
-    {
-        $pointsType = Db::name('points_rule')->field('id,name')->select();
-        $data = Db::name($this->request->controller())->find(input('param.id'));
-        $this->assign([
-            'data_view'  => $data,
-            'pointsType' => $pointsType
-        ]);
-        return $this->fetch();
-    }
-
     public function read($id)
     {
         $information = InformationModel::find($id);

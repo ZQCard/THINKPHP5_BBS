@@ -41,9 +41,10 @@ class Forum extends Base
                 $recInfo[$key]->nickname = '管理员:'.$value->administrator->username;
             }else{
                 $recInfo[$key]->headimg  = $value->users->headimg;
-                $recInfo[$key]->nickname = $value->users->username;
+                $recInfo[$key]->nickname = $value->users->nickname;
             }
         }
+
         $this->assign([
             'recommend' => $recInfo,
             'module'  => $module
@@ -64,8 +65,8 @@ class Forum extends Base
                     $posts[$key]->users_id  = $value->administrator->id;
                 }else{
                     $posts[$key]->headimg  = $value->users->headimg;
-                    $posts[$key]->nickname = $value->users->username;
-                    $posts[$key]->users_id  = $value->users->user_id;
+                    $posts[$key]->nickname = $value->users->nickname;
+                    $posts[$key]->users_id  = $value->users->id;
                 }
             }
 

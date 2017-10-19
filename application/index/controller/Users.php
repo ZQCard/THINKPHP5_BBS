@@ -21,7 +21,9 @@ class Users extends Base
     public function _initialize()
     {
         parent::_initialize();
-
+        if (empty($this->uid)){
+            $this->error('你未登陆，请前去登陆','/login');
+        }
     }
     //用户中心
     public function index($id)
@@ -76,19 +78,7 @@ class Users extends Base
 
     public function points()
     {
-        $userModel = new userModel();
-        $user = $userModel->field('points')->find($this->uid);
-        //处理积分
-        $points = (new PointsLog())->field('bakname,type,count(id)  AS num')->group('type,bakname')->select();
-        $pointsLevel = Db::name('level')->field('point,name,icon,number')->order('number DESC')->select();
-        $level = processLevel($pointsLevel,$user['points']);
-        $user->user_level = $level[0];
-        $user->level_icon = $level[1];
-        $user->nextLevel  = $level[2];
-        $this->assign([
-            'points' => $points,
-            'user'   => $user
-        ]);
+        $this->getUserLevel();
         return $this->fetch();
     }
 
@@ -103,7 +93,38 @@ class Users extends Base
 
     public function pointsrule()
     {
+        $rule = Db::name('points_rule')->field('name,points,type,limit_num')->select();
+        $this->assign([
+            'rule' => $rule
+        ]);
         return $this->fetch();
+    }
+
+    public function level()
+    {
+        $level = array_reverse($this->getUserLevel());
+        $this->assign([
+            'level' => $level
+        ]);
+        //查找等级
+        return $this->fetch();
+    }
+
+    private function getUserLevel(){
+        $userModel = new userModel();
+        $user = $userModel->field('points')->find($this->uid);
+        //处理积分
+        $points = (new PointsLog())->field('bakname,type,count(id)  AS num')->group('type,bakname')->select();
+        $pointsLevel = Db::name('level')->field('point,name,icon,number')->order('number DESC')->select();
+        $level = processLevel($pointsLevel,$user['points']);
+        $user->user_level = $level[0];
+        $user->level_icon = $level[1];
+        $user->nextLevel  = $level[2];
+        $this->assign([
+            'points' => $points,
+            'user'   => $user
+        ]);
+        return $pointsLevel;
     }
     
     //用户收藏

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>测试管理后台</title>
+    <title>学编程论坛管理后台</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <!--[if lt IE 9]>
@@ -167,7 +167,6 @@
     $("#formSubmitAdd").click(function () {
         var form = $("form");
         var url = "/admin/{$controller}";
-        return ;
         $.post(url,form.serialize(),success);
     });
 

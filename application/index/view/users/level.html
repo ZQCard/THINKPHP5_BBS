@@ -1,0 +1,57 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="wp" class="wp" style="min-height: 700px;">
+    <div id="pt" class="bm cl">
+        <div class="z">
+            <a href="home.php?mod=spacecp">设置</a> <em>›</em>积分
+        </div>
+    </div>
+    <div id="ct" class="ct2_a wp cl">
+        <div class="mn">
+            <div class="bm bw0">
+                <h1 class="mt">积分
+                </h1>
+                <!--don't close the div here--><ul class="tb cl">
+                <li><a href="/points">我的积分</a></li>
+                <li><a href="/points/log">积分记录</a></li>
+                <li><a href="/points/rule">积分规则</a></li>
+                <li class="a"><a href="/user/level">等级规则</a></li>
+            </ul><ul class="creditl mtm bbda cl"><li class="xi1 cl"><em> 我的积分: </em>{$user->points}  &nbsp; </li>
+                <li><em> 会员等级: </em>
+                    <!--改变图标开始-->
+                    {php}
+                    $icon = explode('-',$user->level_icon);
+                    array_shift($icon);
+                    foreach($icon as $value){
+                    echo '<img src="'.$value.'" title="'.$user->user_level.'   级,距离下一级需要 '.$user->nextLevel.' 积分">';
+                    }
+                    {/php}
+                    <!--改变图标结束-->
+                </li>
+
+            </ul>
+                <table summary="转账与兑换" cellspacing="0" cellpadding="0" class="dt mtm">
+                    <tbody>
+                    <tr>
+                        <th>等级名称</th>
+                        <th>等级</th>
+                        <th>图标</th>
+                        <th>所需积分</th>
+                    </tr>
+                    {foreach name="level" item="level"}
+                    <tr>
+                        <th>{$level['name']}</th>
+                        <th>{$level['number']}</th>
+                        <th><img src="{$level['icon']}" alt=""></th>
+                        <th>{$level['point']}</th>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {include file="public/user_left"}
+    </div>
+</div>
+{/block}
+

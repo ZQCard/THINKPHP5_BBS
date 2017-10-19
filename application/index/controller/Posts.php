@@ -95,10 +95,15 @@ class Posts extends Base
             $data['user_id']    = $this->uid;
             $data['user_type']  = 2;
             $data['status']     = 1;
+
             $validate = Loader::validate('posts');
             ($validate->check($data)) || $this->error($validate->getError());
+            //增加积分
+            $pointInfo = '发布帖子';
+            $data['info'] = $pointInfo;
+            $info = Common::incrPoint($this->uid,$pointInfo);
             $res = (new PostModel())->saveData($data);
-            (false !== $res)?$this->success('发帖成功,积分+50'):$this->error('发帖失败');
+            (false !== $res)?$this->success('发帖成功  '.$info):$this->error('发帖失败');
         }
     }
 
@@ -111,8 +116,10 @@ class Posts extends Base
             $data['reply_user_name'] = session($this->salt.'username');
             $validate = Loader::validate('posts_comment');
             ($validate->check($data)) || $this->error($validate->getError());
+            $pointInfo = '评论帖子';
+            $info = Common::incrPoint($this->uid,$pointInfo);
             $res = (new PostsComment())->allowField(true)->save($data);
-            ($res !== false)?$this->success('评论成功!'):$this->error('评论失败');
+            ($res !== false)?$this->success('评论成功!'.$info):$this->error('评论失败');
         }
     }
 

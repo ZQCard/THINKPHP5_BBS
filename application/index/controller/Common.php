@@ -179,19 +179,30 @@ class Common extends Controller
 
     /**
      * @param $uid      用户id
-     * @param $point    积分
      * @param $bakname  备注信息
-     * @param $type     操作类型
-     * @param $limit    奖励限制数量
+     * @return $info    提示信息
      */
-    public static function incrPoint($uid,$points,$type,$info)
+    public static function incrPoint($uid,$pointInfo)
     {
-        $data['user_id'] = $uid;
-        $data['points']  = $points;
-        $data['type']    = $type;
-        $data['bakname'] = $info;
-        $res = (new PointsLog())->saveData($data);
-        return $res;
+        $today = strtotime(date('Y-m-d'));
+        $res = Db::name('points_rule')->where('name',$pointInfo)->field('points,type,name,limit_num')->find();
+        if (!$res)return $info = '积分规则不存在';
+        $count = Db::name('points_log')->where('user_id',$uid)->where('bakname',$pointInfo)->where('create_time','>=',$today)->count();
+        if ($res['type'] == 1){
+            $info = '积分 +'.$res['points'];
+        }else{
+            $info = '积分 -'.$res['points'];
+        }
+        if ($count<$res['limit_num']){
+            $data['user_id'] = $uid;
+            $data['points']  = $res['points'];
+            $data['type']    = $res['type'];
+            $data['bakname'] = $pointInfo;
+            (new PointsLog())->saveData($data);
+        }else{
+            $info = '';
+        }
+        return $info;
     }
 
 

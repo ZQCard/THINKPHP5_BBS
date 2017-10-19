@@ -42,11 +42,9 @@ class Login extends Base
                 $this->error('验证码不得为空');
             }
             $res = \app\index\controller\Common::VerifyLoginServlet($data['geetest_challenge'],$data['geetest_validate'],$data['geetest_seccode']);
-            (!$res)&&$this->error('验证码错误');
-
-
+            $res||$this->error('验证码错误');
             $user = $User->where('username',$data['username'])->field('id,username,password,login_times')->find();
-            (!$user)&&$this->error('用户不存在');
+            $user||$this->error('用户不存在');
             if (md5($data['password']) != $user->password)$this->error('用户名或密码错误');
             $ip = $request->ip();
             $location = getLocation($ip);
@@ -58,6 +56,7 @@ class Login extends Base
             $token = config('SALT').$num.$user->username;
             $saveData['verify_token'] = md5($token);
             $res = $user->save($saveData);
+            $info = '';
             if($res){
                 //注册成功预置信息
                 $salt = config('SALT');
@@ -68,8 +67,10 @@ class Login extends Base
                 session($salt.'username',$data['username']);
                 session($salt.'uid',$user->id);
                 cookie($salt.'token',$token);
+                //增加登陆积分
+                $info = Common::incrPoint($user->id, '每日登录');
             }
-            ($res !== false)?$this->success('登陆成功'):$this->error('登陆失败');
+            ($res !== false)?$this->success('登陆成功  '.$info):$this->error('登陆失败');
         }else{
             return $this->fetch();
         }

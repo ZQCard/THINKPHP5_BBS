@@ -15,6 +15,7 @@
                 <li class="a"><a href="/points">我的积分</a></li>
                 <li><a href="/points/log">积分记录</a></li>
                 <li><a href="/points/rule">积分规则</a></li>
+                <li><a href="/user/level">等级规则</a></li>
             </ul><ul class="creditl mtm bbda cl"><li class="xi1 cl"><em> 积分: </em>{$user->points}  &nbsp; </li>
                 <li><em> 会员等级: </em>
                     <!--改变图标开始-->
@@ -38,30 +39,22 @@
                 <table summary="转账与兑换" cellspacing="0" cellpadding="0" class="dt mtm">
                     <caption>
                         <h2 class="mbm xs2">
-                            <a href="/points/log" class="xi2 xs1 xw0 y">查看更多»</a>积分记录
+                            <a href="/points/log" class="xi2 xs1 xw0 y">查看积分记录»</a>
                         </h2>
                     </caption>
-                    <tbody><tr>
-                        <th width="80">操作</th>
-                        <th width="80">积分变更</th>
-                        <th>详情</th>
-                        <th width="100">变更时间</th>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <th width="80">操作</th>
+                            <th width="80">积分变更</th>
+                            <th>详情</th>
+                            <th width="100">变更时间</th>
+                        </tr>
                     <tr><td colspan="4"><p class="emp">目前没有积分交易记录</p></td></tr>
-                    </tbody></table>
-
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="appl">
-            <div class="tbn">
-                <h2 class="mt bbda">设置</h2>
-                <ul>
-                    <li><a href="/setting">账户信息</a></li>
-                    <li  class="a"><a href="/points">积分</a></li>
-                    <li><a href="">访问推广</a></li>
-                </ul>
-            </div>
-        </div>
+        {include file="public/user_left"}
     </div>
 </div>
 {/block}

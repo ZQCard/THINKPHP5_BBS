@@ -56,6 +56,7 @@ Route::get('favorite','index/users/favorite');
 Route::get('points','index/users/points');
 Route::get('points/log','index/users/pointslog');
 Route::get('points/rule','index/users/pointsrule');
+Route::get('/user/level','index/users/level');
 
 //测试控制器
 Route::get('test','index/test/index');

@@ -14,8 +14,8 @@
                 </h1>
                 <!--don't close the div here--><ul class="tb cl">
                 <li><a href="/points">我的积分</a></li>
-                <li class="a"><a href="/">积分记录</a></li>
-                <li><a href="/points/rule">积分规则</a></li>
+                <li><a href="/points/log">积分记录</a></li>
+                <li  class="a"><a href="/points/rule">积分规则</a></li>
                 <li><a href="/user/level">等级规则</a></li>
             </ul><p class="tbmu bw0">
                 <a class="a" href="/" hidefocus="true">系统奖励</a>
@@ -23,24 +23,28 @@
                 <table summary="积分获得历史" cellspacing="0" cellpadding="0" class="dt">
                     <tbody>
                         <tr>
-                            <th class="xw1" width="80">动作名称</th>
+                            <th class="xw1" width="80">积分规则</th>
                             <th class="xw1" width="60">类型</th>
-                            <th class="xw1" width="60">积分</th>
-                            <th class="xw1" width="100">奖励时间</th>
+                            <th class="xw1" width="60">积分数量</th>
+                            <th class="xw1" width="100">每日限定</th>
                         </tr>
-                        {foreach name="pointsLog" item="log"}
+                        {foreach name="rule" item="rule"}
                         <tr>
-                            <td>
-                                <a href="">{$log->bakname}</a>
-                            </td>
-                            <td>{$log->type}</td>
-                            <td>{$log->points}</td>
-                            <td>{$log->create_time}</td>
+                            <th width="80">{$rule['name']}</th>
+                            <th  width="60">
+                                {eq name="$rule['type']" value="1"}
+                                增加
+                                {else/}
+                                减少
+                                {/eq}
+                            </th>
+                            <th width="60">{$rule['points']}</th>
+                            <th width="100">{$rule['limit_num']}</th>
                         </tr>
-                    {/foreach}
+                        {/foreach}
                     </tbody>
                 </table>
-                <div style="margin-left: 30%;">{$pointsLog->render()}</div>
+                <div style="margin-left: 30%;"></div>
             </div>
         </div>
         {include file="public/user_left"}

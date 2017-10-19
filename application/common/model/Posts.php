@@ -17,10 +17,9 @@ class Posts extends Base
     protected static function init()
     {
         Posts::beforeInsert(function ($post){
-            //如果是会员，发帖添加积分50
+            //会员
             if ($post->user_type == 2){
                 $query = Db::name('users');
-                $query->where('id',$post->user_id)->setInc('points',50);
                 $query->where('id',$post->user_id)->setInc('post_num');
             }
             //增加主模块发贴数量
@@ -48,7 +47,7 @@ class Posts extends Base
         //前端状态选择框控制
         $data['status'] = isset($data['status'])?1:2;
         $data['is_top'] = isset($data['is_top'])?1:2;
-        $data['is_good'] = isset($data['is_top'])?1:2;
+        $data['is_good'] = isset($data['is_good'])?1:2;
         $data['score']  = time();
         if (isset($data['id']))
         {

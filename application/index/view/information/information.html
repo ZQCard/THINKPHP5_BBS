@@ -177,7 +177,6 @@
     
     //编辑器
     KindEditor.ready(function(K) {
-        var points_rule_id = "{$information['points_rule_id']}";
         editor  = K.create('#editor_id');
         $("#comment").click(function(){
             isLogin();
@@ -188,7 +187,6 @@
                 'post_user_id':"{$information['post_user_id']}",
                 'reply_user_id':uid,
                 'reply_user_name':"{$Think.cookie.bbszhouqiusername}",
-                'points_rule_id' :points_rule_id
             };
             $.post("{:url('comment')}",data,original);
         });
