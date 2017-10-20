@@ -26,10 +26,11 @@ class PostsComment extends Base
             $data['post_user_name'] = $comment->reply_user_name;
             $data['post_user_headimg'] = $comment->post_user_headimg;
             $data['get_user_id'] = $comment->post_user_id;
-            $data['info'] = '评论帖子';
+            $data['info'] = '评论你的帖子';
             $data['content_info'] = mb_substr($comment->content,0,12).'……';
             $data['content_id'] = $comment->post_id;
             $data['user_type'] = $comment->user_type;
+            $data['type'] = 4;
             (new Message())->save($data);
         });
     }

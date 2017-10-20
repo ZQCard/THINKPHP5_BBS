@@ -214,10 +214,9 @@
             "post_user_id":uid,
             "post_user_name":nickname,
             "get_user_id":comment_user,
-            "content_id":id,
+            "content_id":"{$information['id']}",
             'post_user_headimg':"{$headImg}",
         };
-
         $.post("{:url('attitude')}",data,function (res) {
             var data = JSON.parse(res);
             if (data.status == 1){

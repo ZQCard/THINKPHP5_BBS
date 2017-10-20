@@ -19,7 +19,7 @@ class InformationComment extends Base
             $data['post_user_id'] = $comment->reply_user_id;
             $data['post_user_name'] = $comment->reply_user_name;
             $data['get_user_id'] = $comment->post_user_id;
-            $data['info'] = $comment->info;
+            $data['info'] = '评论你的帖子';
             $data['content_id'] = $comment->information_id;
             $data['user_type'] = 1;
             $data['content_info'] = mb_substr($comment->content,0,12).'……';

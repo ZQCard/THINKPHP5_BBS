@@ -157,7 +157,7 @@ class Users extends Auth
 
     public function favoriteDel(Request $request)
     {
-        if (!($this->uid))$this->error('需要您先登陆噢=￣ω￣=',url('/login'));
+
         if ($request->isDelete()){
             $query = Db::name('favorite');
             $data = input('param.');

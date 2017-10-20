@@ -8,38 +8,42 @@
         <div class="mn">
             <div class="bm bw0">
                 <ul class="tb cl">
-                    <li class="a"><a href="/message">消息</a></li>
+                    <li {eq name="$condition" value="0"}class="a"{/eq}><a href="/message">未读消息</a></li>
+                    <li {eq name="$condition" value="1"}class="a"{/eq}><a href="/message/type/1">已读消息</a></li>
                 </ul>
-                <form id="deletepmform" action="home.php?mod=spacecp&amp;ac=pm&amp;op=delete&amp;folder=" method="post" autocomplete="off" name="deletepmform">
-                    <div class="xld xlda pml mtm mbm">
-                        <dl id="pmlist_1" class="bbda cur1 cl">
-                            <dd class="m avt">
-                                <a href="home.php?mod=space&amp;uid=1" target="_blank"><img src="http://115.28.163.216/app9/uc_server/avatar.php?uid=1&amp;size=small"></a>
-                            </dd>
-                            <dd class="ptm pm_c">
-                                <div class="o">
-                                    <input type="checkbox" name="deletepm_deluid[]" id="a_delete_1" class="pc" value="1">
-                                </div>
-                                <span class="xi2 xw1">您</span> 对 <a href="home.php?mod=space&amp;uid=1" target="_blank">admin</a> 说 :<br>
-                                ljhjk &nbsp;  <br>
-                                <span class="xg1"><span title="2017-10-19 08:30">昨天&nbsp;08:30</span></span> &nbsp;
+                <div class="xld xlda pml mtm mbm">
+                    {foreach name="messages" item="message"}
+                    <dl id="pmlist_1" class="bbda cur1 cl">
+                        <dd class="m avt">
+                            <a href="/user/{$message['post_user_id']}">
+                                <img src="{$message['post_user_headimg']}">
+                            </a>
+                        </dd>
+                        <dd class="ptm pm_c">
+                            {$message['post_user_name']}
+                            <div class="o">
+                            </div>
+                            <span class="xi2 xw1">{$message['tips']}<br>
+                                <span class="xg1">
+                                    <input type="checkbox" name="message[]" class="pc" value="{$message['id']}">
+                                    <span>{$message['create_time']|date="Y-m-d H:i:s",###}</span>
+                                </span> &nbsp;
                                 <span class="pm_o y">
-                                <span class="xg1 z">共 1 条</span>
-                                    <a href="/message">回复</a>
-                                    </span>
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="pgs pbm cl pm_op">
-                        <label for="delete_all" onclick="">
-                            <input type="checkbox" name="chkall" id="delete_all" class="pc">全选
-                        </label> &nbsp;&nbsp;&nbsp;
-                        <button class="pn"><strong>删除</strong></button>
-                        <button class="pn" type="button"><strong>标记已读</strong></button>
-                    </div>
-                </form>
-                <script type="text/javascript">addBlockLink('deletepmform', 'dl');</script>
-
+                                <span class="xg1 z">
+                                </span>
+                                    <a href="{$message['info_url']}">前去查看</a>
+                                </span>
+                            </span>
+                        </dd>
+                    </dl>
+                    {/foreach}
+                    <div style="margin-left: 30%">{$list->render()}</div>
+                </div>
+                <div class="pgs pbm cl pm_op">
+                    <button class="pn"  id="delSome"><strong>删除</strong></button>
+                    <button class="pn"  id="delAll"><strong>全部删除</strong></button>
+                    <button class="pn"  id="is_read" type="button"><strong>标记已读</strong></button>
+                </div>
             </div>
         </div>
         {include file="public/user_left"}
@@ -48,4 +52,62 @@
     <div class="wp mtn">
         <!--[diy=diy3]--><div id="diy3" class="area"></div><!--[/diy]-->
     </div>	</div>
+{/block}
+{block name="js"}
+<script>
+    //更新已读
+    $("#is_read").click(function () {
+        someOrAll('update');
+    });
+    //删除所有信息
+    $("#delAll").click(function () {
+        someOrAll('all');
+    });
+    //删除部分信息
+    $("#delSome").click(function () {
+        someOrAll('some');
+    });
+    //多个信息删除
+    function someOrAll(type){
+        var list = $("input[type='checkbox']");
+        var id = '';
+        var info = (type == 'all')?'删除全部信息':'删除这些信息';
+        if (type == 'all'){
+            info = '删除全部信息';
+        }else if (type == 'some'){
+            info = '删除这些信息';
+        }else if (type == 'update'){
+            info = '标记为已读';
+        }
+        if (type == 'all'){
+            for (var i = 0; i < list.length; i++){
+                id = list[i].value+'-'+id;
+            }
+        }else{
+            for (var i = 0; i < list.length; i++){
+                if (list[i].checked){
+                    id = list[i].value+'-'+id;
+                }
+            }
+            if(!id){
+                layer.msg('您未选中任何值');
+                return ;
+            }
+        }
+        favoriteDel(id,info,type);
+    }
+    //删除函数//successOrFail
+    function favoriteDel(id,title,type) {
+        layer.confirm('是否 '+title+' 吗?', {
+            btn: ['确定','取消']
+        }, function(){
+            $.ajax({
+                type : "DELETE",
+                url : "{:url('message/infoDel')}",
+                data : {'id':id,'type':type},
+                success : successOrFail
+            });
+        });
+    }
+</script>
 {/block}

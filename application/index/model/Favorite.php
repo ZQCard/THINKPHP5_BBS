@@ -35,9 +35,9 @@ class Favorite extends Base
 
 
             if ($favorite->article_type == 1){//咨询
-                $data['info'] = '收藏咨询';
+                $data['info'] = '收藏你的文章';
             }else{//帖子
-                $data['info'] = '收藏帖子';
+                $data['info'] = '收藏你的帖子';
             }
             $data['post_user_id'] = $favorite->user_id;
             $data['post_user_name'] = session(config('SALT').'username');
