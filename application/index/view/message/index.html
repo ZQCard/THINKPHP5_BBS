@@ -1,0 +1,51 @@
+{extend name="layout" /}
+{block name="content"}
+<div id="wp" class="wp" style="min-height: 700px;">
+    <div class="wp">
+        <!--[diy=diy1]--><div id="diy1" class="area"></div><!--[/diy]-->
+    </div>
+    <div id="ct" class="ct2_a wp cl">
+        <div class="mn">
+            <div class="bm bw0">
+                <ul class="tb cl">
+                    <li class="a"><a href="/message">消息</a></li>
+                </ul>
+                <form id="deletepmform" action="home.php?mod=spacecp&amp;ac=pm&amp;op=delete&amp;folder=" method="post" autocomplete="off" name="deletepmform">
+                    <div class="xld xlda pml mtm mbm">
+                        <dl id="pmlist_1" class="bbda cur1 cl">
+                            <dd class="m avt">
+                                <a href="home.php?mod=space&amp;uid=1" target="_blank"><img src="http://115.28.163.216/app9/uc_server/avatar.php?uid=1&amp;size=small"></a>
+                            </dd>
+                            <dd class="ptm pm_c">
+                                <div class="o">
+                                    <input type="checkbox" name="deletepm_deluid[]" id="a_delete_1" class="pc" value="1">
+                                </div>
+                                <span class="xi2 xw1">您</span> 对 <a href="home.php?mod=space&amp;uid=1" target="_blank">admin</a> 说 :<br>
+                                ljhjk &nbsp;  <br>
+                                <span class="xg1"><span title="2017-10-19 08:30">昨天&nbsp;08:30</span></span> &nbsp;
+                                <span class="pm_o y">
+                                <span class="xg1 z">共 1 条</span>
+                                    <a href="/message">回复</a>
+                                    </span>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="pgs pbm cl pm_op">
+                        <label for="delete_all" onclick="">
+                            <input type="checkbox" name="chkall" id="delete_all" class="pc">全选
+                        </label> &nbsp;&nbsp;&nbsp;
+                        <button class="pn"><strong>删除</strong></button>
+                        <button class="pn" type="button"><strong>标记已读</strong></button>
+                    </div>
+                </form>
+                <script type="text/javascript">addBlockLink('deletepmform', 'dl');</script>
+
+            </div>
+        </div>
+        {include file="public/user_left"}
+    </div>
+
+    <div class="wp mtn">
+        <!--[diy=diy3]--><div id="diy3" class="area"></div><!--[/diy]-->
+    </div>	</div>
+{/block}

@@ -113,7 +113,6 @@ class Information extends Base
             $data['info'] = $pointInfo;
             $info = Common::incrPoint($this->uid,$pointInfo);
             $res2 = (new InformationComment())->save($data);
-
             ($res2 !== false)?$this->success('评论成功! '.$info):$this->error('评论失败');
         }
     }

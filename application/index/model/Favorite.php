@@ -45,6 +45,7 @@ class Favorite extends Base
             $data['content_id'] = $favorite->article_id;
             $data['user_type'] = $favorite->user_type;
             $data['type'] = 3;
+            $data['post_user_headimg'] = $favorite->post_user_headimg;
             (new Message())->save($data);
         });
 

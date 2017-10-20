@@ -2,9 +2,9 @@
     <div class="tbn">
         <h2 class="mt bbda">设置</h2>
         <ul>
-            <li><a href="/setting">账户信息</a></li>
-            <li  class="a"><a href="/points">积分</a></li>
-            <li><a href="">访问推广</a></li>
+            <li {eq name="nowType" value="setting"}class="a"{/eq}><a href="/setting">账户信息</a></li>
+            <li {eq name="nowType" value="points"}class="a"{/eq}><a href="/points">积分</a></li>
+            <li {eq name="nowType" value="message"}class="a"{/eq}><a href="/message">消息</a></li>
         </ul>
     </div>
 </div>

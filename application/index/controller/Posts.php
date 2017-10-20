@@ -95,7 +95,6 @@ class Posts extends Base
             $data['user_id']    = $this->uid;
             $data['user_type']  = 2;
             $data['status']     = 1;
-
             $validate = Loader::validate('posts');
             ($validate->check($data)) || $this->error($validate->getError());
             //增加积分
@@ -118,7 +117,7 @@ class Posts extends Base
             ($validate->check($data)) || $this->error($validate->getError());
             $pointInfo = '评论帖子';
             $info = Common::incrPoint($this->uid,$pointInfo);
-            $res = (new PostsComment())->allowField(true)->save($data);
+            $res = (new PostsComment())->save($data);
             ($res !== false)?$this->success('评论成功!'.$info):$this->error('评论失败');
         }
     }

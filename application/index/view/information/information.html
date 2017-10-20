@@ -156,6 +156,7 @@
             'article_user_id':article_user_id,
             'user_type':user_type,
             'article_user_nickname':article_user_nickname,
+            'post_user_headimg':"{$headImg}",
         };
         $.post("{:url('common/favorite')}",data,function (res) {
             layer.msg(res.msg,{time:1000},function () {
@@ -187,6 +188,7 @@
                 'post_user_id':"{$information['post_user_id']}",
                 'reply_user_id':uid,
                 'reply_user_name':"{$Think.cookie.bbszhouqiusername}",
+                'post_user_headimg':"{$headImg}",
             };
             $.post("{:url('comment')}",data,original);
         });
@@ -213,6 +215,7 @@
             "post_user_name":nickname,
             "get_user_id":comment_user,
             "content_id":id,
+            'post_user_headimg':"{$headImg}",
         };
 
         $.post("{:url('attitude')}",data,function (res) {

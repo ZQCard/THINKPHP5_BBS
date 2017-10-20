@@ -353,6 +353,7 @@
             'article_user_id':article_user_id,
             'user_type':user_type,
             'article_user_nickname':article_user_nickname,
+            'post_user_headimg':"{$headImg}"
         };
         $.post("{:url('common/favorite')}",data,function (res) {
             layer.msg(res.msg,{time:1000},function () {
@@ -382,6 +383,7 @@
             var content         = editor.text();
             var token           = "{$Request.token}";
             var data = {
+                'post_user_headimg':"{$headImg}",
                 'post_id'       :post_id,
                 'post_user_id'  :post_user_id,
                 'user_type'     :user_type,

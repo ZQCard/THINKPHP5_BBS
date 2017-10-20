@@ -22,11 +22,12 @@ class PostsComment extends Base
         //帖子评论数量+1
         PostsComment::beforeInsert(function ($comment){
             Db::name('posts')->where('id',$comment->post_id)->setInc('comment');
-
             $data['post_user_id'] = $comment->reply_user_id;
             $data['post_user_name'] = $comment->reply_user_name;
+            $data['post_user_headimg'] = $comment->post_user_headimg;
             $data['get_user_id'] = $comment->post_user_id;
             $data['info'] = '评论帖子';
+            $data['content_info'] = mb_substr($comment->content,0,12).'……';
             $data['content_id'] = $comment->post_id;
             $data['user_type'] = $comment->user_type;
             (new Message())->save($data);

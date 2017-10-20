@@ -43,7 +43,7 @@ class Login extends Base
             }
             $res = \app\index\controller\Common::VerifyLoginServlet($data['geetest_challenge'],$data['geetest_validate'],$data['geetest_seccode']);
             $res||$this->error('验证码错误');
-            $user = $User->where('username',$data['username'])->field('id,username,password,login_times')->find();
+            $user = $User->where('username',$data['username'])->field('id,username,nickname,password,login_times')->find();
             $user||$this->error('用户不存在');
             if (md5($data['password']) != $user->password)$this->error('用户名或密码错误');
             $ip = $request->ip();
@@ -62,9 +62,9 @@ class Login extends Base
                 $salt = config('SALT');
                 $num = mt_rand(1,1000);
                 $token = config('SALT').$num.$user->username;
-                cookie($salt.'username',$data['username']);
+                cookie($salt.'username',$user['nickname']);
                 cookie($salt.'uid',$user->id);
-                session($salt.'username',$data['username']);
+                session($salt.'username',$user['nickname']);
                 session($salt.'uid',$user->id);
                 cookie($salt.'token',$token);
                 //增加登陆积分

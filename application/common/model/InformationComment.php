@@ -8,12 +8,8 @@
 
 namespace app\common\model;
 
-use app\index\controller\Common;
-
 class InformationComment extends Base
 {
-    //忽略非表单字段
-    protected $field = true;
     protected $dateFormat = 'Y-m-d H:i:s';
     //模型事件
     protected static function init()
@@ -26,6 +22,8 @@ class InformationComment extends Base
             $data['info'] = $comment->info;
             $data['content_id'] = $comment->information_id;
             $data['user_type'] = 1;
+            $data['content_info'] = mb_substr($comment->content,0,12).'……';
+            $data['post_user_headimg'] = $comment->post_user_headimg;
             $res1 = (new Message())->save($data);
             return $res1;
         });

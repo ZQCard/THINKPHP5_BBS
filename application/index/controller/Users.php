@@ -16,15 +16,8 @@ use think\Debug;
 use think\Loader;
 use think\Request;
 
-class Users extends Base
+class Users extends Auth
 {
-    public function _initialize()
-    {
-        parent::_initialize();
-        if (empty($this->uid)){
-            $this->error('你未登陆，请前去登陆','/login');
-        }
-    }
     //用户中心
     public function index($id)
     {
@@ -70,6 +63,7 @@ class Users extends Base
         }else{
             $user = userModel::get($this->uid);
             $this->assign([
+                'nowType' => 'setting',
                 'user' => $user
             ]);
             return $this->fetch();
@@ -79,6 +73,9 @@ class Users extends Base
     public function points()
     {
         $this->getUserLevel();
+        $this->assign([
+            'nowType' => 'points',
+        ]);
         return $this->fetch();
     }
 
@@ -86,6 +83,7 @@ class Users extends Base
     {
         $pointsLog = (new PointsLog())->where('user_id',$this->uid)->field('bakname,type,points,create_time')->order('create_time')->paginate(15);
         $this->assign([
+            'nowType' => 'points',
             'pointsLog' => $pointsLog,
         ]);
         return $this->fetch();
@@ -95,6 +93,7 @@ class Users extends Base
     {
         $rule = Db::name('points_rule')->field('name,points,type,limit_num')->select();
         $this->assign([
+            'nowType' => 'points',
             'rule' => $rule
         ]);
         return $this->fetch();
@@ -104,6 +103,7 @@ class Users extends Base
     {
         $level = array_reverse($this->getUserLevel());
         $this->assign([
+            'nowType' => 'points',
             'level' => $level
         ]);
         //查找等级

@@ -57,6 +57,7 @@ Route::get('points','index/users/points');
 Route::get('points/log','index/users/pointslog');
 Route::get('points/rule','index/users/pointsrule');
 Route::get('/user/level','index/users/level');
+Route::get('/message','index/message/index');
 
 //测试控制器
 Route::get('test','index/test/index');
