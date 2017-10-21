@@ -31,7 +31,7 @@
                                 <span class="pm_o y">
                                 <span class="xg1 z">
                                 </span>
-                                    <a href="{$message['info_url']}">前去查看</a>
+                                    <a href="javascript:;" class="findUrl" data-id="{$message['id']}" data-url="{$message['info_url']}">前去查看</a>
                                 </span>
                             </span>
                         </dd>
@@ -55,6 +55,26 @@
 {/block}
 {block name="js"}
 <script>
+    //跳转改变状态
+    $(".findUrl").click(function () {
+        var url = $(this).data('url');
+        var id  = $(this).data('id');
+        type = 'update';
+        $.ajax({
+            type : "DELETE",
+            url : "{:url('message/infoDel')}",
+            data : {'id':id,'type':type},
+            success : function (res) {
+                if (res.code == 1){
+                    window.location.href = url;
+                }else{
+                    layer.msg(res.info,{icon:3},function () {
+                        window.location.reload();
+                    })
+                }
+            }
+        })
+    });
     //更新已读
     $("#is_read").click(function () {
         someOrAll('update');
@@ -94,10 +114,10 @@
                 return ;
             }
         }
-        favoriteDel(id,info,type);
+        infoDel(id,info,type);
     }
     //删除函数//successOrFail
-    function favoriteDel(id,title,type) {
+    function infoDel(id,title,type) {
         layer.confirm('是否 '+title+' 吗?', {
             btn: ['确定','取消']
         }, function(){

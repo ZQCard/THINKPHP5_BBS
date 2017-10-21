@@ -88,8 +88,15 @@ class Message extends Auth
                 $updateData[$key]['id'] = $value;
                 $updateData[$key][$field] = 1;
             }
+            $res2 = $this->updateMessageNum(count($ids));
+            if (!$res2)$this->error('更新用户信息数量出错');
             $res = (new MessageModel())->saveAll($updateData);
             (false !== $res)?$this->success($info.'成功'):$this->error($info.'失败');
         }
+    }
+
+    private function updateMessageNum($num)
+    {
+        return Db::name('users')->where('id',$this->uid)->setDec('message_num',$num);
     }
 }
