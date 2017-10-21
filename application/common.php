@@ -8,6 +8,44 @@
 // +----------------------------------------------------------------------
 // | Author: 流年 <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+/**
+ * @param string $city 城市名称
+ * @return mixed       设置cookle
+ */
+function saveWeatherCookies($city=''){
+    //如果cookie存在
+    if (!is_null(cookie('weather'))){
+        return cookie('weather');
+    }
+    //如果没有传入城市名称
+    if (empty($city)){
+        $res = getLocation(request()->ip());
+        $city = $res['city'];
+    }
+
+    // 心知天气接口调用凭据
+    $key = config('XINZHI_KEY'); // 测试用 key，请更换成您自己的 Key
+    $uid = config('XINZHI_ID'); // 测试用 用户 ID，请更换成您自己的用户 ID
+    // 参数
+    $api = 'https://api.seniverse.com/v3/weather/daily.json'; // 接口地址
+    $location = $city;
+    $param = [
+        'ts' => time(),
+        'ttl' => 300,
+        'uid' => $uid,
+    ];
+    $sig_data = http_build_query($param);
+    $sig = base64_encode(hash_hmac('sha1', $sig_data, $key, TRUE));
+    $param['sig'] = $sig; // 签名
+    $param['location'] = $location;
+    $param['start'] = 0;
+    $param['days'] = 2;
+    // 构造url
+    $url = $api . '?' . http_build_query($param);
+    $res = \curl\Curl::cUrl($url);
+    $weather = $res['results'][0]['daily'];
+    cookie('weather',$weather);
+}
 
 // 应用公共文件
 /**
