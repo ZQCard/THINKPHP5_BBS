@@ -9,10 +9,7 @@ class Test extends Controller
 {
     public function index()
     {
-        $redis = new \Redis();
-        $conn = $redis->connect('127.0.0.1');
-        $redis->set('author','zhouqi');
-        echo $redis->get('author');
+        dump(cookie('weather'));
     }
 
     public function info()

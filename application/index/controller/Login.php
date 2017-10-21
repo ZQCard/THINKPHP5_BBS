@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\common\model\Users;
+use think\Cookie;
 use think\Db;
 use think\Loader;
 use think\Request;
@@ -58,6 +59,8 @@ class Login extends Base
             $res = $user->save($saveData);
             $info = '';
             if($res){
+                //将天气放入cookie
+                saveWeatherCookies($location['city']);
                 //注册成功预置信息
                 $salt = config('SALT');
                 $num = mt_rand(1,1000);

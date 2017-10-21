@@ -13,6 +13,8 @@ class Base extends Controller
     {
         parent::_initialize();
         header("Content-type:text/html;charset=utf-8");
+        //天气预报
+        saveWeatherCookies();
         $this->salt = config('SALT');
         $this->now = date('Y-m-d');
         $sessionUid = session($this->salt.'uid');
@@ -28,7 +30,8 @@ class Base extends Controller
             $config[$value['key']] = $value['value'];
         }
         $this->assign([
-            'headImg'   =>$headImg['headimg'],
+            'weather'   => cookie('weather'),
+            'headImg'   => $headImg['headimg'],
             'config'    => $config,
             'sessionUid'=> $sessionUid,
             'navData'   => $navData,

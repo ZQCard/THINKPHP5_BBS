@@ -108,6 +108,17 @@
                 <!--友情连接结束-->
             </ul>
         </div>
+        <!--天气预报-->
+        <div class="link clearfix">
+            <ul class="clearfix">
+                {foreach name="weather" item="day"}
+                <li>
+                    天气情况:{$day.date}-{$day.text_day}<br>最高温度{$day.high}-最低温度{$day.low}
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+        <!--天气预报-->
         <!-- 二维码生成注释
         <div id="output"></div>
         <div style="width: 200px;height: 200px;background:#000;" class="getQRCode"></div>-->

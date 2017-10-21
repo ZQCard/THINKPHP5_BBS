@@ -219,7 +219,7 @@ return [
         // cookie 名称前缀
         'prefix'    => '',
         // cookie 保存时间
-        'expire'    => 0,
+        'expire'    => 3600,
         // cookie 保存路径
         'path'      => '/',
         // cookie 有效域名
@@ -255,4 +255,8 @@ return [
     //极验id和key
     'GEET_ID'     =>    '59e76f3c12d028e22f72d285aa68faab',
     'GEET_KEY'    =>    'f7fa929bbe8efb31eed172be69e7e901',
+
+    //心知天气API
+    'XINZHI_KEY'  =>    'hqm6uibjlubiim24',
+    'XINZHI_ID'  =>     'U2194FC437',
 ];
