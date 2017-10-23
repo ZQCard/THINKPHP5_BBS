@@ -8,6 +8,20 @@
 // +----------------------------------------------------------------------
 // | Author: 流年 <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+
+/**
+ * @return null|Redis $redis对象
+ */
+function redis(){
+    static $redis = null;
+    if (!is_null($redis)){
+        return $redis;
+    }
+    $redis = new \Redis();
+    $redis->connect('127.0.0.1');
+    return $redis;
+}
+
 /**
  * @param string $city 城市名称
  * @return mixed       设置cookle

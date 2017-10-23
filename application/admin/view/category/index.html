@@ -85,7 +85,7 @@
                                         <td>
                                             <div class="switch">
                                                 <div class="onoffswitch">
-                                                    <input type="checkbox" {eq name="$category->status" value="正常"}checked=""{/eq}  class="onoffswitch-checkbox statusChange" id="status-{$category->status}-{$category->id}">
+                                                    <input type="checkbox" {eq name="$category->status" value="正常"}checked=""{/eq}  class="onoffswitch-checkbox statusChange" data-redis="1" id="status-{$category->status}-{$category->id}">
                                                     <label class="onoffswitch-label" for="status-{$category->status}-{$category->id}">
                                                         <span class="onoffswitch-inner"></span>
                                                         <span class="onoffswitch-switch"></span>
@@ -124,11 +124,12 @@
 {block name="js"}
 <script>
     $(".statusChange").change(function () {
+        var redis = $(this).data('redis');
         var info = $(this).attr('id').split('-');
         var name = info[0];
         var status = (info[1]=='正常')?2:1;
         var id = info[2];
-        sendChange(id,name,status);
+        sendChange(id,name,status,redis);
     });
 </script>
 {/block}

@@ -60,7 +60,15 @@ class Base extends Controller
         if ($this->request->isPatch())
         {
             $data = input('param.');
-            (false !== Db::name($this->request->controller())->where('id',$data['id'])->update([$data['name'] => $data['value']]))?$this->success('更新状态成功!'):$this->error('更新状态失败!');
+            if(empty($data['redis'])){
+                (false !== Db::name($this->request->controller())->where('id',$data['id'])->update([$data['name'] => $data['value']]))?$this->success('更新状态成功!'):$this->error('更新状态失败!');
+            }else{
+                //更新redis数据
+                $key = strtolower($this->request->controller());
+                $redis = redis();
+                $redis->hSet($key.':'.$data['id'],$data['name'],$data['value']);
+                (false !== Db::name($this->request->controller())->where('id',$data['id'])->update([$data['name'] => $data['value']]))?$this->success('更新状态成功!'):$this->error('更新状态失败!');
+            }
         }
     }
 

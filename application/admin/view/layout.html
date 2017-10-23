@@ -167,7 +167,9 @@
     $("#formSubmitAdd").click(function () {
         var form = $("form");
         var url = "/admin/{$controller}";
-        $.post(url,form.serialize(),success);
+        $.post(url,form.serialize(),function (res) {
+            console.log(res)
+        });
     });
 
     //修改表单提交
@@ -178,7 +180,9 @@
             type    : "PUT",
             url     : "/admin/{$controller}/"+id,
             data    : form.serialize(),
-            success : success
+            success : function (res) {
+                console.log(res);
+            }
         });
     });
 
@@ -229,12 +233,13 @@
      * @param id  主键id
      * @param name 字段名称
      * @param value 字段值
+     * @param redis 是否启用redis存储
      */
-    function sendChange(id,name,value) {
+    function sendChange(id,name,value,redis=0) {
         $.ajax({
             type : "PATCH",
             url  : "/admin/{$controller}/changeInfo",
-            data : {id:id,name:name,value:value},
+            data : {id:id,name:name,value:value,redis:redis},
             success : function (res) {
                 layer.msg(res.msg,{time:1000});
             }
