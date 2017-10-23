@@ -13,26 +13,20 @@ class Base extends Controller
     {
         parent::_initialize();
         header("Content-type:text/html;charset=utf-8");
-        //天气预报
-        saveWeatherCookies();
         $this->salt = config('SALT');
         $this->now = date('Y-m-d');
         $sessionUid = session($this->salt.'uid');
         $this->uid = $sessionUid;
         //友情连接
         $navData = $this->getCategory();
-        $linkData = Db::name('link')->where("status = 1 AND end_time >=".$this->now)->field('name,link')->order('sort desc')->select();
+        $linkData = $this->getLink();
         $headImg = Db::name('users')->where('id',$this->uid)->field('headimg')->find();
-        //找到网站keywords和description
-        $configData = Db::name('config')->where('key','keywords')->whereOr('key','description')->select();
-        $config = [];
-        foreach ($configData as $key => $value){
-            $config[$value['key']] = $value['value'];
-        }
+        //pv
+        $global['pv'] = $this->getPv();
+        $global['uv'] = $this->getUv();
         $this->assign([
-            'weather'   => cookie('weather'),
+            'global'    => $global,
             'headImg'   => $headImg['headimg'],
-            'config'    => $config,
             'sessionUid'=> $sessionUid,
             'navData'   => $navData,
             'linkData'  => $linkData,
@@ -41,9 +35,9 @@ class Base extends Controller
 
     //查找首页导航
     private function getCategory(){
+        $redis = redis();
         //取出redis分类数据
         $categorys = [];
-        $redis = redis();
         //排序值从大到小
         $categorySort = $redis->zRevRange('category:score',0,-1,true);
         if (!empty($categorySort)){
@@ -57,5 +51,44 @@ class Base extends Controller
             $categorys = Db::name('category')->where('status',1)->field('name,link')->order('sort desc')->select();
         }
         return $categorys;
+    }
+
+    //查找友情链接
+    private function getLink(){
+        //取出redis友情链接数据
+        $time = date('Y-m-d');
+        $links = [];
+        $redis = redis();
+        //排序值从大到小
+        $linkSort = $redis->zRevRange('link:score',0,-1,true);
+        if (!empty($linkSort)){
+            foreach ($linkSort as $key => $value){
+                $link = $redis->hGetAll($key);
+                if (($link['status'] == 1)&&($time>=$link['start_time'])&&($time<=$link['end_time'])){
+                    $links[] = $link;
+                }
+            }
+        }else{
+            $links = Db::name('link')->where('status',1)->field('name,link')->order('sort desc')->select();
+        }
+        return $links;
+    }
+
+    //全局pv数据
+    private function getPv(){
+        $redis = redis();
+        $res = $redis->incr('global:pv');
+        return $res;
+    }
+
+    //全局uv数据
+    private function getUv(){
+        $redis = redis();
+        $ip = request()->ip();
+        if (!$redis->sIsMember('global:uv',$ip)){
+            $redis->sAdd('global:uv',$ip);
+        }
+        $res = $redis->sCard('global:uv');
+        return $res;
     }
 }

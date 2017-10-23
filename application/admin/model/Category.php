@@ -13,15 +13,13 @@ class Category extends Base
         //前端状态选择框控制
         $data['status'] = isset($data['status'])?1:2;
         $redis = redis();
-        if (isset($data['id']))
-        {
+        if (isset($data['id'])) {
             $res = $this->isUpdate(true)->save($data);
             $id  = $data['id'];
-        }
-        else
-        {
+        } else {
             $res = $this->isUpdate(false)->save($data);
             $id = $this->getLastInsID();
+            $data['id'] = $id;
         }
         unset($data['__token__']);
         //信息存入redis哈希表

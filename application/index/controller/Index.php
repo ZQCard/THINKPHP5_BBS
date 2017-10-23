@@ -22,7 +22,10 @@ class Index extends Base
         $module = Db::name('module')->where('status = 1 AND pid != 0')->field('id,name')->order('sort DESC')->select();
         //博客园抓取的新闻
         $newsInfo = Common::getBlogNews();
+        //天气API
+        saveWeatherCookies();
         $this->assign([
+            'weather'    => cookie('weather'),
             'banner'     => $banner,
             'newsInfo'   => $newsInfo,
            'information' => $information,

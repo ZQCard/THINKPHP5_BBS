@@ -109,7 +109,31 @@
                 </div>
             </div>
             <!--[推荐栏目结束]-->
-            <!--[二级推荐位开始]-->
+            <!--[天气预报开始]-->
+            <div class="area">
+                <div class="frame move-span cl frame-1">
+                    <div class="column frame-1-c">
+                        <div class="move-span temp"></div>
+                        <div class="block move-span">
+                            <div class="dxb_bc">
+                                <div class="right-module application">
+                                    <h4>天气预报</h4>
+                                    <br/>
+                                    <ul>
+                                        <li>
+                                            {foreach name="weather" item="day"}
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$day.date}-{$day.text_day}&nbsp;&nbsp;&nbsp;&nbsp;最高温度{$day.high}&nbsp;&nbsp;最低温度{$day.low}
+                                            <br/>
+                                            {/foreach}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--[新闻推荐位开始]-->
             <div id="um_portal_diy5" class="area">
                 <div id="frameYoLW02" class="frame move-span cl frame-1">
                     <div id="frameYoLW02_left" class="column frame-1-c">
@@ -132,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            <!--[二级推荐位结束]-->
+            <!--[新闻推荐位结束]-->
         </div>
         <!--侧边栏结束-->
     </div>

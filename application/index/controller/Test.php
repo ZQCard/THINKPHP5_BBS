@@ -9,7 +9,7 @@ class Test extends Controller
 {
     public function index()
     {
-        dump(cookie('weather'));
+
     }
 
     public function info()
