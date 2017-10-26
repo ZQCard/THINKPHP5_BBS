@@ -9,7 +9,7 @@ class Test extends Controller
 {
     public function index()
     {
-
+        $this->sendEmail();
     }
 
     public function info()
